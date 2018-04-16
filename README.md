@@ -1,5 +1,5 @@
 # KuisKode_Starter
-Kuis Kode LINE Bot App
+Restaurant LINE Bot App
 
-Sample code LINE Bot with PHP
-Check academy at [Dicoding LINE Bot Academy](https://dicoding.id/a/32)
+Restaurant Reservation and Menu Order code LINE Bot with PHP
+Check academy at [ZEUS Technology](http://www.zeus-solution.com)
