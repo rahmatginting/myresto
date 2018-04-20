@@ -149,10 +149,10 @@ private function textMessage($event)
 
   public function sendQuestion($replyToken, $questionNum=1)
   {
-    /*
     // get question from database
     $question = $this->tebakkode_m->getQuestion($questionNum);
  
+    /*
     // prepare answer options
     for($opsi = "a"; $opsi <= "d"; $opsi++) {
         if(!empty($question['option_'.$opsi]))
@@ -160,17 +160,14 @@ private function textMessage($event)
     }
     */
 
-    // get question from database
-    $question = $this->tebakkode_m->getQuestion($questionNum);
-    $options[] ='';
+    if ($questionNum==1) {
+      $options[] = new MessageTemplateActionBuilder('NOMOR MEJA', 'NOMOR MEJA');
+    }else if ($questionNum!=1) {
 
-    if ($questionNum!=1) {
       // prepare answer options
       for($opsi = "a"; $opsi <= "d"; $opsi++) {
           if(!empty($question['option_'.$opsi]))
               $options[] = new MessageTemplateActionBuilder($question['option_'.$opsi], $question['option_'.$opsi]);
-      }else if ($questionNum==1) {
-        $options[] = new MessageTemplateActionBuilder('', '');
       }
     }
     
