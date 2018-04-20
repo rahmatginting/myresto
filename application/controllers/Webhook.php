@@ -221,11 +221,12 @@ private function textMessage($event)
       if ($this->user['number']==1) {
         // update restaurant and table code
         $this->tebakkode_m->setRestoTable($this->user['user_id'], $message);
+       
+        // send next question
+        $this->sendQuestion($replyToken, $this->user['number'] + 1);        
 
         $this->tebakkode_m->setRestoTable($this->user['user_id'], 'TEST');
         
-        // send next question
-        $this->sendQuestion($replyToken, $this->user['number'] + 1);        
       }
     }
     else {
