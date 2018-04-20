@@ -175,16 +175,29 @@ private function textMessage($event)
       $options[] = new MessageTemplateActionBuilder('NOMOR MEJA', 'NOMOR MEJA');
       
     }else if ($questionNum==2) {
+      //Save Progress debug
+      $this->tebakkode_m->saveProgress('prog03');
+      
       //Search Menu Category options
-        $this->tebakkode_m->setRestoTable($this->user['user_id'], 'cob01');
-
+      $test='00';
       $categorys=$this->tebakkode_m->getCategory(1);
+
+      //Save Progress debug
+      $this->tebakkode_m->saveProgress('prog04');
+      
       foreach($categorys as $category) {
         
-          if(!empty($category['name']))
+          if(!empty($category['name'])) {
               $options[] = new MessageTemplateActionBuilder($category['name'], $category['name']);
+              $test = '01';
+          }
       }      
-        $this->tebakkode_m->setRestoTable($this->user['user_id'], 'cob02');
+      
+      if ($test=='01') {
+        //Save Progress debug
+        $this->tebakkode_m->saveProgress('prog05');
+      }
+      
     }else {
       // prepare answer options
       for($opsi = "a"; $opsi <= "d"; $opsi++) {
@@ -222,10 +235,16 @@ private function textMessage($event)
       if ($this->user['number']==1) {
         // update restaurant and table code
         $this->tebakkode_m->setRestoTable($this->user['user_id'], $message);
-       
+
+        //Save Progress debug
+        $this->tebakkode_m->saveProgress('prog01');
+        
         // send next question
-        $this->sendQuestion($replyToken, $this->user['number'] + 1);        
+        $this->sendQuestion($replyToken, $this->user['number'] + 1);
        
+        //Save Progress debug
+        $this->tebakkode_m->saveProgress('prog02');
+        
       }
     }
     else {
