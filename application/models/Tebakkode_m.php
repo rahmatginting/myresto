@@ -117,5 +117,13 @@ class Tebakkode_m extends CI_Model {
     if($query->num_rows() == 0) return false;
     return $query->result_array();
   }
+
+    function saveProgress($msg)
+  {
+    $this->db->set('desc', $msg)
+      ->insert('progress');
+ 
+    return $this->db->insert_id();
+  }
   
 }
