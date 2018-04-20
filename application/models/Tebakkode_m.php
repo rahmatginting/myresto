@@ -84,8 +84,8 @@ class Tebakkode_m extends CI_Model {
       ->where('user_id', $user_id)
       ->update('users');
  
-    //return $this->db->affected_rows();
-      return $restoNum;
+    return $this->db->affected_rows();
+    //return $restoNum;
   }
 
   function getRestoID($tableCode)
