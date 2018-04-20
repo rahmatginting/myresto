@@ -40,16 +40,18 @@ class Webhook extends CI_Controller {
 /*      
         // update restaurant and table code
         $this->tebakkode_m->setRestoTable('U4035bbada65f83a2ab7253095cd0e6e7', 'TEST');
+*/      
       
-      $categorys=$this->tebakkode_m->getCategory(1);
+      $categorys=$this->tebakkode_m->getCategory($this->resto);
       foreach($categorys as $category) {
         
           if(!empty($category['name']))            
               //$options[] = new MessageTemplateActionBuilder($category['name'], $category['name']);
             echo $category['name'] . "</br>";
       }
-*/      
-      echo "Hello Resto04!";
+      
+           
+      echo "Hello Resto05!";
       header('HTTP/1.1 400 Only POST method allowed');
       exit;
     }
