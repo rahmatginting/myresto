@@ -31,6 +31,14 @@ class Webhook extends CI_Controller {
   {
  
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+      $categorys=$this->tebakkode_m->getCategory(1);
+      foreach($categorys as $category) {
+        
+          if(!empty($category['name']))            
+              //$options[] = new MessageTemplateActionBuilder($category['name'], $category['name']);
+            echo $category['name'] . "</br>"
+      }
+      
       echo "Hello Coders!";
       header('HTTP/1.1 400 Only POST method allowed');
       exit;
