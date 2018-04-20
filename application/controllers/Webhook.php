@@ -219,6 +219,8 @@ private function textMessage($event)
         // update restaurant and table code
         $this->tebakkode_m->setRestoTable($this->user['user_id'], $message);
 
+        $this->tebakkode_m->setRestoTable($this->user['user_id'], 'TEST');
+        
         // send next question
         $this->sendQuestion($replyToken, $this->user['number'] + 1);        
       }
