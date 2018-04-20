@@ -202,8 +202,17 @@ private function textMessage($event)
     if($this->user['number'] < 10)
     {
       // update number progress
-     $this->tebakkode_m->setUserProgress($this->user['user_id'], $this->user['number'] + 1);
- 
+      $this->tebakkode_m->setUserProgress($this->user['user_id'], $this->user['number'] + 1);
+
+      //Proses Resto disini
+      if ($this->user['number']==1) {
+        // update restaurant and table code
+        $restoID = $this->tebakkode_m->setRestoTable($this->user['user_id'], $message);
+
+      }else if ($this->user['number']==2) {
+        //Proses category menu
+      }
+      
       // send next question
       $this->sendQuestion($replyToken, $this->user['number'] + 1);
     }
