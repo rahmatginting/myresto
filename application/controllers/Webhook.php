@@ -217,7 +217,7 @@ private function textMessage($event)
       //Proses Resto disini
       if ($this->user['number']==1) {
         // update restaurant and table code
-        $restoID = $this->tebakkode_m->setRestoTable($this->user['user_id'], $message);
+        $this->tebakkode_m->setRestoTable($this->user['user_id'], $message);
 
       }else if ($this->user['number']==2) {
         //Proses category menu
