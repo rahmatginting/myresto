@@ -110,6 +110,9 @@ class Webhook extends CI_Controller {
       $multiMessageBuilder->add($textMessageBuilder);
       $multiMessageBuilder->add($stickerMessageBuilder);
  
+       //Save Progress debug
+      $this->tebakkode_m->saveProgress('token01=' . $event['replyToken']);
+
       // send reply message
       $this->bot->replyMessage($event['replyToken'], $multiMessageBuilder);
  
@@ -129,11 +132,18 @@ private function textMessage($event)
         $this->tebakkode_m->setScore($this->user['user_id'], 0);
         // update number progress
         $this->tebakkode_m->setUserProgress($this->user['user_id'], 1);
+
+        //Save Progress debug
+        $this->tebakkode_m->saveProgress('token02=' . $event['replyToken']);
+
         // send question no.1
         $this->sendQuestion($event['replyToken'], 1);
       } else {
         $message = 'Silakan kirim pesan "MULAI" untuk memulai kuis.';
         $textMessageBuilder = new TextMessageBuilder($message);
+        //Save Progress debug
+        $this->tebakkode_m->saveProgress('token03=' . $event['replyToken']);
+
         $this->bot->replyMessage($event['replyToken'], $textMessageBuilder);
       }
  
@@ -156,6 +166,9 @@ private function textMessage($event)
     $multiMessageBuilder->add($stickerMessageBuilder);
     $multiMessageBuilder->add($textMessageBuilder);
  
+         //Save Progress debug
+        $this->tebakkode_m->saveProgress('token04=' . $event['replyToken']);
+
     // send message
     $this->bot->replyMessage($event['replyToken'], $multiMessageBuilder);
   }
@@ -223,6 +236,9 @@ private function textMessage($event)
  
     //Save Progress debug
     $this->tebakkode_m->saveProgress('prog07');
+
+        //Save Progress debug
+        $this->tebakkode_m->saveProgress('token06=' . $replyToken);
     
     // send message
     $response = $this->bot->replyMessage($replyToken, $messageBuilder);
