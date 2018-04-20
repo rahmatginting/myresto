@@ -225,9 +225,7 @@ private function textMessage($event)
        
         // send next question
         $this->sendQuestion($replyToken, $this->user['number'] + 1);        
-
-        $this->tebakkode_m->setRestoTable($this->user['user_id'], 'TEST');
-        
+       
       }
     }
     else {
