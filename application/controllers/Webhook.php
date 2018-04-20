@@ -169,6 +169,8 @@ private function textMessage($event)
       for($opsi = "a"; $opsi <= "d"; $opsi++) {
           if(!empty($question['option_'.$opsi]))
               $options[] = new MessageTemplateActionBuilder($question['option_'.$opsi], $question['option_'.$opsi]);
+      }else if ($questionNum==1) {
+        $options[] = new MessageTemplateActionBuilder('', '');
       }
     }
     
