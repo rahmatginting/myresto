@@ -15,6 +15,7 @@ class Webhook extends CI_Controller {
   private $events;
   private $signature;
   private $user;
+  private $resto;
 
   function __construct()
   {
@@ -196,7 +197,7 @@ private function textMessage($event)
       
       //Search Menu Category options
       $test='00';
-      $categorys=$this->tebakkode_m->getCategory(1);
+      $categorys=$this->tebakkode_m->getCategory($this->$resto);
 
       //Save Progress debug
       $this->tebakkode_m->saveProgress('prog03');
@@ -265,8 +266,13 @@ private function textMessage($event)
 
       //Proses Resto disini
       if ($this->user['number']==1) {
-        // update restaurant and table code
-        $this->tebakkode_m->setRestoTable($this->user['user_id'], $message);
+        // update table code
+        $this->tebakkode_m->setTable($this->user['user_id'], $message);
+
+        // update restaurant code
+        $this->$resto = $this->tebakkode_m->getResto($message);
+        $this->tebakkode_m->saveProgress('resto='.$this->$resto);
+        $this->tebakkode_m->setResto($this->user['user_id'], $this->$resto);
 
         //Save Progress debug
         $this->tebakkode_m->saveProgress('prog01');
