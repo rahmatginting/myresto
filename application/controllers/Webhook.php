@@ -162,8 +162,18 @@ private function textMessage($event)
 
     if ($questionNum==1) {
       $options[] = new MessageTemplateActionBuilder('NOMOR MEJA', 'NOMOR MEJA');
-    }else if ($questionNum!=1) {
+      
+    }else if ($questionNum==2) {
+      //Masukkan code disini
+      //Search Menu Category options
+      $categorys=$this->tebakkode_m->getCategory($restoID);
+      foreach($categorys as $category) {
+        
+          if(!empty($category['name']))
+              $options[] = new MessageTemplateActionBuilder($category['name'], $category['name']);
+      }      
 
+    }else {
       // prepare answer options
       for($opsi = "a"; $opsi <= "d"; $opsi++) {
           if(!empty($question['option_'.$opsi]))
