@@ -95,7 +95,6 @@ class Tebakkode_m extends CI_Model {
     //return $restoNum;
   }
 
-
   function getResto($tableCode)
   {
 
@@ -104,14 +103,10 @@ class Tebakkode_m extends CI_Model {
              ->where('code',$tableCode);
     $query = $this->db->get();
 
-    if ($query->num_rows() > 0 )
-    {
-      $row=$query->row_array();
-      return  $row;
-    }else {
-      return false;
-    }
-
+     if ($query->num_rows() > 0) {
+         return $query->row()->restaurant_id;
+     }
+     return false;
   }
 
   // Menu category
