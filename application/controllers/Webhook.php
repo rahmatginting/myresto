@@ -219,9 +219,9 @@ private function textMessage($event)
         // update restaurant and table code
         $this->tebakkode_m->setRestoTable($this->user['user_id'], $message);
 
+        // send next question
+        $this->sendQuestion($replyToken, $this->user['number'] + 1);        
       }
-      // send next question
-      $this->sendQuestion($replyToken, $this->user['number'] + 1);
     }
     else {
       // create user score message
