@@ -201,12 +201,14 @@ private function textMessage($event)
   
   private function checkAnswer($message, $replyToken)
   {
+    /*
     // if answer is true, increment score
     if($this->tebakkode_m->isAnswerEqual($this->user['number'], $message)){
       $this->user['score']++;
       $this->tebakkode_m->setScore($this->user['user_id'], $this->user['score']);
     }
- 
+    */
+    
     if($this->user['number'] < 10)
     {
       // update number progress
