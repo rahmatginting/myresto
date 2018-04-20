@@ -74,13 +74,10 @@ class Tebakkode_m extends CI_Model {
     return $this->db->affected_rows();
   }
 
-  function setRestoTable($user_id, $tableNum)
-  {
-    $array = $this->getRestoID($tableNum);
-    $restoNum = $array['restaurant_id'];
 
-    $this->db->set('resto', $restoNum)
-      ->set('table', $tableNum)
+  function setTable($user_id, $tableNum)
+  {
+    $this->db->set('table', $tableNum)
       ->where('user_id', $user_id)
       ->update('users');
  
@@ -88,7 +85,18 @@ class Tebakkode_m extends CI_Model {
     //return $restoNum;
   }
 
-  function getRestoID($tableCode)
+ function setResto($user_id, $resto_id)
+  {
+    $this->db->set('resto', $resto_id)
+      ->where('user_id', $user_id)
+      ->update('users');
+ 
+    return $this->db->affected_rows();
+    //return $restoNum;
+  }
+
+
+  function getResto($tableCode)
   {
 
     $this->db->select('restaurant_id')
@@ -100,6 +108,8 @@ class Tebakkode_m extends CI_Model {
     {
       $row=$query->row_array();
       return  $row;
+    }else {
+      return false;
     }
 
   }
@@ -108,7 +118,6 @@ class Tebakkode_m extends CI_Model {
   function getCategory($restoID)
   {
 
-
     $this->db->select('name')
              ->from('menu_category')
              ->where('restaurant_id',$restoID);
@@ -116,6 +125,7 @@ class Tebakkode_m extends CI_Model {
 
     if($query->num_rows() == 0) return false;
     return $query->result_array();
+
   }
 
     function saveProgress($msg)
