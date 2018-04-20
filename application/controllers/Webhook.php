@@ -31,6 +31,9 @@ class Webhook extends CI_Controller {
   {
  
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        //Save Progress debug
+        $this->tebakkode_m->saveProgress('prog02');
+/*      
         // update restaurant and table code
         $this->tebakkode_m->setRestoTable('U4035bbada65f83a2ab7253095cd0e6e7', 'TEST');
       
@@ -41,8 +44,8 @@ class Webhook extends CI_Controller {
               //$options[] = new MessageTemplateActionBuilder($category['name'], $category['name']);
             echo $category['name'] . "</br>";
       }
-      
-      echo "Hello Resto03!";
+*/      
+      echo "Hello Resto04!";
       header('HTTP/1.1 400 Only POST method allowed');
       exit;
     }
