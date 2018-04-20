@@ -33,7 +33,10 @@ class Webhook extends CI_Controller {
  
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         //Save Progress debug
-        $this->tebakkode_m->saveProgress('prog02');
+        $this->resto = $this->tebakkode_m->getResto('1001');
+        echo $this->resto;
+        echo "</br>";
+
 /*      
         // update restaurant and table code
         $this->tebakkode_m->setRestoTable('U4035bbada65f83a2ab7253095cd0e6e7', 'TEST');
@@ -197,7 +200,7 @@ private function textMessage($event)
       
       //Search Menu Category options
       $test='00';
-      $categorys=$this->tebakkode_m->getCategory($this->$resto);
+      $categorys=$this->tebakkode_m->getCategory($this->resto);
 
       //Save Progress debug
       $this->tebakkode_m->saveProgress('prog03');
@@ -270,9 +273,9 @@ private function textMessage($event)
         $this->tebakkode_m->setTable($this->user['user_id'], $message);
 
         // update restaurant code
-        $this->$resto = $this->tebakkode_m->getResto($message);
-        $this->tebakkode_m->saveProgress('resto='.$this->$resto);
-        $this->tebakkode_m->setResto($this->user['user_id'], $this->$resto);
+        $this->resto = $this->tebakkode_m->getResto($message);
+        $this->tebakkode_m->saveProgress('resto='.$this->resto);
+        $this->tebakkode_m->setResto($this->user['user_id'], $this->resto);
 
         //Save Progress debug
         $this->tebakkode_m->saveProgress('prog01');
