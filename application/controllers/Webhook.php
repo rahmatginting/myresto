@@ -149,6 +149,7 @@ private function textMessage($event)
 
   public function sendQuestion($replyToken, $questionNum=1)
   {
+    /*
     // get question from database
     $question = $this->tebakkode_m->getQuestion($questionNum);
  
@@ -157,7 +158,20 @@ private function textMessage($event)
         if(!empty($question['option_'.$opsi]))
             $options[] = new MessageTemplateActionBuilder($question['option_'.$opsi], $question['option_'.$opsi]);
     }
- 
+    */
+
+    // get question from database
+    $question = $this->tebakkode_m->getQuestion($questionNum);
+    $options[] ='';
+
+    if ($questionNum!=1) {
+      // prepare answer options
+      for($opsi = "a"; $opsi <= "d"; $opsi++) {
+          if(!empty($question['option_'.$opsi]))
+              $options[] = new MessageTemplateActionBuilder($question['option_'.$opsi], $question['option_'.$opsi]);
+      }
+    }
+    
     // prepare button template
     $buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
  
