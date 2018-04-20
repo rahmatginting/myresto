@@ -39,7 +39,7 @@ class Webhook extends CI_Controller {
             echo $category['name'] . "</br>";
       }
       
-      echo "Hello Coders!";
+      echo "Hello Resto!";
       header('HTTP/1.1 400 Only POST method allowed');
       exit;
     }
