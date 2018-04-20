@@ -36,7 +36,7 @@ class Webhook extends CI_Controller {
         
           if(!empty($category['name']))            
               //$options[] = new MessageTemplateActionBuilder($category['name'], $category['name']);
-            echo $category['name'] . "</br>"
+            echo $category['name'] . "</br>";
       }
       
       echo "Hello Coders!";
