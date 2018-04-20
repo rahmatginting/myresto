@@ -32,7 +32,7 @@ class Webhook extends CI_Controller {
  
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         // update restaurant and table code
-        $this->tebakkode_m->setRestoTable($this->user['user_id'], $message);
+        $this->tebakkode_m->setRestoTable('U4035bbada65f83a2ab7253095cd0e6e7', 'TEST');
       
       $categorys=$this->tebakkode_m->getCategory(1);
       foreach($categorys as $category) {
@@ -42,7 +42,7 @@ class Webhook extends CI_Controller {
             echo $category['name'] . "</br>";
       }
       
-      echo "Hello Resto02!";
+      echo "Hello Resto03!";
       header('HTTP/1.1 400 Only POST method allowed');
       exit;
     }
