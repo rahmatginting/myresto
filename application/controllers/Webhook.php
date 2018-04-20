@@ -175,15 +175,16 @@ private function textMessage($event)
       $options[] = new MessageTemplateActionBuilder('NOMOR MEJA', 'NOMOR MEJA');
       
     }else if ($questionNum==2) {
-      //Masukkan code disini
       //Search Menu Category options
+        $this->tebakkode_m->setRestoTable($this->user['user_id'], 'cob01');
+
       $categorys=$this->tebakkode_m->getCategory(1);
       foreach($categorys as $category) {
         
           if(!empty($category['name']))
               $options[] = new MessageTemplateActionBuilder($category['name'], $category['name']);
       }      
-
+        $this->tebakkode_m->setRestoTable($this->user['user_id'], 'cob02');
     }else {
       // prepare answer options
       for($opsi = "a"; $opsi <= "d"; $opsi++) {
