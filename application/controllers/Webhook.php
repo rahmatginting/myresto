@@ -179,14 +179,14 @@ private function textMessage($event)
       
     }else if ($questionNum==2) {
       //Save Progress debug
-      $this->tebakkode_m->saveProgress('prog03');
+      $this->tebakkode_m->saveProgress('prog02');
       
       //Search Menu Category options
       $test='00';
       $categorys=$this->tebakkode_m->getCategory(1);
 
       //Save Progress debug
-      $this->tebakkode_m->saveProgress('prog04');
+      $this->tebakkode_m->saveProgress('prog03');
       
       foreach($categorys as $category) {
         
@@ -198,7 +198,7 @@ private function textMessage($event)
       
       if ($test=='01') {
         //Save Progress debug
-        $this->tebakkode_m->saveProgress('prog05');
+        $this->tebakkode_m->saveProgress('prog04');
       }
       
     }else {
@@ -208,15 +208,28 @@ private function textMessage($event)
               $options[] = new MessageTemplateActionBuilder($question['option_'.$opsi], $question['option_'.$opsi]);
       }
     }
+
+    //Save Progress debug
+    $this->tebakkode_m->saveProgress('prog05');
     
     // prepare button template
     $buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
- 
+
+    //Save Progress debug
+    $this->tebakkode_m->saveProgress('prog06');
+    
     // build message
     $messageBuilder = new TemplateMessageBuilder("Gunakan mobile app untuk melihat soal", $buttonTemplate);
  
+    //Save Progress debug
+    $this->tebakkode_m->saveProgress('prog07');
+    
     // send message
     $response = $this->bot->replyMessage($replyToken, $messageBuilder);
+
+    //Save Progress debug
+    $this->tebakkode_m->saveProgress('prog08');
+    
   }
   
   private function checkAnswer($message, $replyToken)
@@ -246,7 +259,7 @@ private function textMessage($event)
         $this->sendQuestion($replyToken, $this->user['number'] + 1);
        
         //Save Progress debug
-        $this->tebakkode_m->saveProgress('prog02');
+        $this->tebakkode_m->saveProgress('prog09');
         
       }
     }
