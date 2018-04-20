@@ -166,7 +166,7 @@ private function textMessage($event)
     }else if ($questionNum==2) {
       //Masukkan code disini
       //Search Menu Category options
-      $categorys=$this->tebakkode_m->getCategory($restoID);
+      $categorys=$this->tebakkode_m->getCategory(1);
       foreach($categorys as $category) {
         
           if(!empty($category['name']))
