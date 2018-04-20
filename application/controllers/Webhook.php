@@ -219,10 +219,7 @@ private function textMessage($event)
         // update restaurant and table code
         $this->tebakkode_m->setRestoTable($this->user['user_id'], $message);
 
-      }else if ($this->user['number']==2) {
-        //Proses category menu
       }
-      
       // send next question
       $this->sendQuestion($replyToken, $this->user['number'] + 1);
     }
