@@ -131,7 +131,7 @@ class Tebakkode_m extends CI_Model {
     return $this->db->insert_id();
   }
 
-  function getCategory($restoID, $category) 
+  function getCategoryID($restoID, $category) 
   {
     $this->db->select('code')
              ->from('menu_category')
