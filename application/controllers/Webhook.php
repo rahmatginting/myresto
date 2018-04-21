@@ -43,7 +43,7 @@ class Webhook extends CI_Controller {
         // update restaurant and table code
         $this->tebakkode_m->setRestoTable('U4035bbada65f83a2ab7253095cd0e6e7', 'TEST');
 */      
-      $menus=$this->tebakkode_m->getMenu(1,'101');
+      $menus=$this->tebakkode_m->getMenu($this->resto,$this->categoryID);
       if (is_array($menus) || is_object($menus))
       {      
         foreach($menus as $menu) {
