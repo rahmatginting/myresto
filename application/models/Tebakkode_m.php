@@ -159,19 +159,19 @@ class Tebakkode_m extends CI_Model {
 
   function getMenu($restoID,$categoryID)
   {
+    /*
     $this->db->select('name')
              ->from('restaurant_menu')
              ->where('category_id',$categoryID)
              ->where('restaurant_id',$restoID);
     $query = $this->db->get();
+    */
 
-    /*
     $sql = "SELECT name FROM restaurant_menu WHERE category_id = '". $categoryID . "' AND restaurant_id = '" . $restoID ."'";
     $query = $this->db->query($sql);
 
     if($query->num_rows() == 0) return false;
     return $query->result_array();
-    */
 
   }
 }
