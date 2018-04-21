@@ -303,9 +303,14 @@ private function textMessage($event)
         //Save Progress debug
         $this->tebakkode_m->saveProgress('prog09');
         
+      }else if ($this->user['number']==2) {
+
+        //Save Progress debug
+        $this->tebakkode_m->saveProgress($message);
+
       }
-    }
-    else {
+
+    } else {
       // create user score message
       $message = 'Skormu '. $this->user['score'];
       $textMessageBuilder1 = new TextMessageBuilder($message);
