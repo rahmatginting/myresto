@@ -45,7 +45,7 @@ class Webhook extends CI_Controller {
       $categorys=$this->tebakkode_m->getCategory($this->resto);
       foreach($categorys as $category) {
         
-          if(!empty($category['name']))            
+          if(!empty($category['name']))
               //$options[] = new MessageTemplateActionBuilder($category['name'], $category['name']);
             echo $category['name'] . "</br>";
       }
@@ -207,6 +207,33 @@ private function textMessage($event)
 
     if ($questionNum==1) {
       $options[] = new MessageTemplateActionBuilder('NOMOR MEJA', 'NOMOR MEJA');
+      
+    }else if ($questionNum==2) {
+      //Save Progress debug
+      $this->tebakkode_m->saveProgress('prog02');
+      
+      //Search Menu Category options
+      $test='00';
+      $categorys=$this->tebakkode_m->getCategory($this->resto);
+
+      //Save Progress debug
+      $this->tebakkode_m->saveProgress('restoID=' . $this->resto);
+
+      //Save Progress debug
+      $this->tebakkode_m->saveProgress('prog03');
+      
+      foreach($categorys as $category) {
+      
+          if(!empty($category['name'])) {
+              $options[] = new MessageTemplateActionBuilder($category['name'], $category['name']);
+              $test = '01';
+          }
+      }
+      
+      if ($test=='01') {
+        //Save Progress debug
+        $this->tebakkode_m->saveProgress('prog04');
+      }
       
     }else {
       // prepare answer options
