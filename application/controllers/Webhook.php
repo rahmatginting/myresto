@@ -221,6 +221,16 @@ private function textMessage($event)
       $this->tebakkode_m->saveProgress('masuk01');
 
       $menus=$this->tebakkode_m->getMenu($this->resto,$this->categoryID);
+
+      //Update progress debug
+      $this->tebakkode_m->saveProgress('masuk02');
+
+      //Update progress debug
+      $this->tebakkode_m->saveProgress($this->resto);
+
+      //Update progress debug
+      $this->tebakkode_m->saveProgress($this->categoryID);
+
       if (is_array($menus) || is_object($menus))
       {      
         foreach($menus as $menu) {    
@@ -318,7 +328,7 @@ private function textMessage($event)
  
       // send reply message
       $this->bot->replyMessage($replyToken, $multiMessageBuilder);
-      $this->tebakkode_m->setUserProgress($this->user['user_id'], 0); 
+      $this->tebakkode_m->setUserProgress($this->user['user_id'], 0);
     }
   }
   
