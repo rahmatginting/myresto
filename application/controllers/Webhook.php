@@ -242,22 +242,29 @@ private function textMessage($event)
       
     }else if ($questionNum==3) {
       
-      $columns = array();
-      $img_url = "https://res.cloudinary.com/db9zavtws/image/upload/v1486219057/5_ngpkk0.png";
       $menus=$this->tebakkode_m->getMenu($this->resto,$this->categoryID);
       if (is_array($menus) || is_object($menus))
       {
         foreach($menus as $menu) {
-          if(!empty($menu['name'])) {
-              //$actions = array(new PostbackTemplateActionBuilder("Add to Cart","action=carousel&button=".$i),
-                //new UriTemplateActionBuilder("View","http://www.google.com"));
-              $actions = array("Pesan","Kembali");
-              $column = new CarouselColumnTemplateBuilder($menu['name'], "description", $img_url , $actions);
-              $columns[] = $column;
-            }
+          if(!empty($menu['name']))
+              //$options[] = new MessageTemplateActionBuilder($menu['name'], $menu['name']);
+              //Update progress debug
+              $test="";            
         }
       }
 
+      //pre
+      $columns = array();
+      $img_url = "https://cdn.shopify.com/s/files/1/0379/7669/products/sampleset2_1024x1024.JPG?v=1458740363";
+      for($i=0;$i<5;$i++) {
+        $actions = array(new PostbackTemplateActionBuilder("Add to Cart","action=carousel&button=".$i),
+          new UriTemplateActionBuilder("View","http://www.google.com"));
+        //$actions = array(new PostbackTemplateActionBuilder("Add to Cart","action=carousel&button=".$i),
+          //new UriTemplateActionBuilder("View","http://www.google.com"));
+
+        $column = new CarouselColumnTemplateBuilder("Title", "description", $img_url , $actions);
+        $columns[] = $column;
+      }
       $carousel = new CarouselTemplateBuilder($columns);
       $messageBuilder = new TemplateMessageBuilder("Carousel Demo", $carousel);
 
@@ -339,7 +346,7 @@ private function textMessage($event)
  
       // send reply message
       $this->bot->replyMessage($replyToken, $multiMessageBuilder);
-      $this->tebakkode_m->setUserProgress($this->user['user_id'], 0); 
+      $this->tebakkode_m->setUserProgress($this->user['user_id'], 0);
     }
   }
   
