@@ -161,7 +161,7 @@ class Tebakkode_m extends CI_Model {
   {
     $this->db->select('name')
              ->from('restaurant_menu')
-             ->where('category_id',escape($categoryID))
+             ->where('category_id',$categoryID)
              ->where('restaurant_id',$restoID);
     $query = $this->db->get();
 
