@@ -209,8 +209,6 @@ private function textMessage($event)
     }else if ($questionNum==2) {
       
       $categorys=$this->tebakkode_m->getCategory($this->resto);
-
-      
       foreach($categorys as $category) {
       
           if(!empty($category['name'])) {
@@ -219,15 +217,21 @@ private function textMessage($event)
       }
       
     }else if ($questionNum==3) {
+      //Update progress debug
+      $this->tebakkode_m->saveProgress('masuk01');
 
       $menus=$this->tebakkode_m->getMenu($this->resto,$this->categoryID);
       if (is_array($menus) || is_object($menus))
       {      
-        foreach($menus as $menu) {       
+        foreach($menus as $menu) {    
           if(!empty($menu['name'])) 
               $options[] = new MessageTemplateActionBuilder($menu['name'], $menu['name']);
+              //Update progress debug
+              $this->tebakkode_m->saveProgress($menu['name']);
         }
       }
+      //Update progress debug
+      $this->tebakkode_m->saveProgress('masuk03');
 
 
     } else {
@@ -241,13 +245,10 @@ private function textMessage($event)
     
     // prepare button template
     $buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
-
-    
+   
     // build message
     $messageBuilder = new TemplateMessageBuilder("Gunakan mobile app untuk melihat soal", $buttonTemplate);
  
-
-    
     // send message
     $response = $this->bot->replyMessage($replyToken, $messageBuilder);
   
