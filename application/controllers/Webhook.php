@@ -221,13 +221,13 @@ private function textMessage($event)
       //Update progress debug
       $this->tebakkode_m->saveProgress('masuk01');
 
-      $menus=$this->tebakkode_m->getMenu($this->resto,$this->categoryID);
-
       //Update progress debug
       $this->tebakkode_m->saveProgress($this->resto);
 
       //Update progress debug
       $this->tebakkode_m->saveProgress($this->categoryID);
+      
+      $menus=$this->tebakkode_m->getMenu($this->resto,$this->categoryID);
       
       //Update progress debug
       $this->tebakkode_m->saveProgress('masuk02');
