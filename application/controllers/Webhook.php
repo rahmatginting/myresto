@@ -294,6 +294,15 @@ private function textMessage($event)
         
       }else if ($this->user['number']==2) {
 
+        //Update progress debug
+        $this->tebakkode_m->saveProgress('Nomor2');
+
+        //Update progress debug
+        $this->tebakkode_m->saveProgress($this->resto);
+
+        //Update progress debug
+        $this->tebakkode_m->saveProgress($message);
+        
         // get Category ID
         $this->categoryID = $this->tebakkode_m->getCategoryID($this->resto, $message);
 
