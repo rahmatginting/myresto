@@ -49,6 +49,18 @@ class Webhook extends CI_Controller {
               //$options[] = new MessageTemplateActionBuilder($category['name'], $category['name']);
             echo $category['name'] . "</br>";
       }
+echo "</br>";
+echo "</br>";
+      
+      // get question from database
+      $question = $this->tebakkode_m->getQuestion(2);
+      
+      // prepare answer options
+      for($opsi = "a"; $opsi <= "d"; $opsi++) {
+          if(!empty($question['option_'.$opsi]))
+              //$options[] = new MessageTemplateActionBuilder($question['option_'.$opsi], $question['option_'.$opsi]);
+              echo $question['option_'.$opsi] . "</br>";
+      }
       
            
       echo "Hello Resto05!";
