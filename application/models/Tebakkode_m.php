@@ -130,5 +130,41 @@ class Tebakkode_m extends CI_Model {
  
     return $this->db->insert_id();
   }
-  
+
+  function getCategory($restoID, $category) 
+  {
+    $this->db->select('code')
+             ->from('menu_category')
+             ->where('restaurant_id',$restoID)
+             ->where('name',$category);
+    $query = $this->db->get();
+
+     if ($query->num_rows() > 0) {
+         return $query->row()->code;
+     }
+     return false;
+
+  }
+
+  function setCategory($user_id, $category_id)
+  {
+    $this->db->set('category', $category_id)
+      ->where('user_id', $user_id)
+      ->update('users');
+ 
+    return $this->db->affected_rows();
+    //return $restoNum;
+  }
+
+  function getMenu($restoID,$categoryID)
+  {
+    $this->db->select('name')
+             ->from('restaurant_menu')
+             ->where('category_id',$categoryID)
+             ->where('restaurant_id',$restoID);
+    $query = $this->db->get();
+
+    if($query->num_rows() == 0) return false;
+    return $query->result_array();
+  }  
 }
