@@ -219,14 +219,16 @@ private function textMessage($event)
       }
       
     }else if ($questionNum==3) {
+
       $menus=$this->tebakkode_m->getMenu($this->resto,$this->categoryID);
-      
-      foreach($menus as $menu) {
-      
-          if(!empty($menu['name'])) {
+      if (is_array($menus) || is_object($menus))
+      {      
+        foreach($menus as $menu) {       
+          if(!empty($menu['name'])) 
               $options[] = new MessageTemplateActionBuilder($menu['name'], $menu['name']);
-          }
+        }
       }
+
 
     } else {
       // prepare answer options
