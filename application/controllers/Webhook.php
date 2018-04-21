@@ -250,7 +250,9 @@ private function textMessage($event)
         foreach($menus as $menu) {
           if(!empty($menu['name'])){
             //$options[] = new MessageTemplateActionBuilder($menu['name'], $menu['name']);
-            $actions = array("Pesan","Kembali");
+            //$actions = array("Pesan","Kembali");
+            $actions = array(new PostbackTemplateActionBuilder("Add to Cart","action=carousel&button=".$i),
+              new UriTemplateActionBuilder("View","http://www.google.com"));
             $column = new CarouselColumnTemplateBuilder("Title", "description", $img_url , $actions);
             $columns[] = $column;
           }
@@ -263,8 +265,6 @@ private function textMessage($event)
       for($i=0;$i<5;$i++) {
         $actions = array(new PostbackTemplateActionBuilder("Add to Cart","action=carousel&button=".$i),
           new UriTemplateActionBuilder("View","http://www.google.com"));
-        //$actions = array(new PostbackTemplateActionBuilder("Add to Cart","action=carousel&button=".$i),
-          //new UriTemplateActionBuilder("View","http://www.google.com"));
 
         $column = new CarouselColumnTemplateBuilder("Title", "description", $img_url , $actions);
         $columns[] = $column;
