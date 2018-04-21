@@ -9,6 +9,13 @@ use \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder;
 use \LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder;
 use \LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder;
 
+use \LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
+use \LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
+use \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
+use \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
+
+
+
 class Webhook extends CI_Controller {
 
   private $bot;
@@ -200,7 +207,9 @@ private function textMessage($event)
     $this->bot->replyMessage($event['replyToken'], $multiMessageBuilder);
   }
   
-
+  //====================================================================================
+  //====================================================================================
+  //====================================================================================
   public function sendQuestion($replyToken, $questionNum=1)
   {
     // get question from database
@@ -209,6 +218,12 @@ private function textMessage($event)
     if ($questionNum==1) {
       $options[] = new MessageTemplateActionBuilder('NOMOR MEJA', 'NOMOR MEJA');
       
+      // prepare button template
+      $buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
+     
+      // build message
+      $messageBuilder = new TemplateMessageBuilder("Gunakan mobile app untuk melihat soal", $buttonTemplate);
+
     }else if ($questionNum==2) {
       
       $categorys=$this->tebakkode_m->getCategory($this->resto);
@@ -218,55 +233,47 @@ private function textMessage($event)
               $options[] = new MessageTemplateActionBuilder($category['name'], $category['name']);
           }
       }
+
+      // prepare button template
+      $buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
+     
+      // build message
+      $messageBuilder = new TemplateMessageBuilder("Gunakan mobile app untuk melihat soal", $buttonTemplate);
       
     }else if ($questionNum==3) {
       
-      //Update progress debug
-      $this->tebakkode_m->saveProgress('masuk01');
-
-      //Update progress debug
-      $this->tebakkode_m->saveProgress($this->resto);
-
-      //Update progress debug
-      $this->tebakkode_m->saveProgress($this->categoryID);
-      
       $menus=$this->tebakkode_m->getMenu($this->resto,$this->categoryID);
-      
-      //Update progress debug
-      $this->tebakkode_m->saveProgress('masuk02');
-
       if (is_array($menus) || is_object($menus))
-      {      
-        foreach($menus as $menu) {    
-          if(!empty($menu['name'])) 
-              $options[] = new MessageTemplateActionBuilder($menu['name'], $menu['name']);
+      {
+        foreach($menus as $menu) {
+          if(!empty($menu['name']))
+              //$options[] = new MessageTemplateActionBuilder($menu['name'], $menu['name']);
               //Update progress debug
-              $this->tebakkode_m->saveProgress($menu['name']);
         }
       }
 
-      //Update progress debug
-      $this->tebakkode_m->saveProgress('masuk03');
-    } else {
-      // prepare answer options
-      for($opsi = "a"; $opsi <= "d"; $opsi++) {
-          if(!empty($question['option_'.$opsi]))
-              $options[] = new MessageTemplateActionBuilder($question['option_'.$opsi], $question['option_'.$opsi]);
+      //pre
+      $columns = array();
+      $img_url = "https://cdn.shopify.com/s/files/1/0379/7669/products/sampleset2_1024x1024.JPG?v=1458740363";
+      for($i=0;$i<5;$i++) {
+        $actions = array(new PostbackTemplateActionBuilder("Add to Cart","action=carousel&button=".$i),
+          new UriTemplateActionBuilder("View","http://www.google.com"));
+        $column = new CarouselColumnTemplateBuilder("Title", "description", $img_url , $actions);
+        $columns[] = $column;
       }
-    }
+      $carousel = new CarouselTemplateBuilder($columns);
+      $messageBuilder = new TemplateMessageBuilder("Carousel Demo", $carousel);
 
-    
-    // prepare button template
-    $buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
-   
-    // build message
-    $messageBuilder = new TemplateMessageBuilder("Gunakan mobile app untuk melihat soal", $buttonTemplate);
+    }
  
     // send message
     $response = $this->bot->replyMessage($replyToken, $messageBuilder);
   
   }
-  
+
+  //====================================================================================
+  //====================================================================================
+  //====================================================================================  
   private function checkAnswer($message, $replyToken)
   {
     /*
