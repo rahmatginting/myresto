@@ -96,7 +96,7 @@ class Tebakkode_m extends CI_Model {
   }
 
 
-  function getResto($tableCode)
+  function checkResto($tableCode)
   {
 
     $this->db->select('restaurant_id')
@@ -110,6 +110,19 @@ class Tebakkode_m extends CI_Model {
      return false;
   }
 
+  function getResto($user_id)
+  {
+    $this->db->select('resto')
+             ->from('users')
+             ->where('user_id',$user_id);
+    $query = $this->db->get();
+
+     if ($query->num_rows() > 0) {
+         return $query->row()->resto;
+     }
+     return false;
+
+  }
   // Menu category
   function getCategory($restoID)
   {
@@ -169,10 +182,8 @@ class Tebakkode_m extends CI_Model {
 
     $sql = "SELECT name FROM restaurant_menu WHERE category_id = '". $categoryID . "' AND restaurant_id = '" . $restoID ."'";
     $query = $this->db->query($sql);
-
     if($query->num_rows() == 0) return false;
     return $query->result_array();
-
   }
 }
 
