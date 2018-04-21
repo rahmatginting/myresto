@@ -33,16 +33,16 @@ class Webhook extends CI_Controller {
   {
  
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+/*      
         //Save Progress debug
         $this->resto = $this->tebakkode_m->getResto('1001');
         $this->categoryID = '101';
         echo $this->resto;
         echo "</br>";
 
-/*      
         // update restaurant and table code
         $this->tebakkode_m->setRestoTable('U4035bbada65f83a2ab7253095cd0e6e7', 'TEST');
-*/      
+
       $menus=$this->tebakkode_m->getMenu($this->resto,$this->categoryID);
       if (is_array($menus) || is_object($menus))
       {      
@@ -77,6 +77,7 @@ echo "</br>";
               echo $question['option_'.$opsi] . "</br>";
       }
       
+*/      
            
       echo "Hello Resto05!";
       header('HTTP/1.1 400 Only POST method allowed');
