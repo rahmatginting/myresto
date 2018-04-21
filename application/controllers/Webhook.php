@@ -180,6 +180,8 @@ private function textMessage($event)
       $this->checkAnswer($userMessage, $event['replyToken']);
     }
   }
+
+
     private function stickerMessage($event)
   {
     // create sticker message
@@ -286,7 +288,7 @@ private function textMessage($event)
         $this->tebakkode_m->setTable($this->user['user_id'], $message);
 
         // update restaurant code
-        $this->resto = $this->tebakkode_m->getResto($message);
+        $this->resto = $this->tebakkode_m->checkResto($message);
         $this->tebakkode_m->setResto($this->user['user_id'], $this->resto);
 
         // send next question
@@ -298,6 +300,9 @@ private function textMessage($event)
         //Update progress debug
         $this->tebakkode_m->saveProgress('Nomor2');
 
+        //get restaurant id
+        $this->resto = $this->tebakkode_m->getResto($this->user['user_id']);
+        
         //Update progress debug
         $this->tebakkode_m->saveProgress($this->resto);
 
