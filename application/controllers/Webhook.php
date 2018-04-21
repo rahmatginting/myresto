@@ -280,7 +280,7 @@ private function textMessage($event)
       }else if ($this->user['number']==2) {
 
         // get Category ID
-        $this->categoryID = $this->tebakkode_m->getCategory($this->resto, $message);
+        $this->categoryID = $this->tebakkode_m->getCategoryID($this->resto, $message);
 
         // update Category code
         $this->tebakkode_m->setCategory($this->user['user_id'], $this->categoryID);
