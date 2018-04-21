@@ -16,6 +16,7 @@ class Webhook extends CI_Controller {
   private $signature;
   private $user;
   private $resto;
+  private $categoryID;
 
   function __construct()
   {
@@ -34,6 +35,7 @@ class Webhook extends CI_Controller {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         //Save Progress debug
         $this->resto = $this->tebakkode_m->getResto('1001');
+        $this->categoryID = '101';
         echo $this->resto;
         echo "</br>";
 
@@ -41,6 +43,17 @@ class Webhook extends CI_Controller {
         // update restaurant and table code
         $this->tebakkode_m->setRestoTable('U4035bbada65f83a2ab7253095cd0e6e7', 'TEST');
 */      
+      $menus=$this->tebakkode_m->getMenu($this->resto,$this->categoryID);
+      
+      foreach($menus as $menu) {
+      
+          if(!empty($menus['name'])) {
+              //$options[] = new MessageTemplateActionBuilder($menus['name'], $menus['name']);
+              echo $menus['name'] . "</br>";
+          }
+      }
+echo "</br>";
+echo "</br>";
       
       $categorys=$this->tebakkode_m->getCategory($this->resto);
       foreach($categorys as $category) {
@@ -51,7 +64,7 @@ class Webhook extends CI_Controller {
       }
 echo "</br>";
 echo "</br>";
-      
+     
       // get question from database
       $question = $this->tebakkode_m->getQuestion(2);
       
@@ -188,14 +201,6 @@ private function textMessage($event)
     // get question from database
     $question = $this->tebakkode_m->getQuestion($questionNum);
  
-    /*
-    // prepare answer options
-    for($opsi = "a"; $opsi <= "d"; $opsi++) {
-        if(!empty($question['option_'.$opsi]))
-            $options[] = new MessageTemplateActionBuilder($question['option_'.$opsi], $question['option_'.$opsi]);
-    }
-    */
-
     if ($questionNum==1) {
       $options[] = new MessageTemplateActionBuilder('NOMOR MEJA', 'NOMOR MEJA');
       
@@ -210,8 +215,18 @@ private function textMessage($event)
               $options[] = new MessageTemplateActionBuilder($category['name'], $category['name']);
           }
       }
-            
-    }else {
+      
+    }else if ($questionNum==3) {
+      $menus=$this->tebakkode_m->getMenu($this->resto,$this->categoryID);
+      
+      foreach($menus as $menu) {
+      
+          if(!empty($menus['name'])) {
+              $options[] = new MessageTemplateActionBuilder($menus['name'], $menus['name']);
+          }
+      }
+
+    } else {
       // prepare answer options
       for($opsi = "a"; $opsi <= "d"; $opsi++) {
           if(!empty($question['option_'.$opsi]))
@@ -264,8 +279,14 @@ private function textMessage($event)
         
       }else if ($this->user['number']==2) {
 
-        //Save Progress debug
-        $this->tebakkode_m->saveProgress($message);
+        // get Category ID
+        $this->categoryID = $this->tebakkode_m->getCategory($this->resto, $message);
+
+        // update Category code
+        $this->tebakkode_m->setCategory($this->user['user_id'], $this->categoryID);
+
+        // send next question
+        $this->sendQuestion($replyToken, $this->user['number'] + 1);
 
       }
 
