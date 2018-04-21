@@ -249,6 +249,7 @@ private function textMessage($event)
           if(!empty($menu['name']))
               //$options[] = new MessageTemplateActionBuilder($menu['name'], $menu['name']);
               //Update progress debug
+			        $test="";            
         }
       }
 
