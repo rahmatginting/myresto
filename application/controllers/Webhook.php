@@ -128,8 +128,6 @@ echo "</br>";
       $multiMessageBuilder->add($textMessageBuilder);
       $multiMessageBuilder->add($stickerMessageBuilder);
  
-       //Save Progress debug
-      $this->tebakkode_m->saveProgress('token01=' . $event['replyToken']);
 
       // send reply message
       $this->bot->replyMessage($event['replyToken'], $multiMessageBuilder);
@@ -151,16 +149,12 @@ private function textMessage($event)
         // update number progress
         $this->tebakkode_m->setUserProgress($this->user['user_id'], 1);
 
-        //Save Progress debug
-        $this->tebakkode_m->saveProgress('token02=' . $event['replyToken']);
-
         // send question no.1
         $this->sendQuestion($event['replyToken'], 1);
+
       } else {
         $message = 'Silakan kirim pesan "MULAI" untuk memulai kuis.';
         $textMessageBuilder = new TextMessageBuilder($message);
-        //Save Progress debug
-        $this->tebakkode_m->saveProgress('token03=' . $event['replyToken']);
 
         $this->bot->replyMessage($event['replyToken'], $textMessageBuilder);
       }
@@ -184,9 +178,6 @@ private function textMessage($event)
     $multiMessageBuilder->add($stickerMessageBuilder);
     $multiMessageBuilder->add($textMessageBuilder);
  
-         //Save Progress debug
-        $this->tebakkode_m->saveProgress('token04=' . $event['replyToken']);
-
     // send message
     $this->bot->replyMessage($event['replyToken'], $multiMessageBuilder);
   }
@@ -209,32 +200,17 @@ private function textMessage($event)
       $options[] = new MessageTemplateActionBuilder('NOMOR MEJA', 'NOMOR MEJA');
       
     }else if ($questionNum==2) {
-      //Save Progress debug
-      $this->tebakkode_m->saveProgress('prog02');
       
-      //Search Menu Category options
-      $test='00';
       $categorys=$this->tebakkode_m->getCategory($this->resto);
 
-      //Save Progress debug
-      $this->tebakkode_m->saveProgress('restoID=' . $this->resto);
-
-      //Save Progress debug
-      $this->tebakkode_m->saveProgress('prog03');
       
       foreach($categorys as $category) {
       
           if(!empty($category['name'])) {
               $options[] = new MessageTemplateActionBuilder($category['name'], $category['name']);
-              $test = '01';
           }
       }
-      
-      if ($test=='01') {
-        //Save Progress debug
-        $this->tebakkode_m->saveProgress('prog04');
-      }
-      
+            
     }else {
       // prepare answer options
       for($opsi = "a"; $opsi <= "d"; $opsi++) {
@@ -243,30 +219,19 @@ private function textMessage($event)
       }
     }
 
-    //Save Progress debug
-    $this->tebakkode_m->saveProgress('prog05');
     
     // prepare button template
     $buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
 
-    //Save Progress debug
-    $this->tebakkode_m->saveProgress('prog06');
     
     // build message
     $messageBuilder = new TemplateMessageBuilder("Gunakan mobile app untuk melihat soal", $buttonTemplate);
  
-    //Save Progress debug
-    $this->tebakkode_m->saveProgress('prog07');
 
-        //Save Progress debug
-        $this->tebakkode_m->saveProgress('token06=' . $replyToken);
     
     // send message
     $response = $this->bot->replyMessage($replyToken, $messageBuilder);
-
-    //Save Progress debug
-    $this->tebakkode_m->saveProgress('prog08');
-    
+  
   }
   
   private function checkAnswer($message, $replyToken)
@@ -291,17 +256,11 @@ private function textMessage($event)
 
         // update restaurant code
         $this->resto = $this->tebakkode_m->getResto($message);
-        $this->tebakkode_m->saveProgress('resto='.$this->resto);
         $this->tebakkode_m->setResto($this->user['user_id'], $this->resto);
 
-        //Save Progress debug
-        $this->tebakkode_m->saveProgress('prog01');
-        
         // send next question
         $this->sendQuestion($replyToken, $this->user['number'] + 1);
        
-        //Save Progress debug
-        $this->tebakkode_m->saveProgress('prog09');
         
       }else if ($this->user['number']==2) {
 
