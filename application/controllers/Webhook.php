@@ -111,14 +111,18 @@ echo "</br>";
         // if user not registered
         if(!$this->user) $this->followCallback($event);
         else {
-          $this->tebakkode_m->saveProgress($event['type']);
           // respond event
           if($event['type'] == 'message'){
             if(method_exists($this, $event['message']['type'].'Message')){
               $this->{$event['message']['type'].'Message'}($event);
             }
-          } else {
+            
+          }else if($event['type'] == 'postback'){
+
             $this->tebakkode_m->saveProgress($event['type']);
+            $this->doPostback($event);
+
+          } else {
             if(method_exists($this, $event['type'].'Callback')){
               $this->{$event['type'].'Callback'}($event);
             }
@@ -162,7 +166,14 @@ echo "</br>";
       $this->tebakkode_m->saveUser($profile);
     }
   }
-  
+
+private function doPostback($event) {
+    $this->tebakkode_m->saveProgress('masuk doPostback');        
+
+    $this->tebakkode_m->saveProgress($event['message']['text']);        
+
+}
+
 private function textMessage($event)
   {
     $userMessage = $event['message']['text'];
