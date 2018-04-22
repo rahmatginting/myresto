@@ -167,12 +167,14 @@ echo "</br>";
     }
   }
 
+/*
 private function doPostback($event) {
     $this->tebakkode_m->saveProgress('masuk doPostback');        
 
     $this->tebakkode_m->saveProgress($event['message']['text']);        
 
 }
+*/
 
 private function textMessage($event)
   {
