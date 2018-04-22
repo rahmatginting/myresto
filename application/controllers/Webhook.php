@@ -172,8 +172,14 @@ echo "</br>";
 private function doPostback($event)
 {
   $this->tebakkode_m->saveProgress('masukFunc');
-  $query = $event->getPostbackData();
+  //$query = $event->getPostbackData();
+  $query = $this->event['postback']['data']
   $this->tebakkode_m->saveProgress($query);
+  
+  parse_str($event->getPostbackData(), $parsePostback);
+  if ($parsePostback["action"] == "carousel") {
+    $this->tebakkode_m->saveProgress('carousel');
+  }
   
   $actions = array (
     New PostbackTemplateActionBuilder("yes", "ans=y"),
