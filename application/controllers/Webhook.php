@@ -165,10 +165,29 @@ echo "</br>";
     }
   }
 
+  //====================================================================================
+  //====================================================================================
+  //====================================================================================
+
 private function doPostback($event)
 {
   $this->tebakkode_m->saveProgress('masukFunc');
-}
+  $this->tebakkode_m->saveProgress($event['text']);
+  $this->tebakkode_m->saveProgress($event->getText());
+
+  $actions = array (
+    New PostbackTemplateActionBuilder("yes", "ans=y"),
+    New PostbackTemplateActionBuilder("no", "ans=N")
+  );
+  $button = new ConfirmTemplateBuilder("Apakan Anda yakin pesan menu", $actions);
+  $outputText = new TemplateMessageBuilder("confim message", $button);
+  $response = $bot->replyMessage($event->getReplyToken(), $outputText);
+
+
+
+  //====================================================================================
+  //====================================================================================
+  //====================================================================================
 private function textMessage($event)
   {
     $userMessage = $event['message']['text'];
@@ -198,6 +217,9 @@ private function textMessage($event)
   }
 
 
+  //====================================================================================
+  //====================================================================================
+  //====================================================================================
     private function stickerMessage($event)
   {
     // create sticker message
