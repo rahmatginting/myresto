@@ -249,9 +249,10 @@ private function textMessage($event)
       {
         foreach($menus as $menu) {
           if(!empty($menu['name'])){
-            //$actions = array(new PostbackTemplateActionBuilder("Add to Cart","action=carousel&button=".$i),
-              //new UriTemplateActionBuilder("View","http://www.google.com"));
-
+            $actions = array(new PostbackTemplateActionBuilder("Pesan","action=carousel&button=".$i),
+              new MessageTemplateActionBuilder("Kembali","kembali"));
+            
+            /*
             $confirm = array (
               New PostbackTemplateActionBuilder("yes", "ans=y"),
               New PostbackTemplateActionBuilder("no", "ans=N")
@@ -259,6 +260,7 @@ private function textMessage($event)
             $btnConfirm = new ConfirmTemplateBuilder("Anda yakin ingin pesan " . $menu['name']."?", $confirm);
             $kembali = new MessageTemplateActionBuilder("Kembali","/kembali");
             $actions = array($btnConfirm,$kembali);
+            */
 
             $column = new CarouselColumnTemplateBuilder($menu['name'], $menu['description'], $menu['picture'], $actions);
             $columns[] = $column;
