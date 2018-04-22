@@ -172,7 +172,6 @@ echo "</br>";
 private function doPostback($event)
 {
   $this->tebakkode_m->saveProgress('masukFunc');
-  $this->tebakkode_m->saveProgress($event['text']);
   $this->tebakkode_m->saveProgress($event->getText());
 
   $actions = array (
