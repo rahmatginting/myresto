@@ -180,7 +180,7 @@ class Tebakkode_m extends CI_Model {
     $query = $this->db->get();
     */
 
-    $sql = "SELECT name, description, picture FROM restaurant_menu WHERE category_id = '". $categoryID . "' AND restaurant_id = '" . $restoID ."'";
+    $sql = "SELECT name, code, description, picture FROM restaurant_menu WHERE category_id = '". $categoryID . "' AND restaurant_id = '" . $restoID ."'";
     $query = $this->db->query($sql);
     if($query->num_rows() == 0) return false;
     return $query->result_array();
