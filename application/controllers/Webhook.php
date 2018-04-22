@@ -172,8 +172,9 @@ echo "</br>";
 private function doPostback($event)
 {
   $this->tebakkode_m->saveProgress('masukFunc');
-  $this->tebakkode_m->saveProgress($event->getText());
-
+  $query = $event->getPostbackData();
+  $this->tebakkode_m->saveProgress($query);
+  
   $actions = array (
     New PostbackTemplateActionBuilder("yes", "ans=y"),
     New PostbackTemplateActionBuilder("no", "ans=N")
