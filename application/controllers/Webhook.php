@@ -270,21 +270,6 @@ private function textMessage($event)
 
     }
  
-
-<?php
-
-$confirm = array (
-  New PostbackTemplateActionBuilder("yes", "ans=y"),
-  New PostbackTemplateActionBuilder("no", "ans=N")
-);
-$btnConfirm = new ConfirmTemplateBuilder("Anda yakin ingin pesan " . $menu['name']."?", $confirm);
-$outputText = new TemplateMessageBuilder("confim message", $btnConfirm);
-$response = $bot->replyMessage($event->getReplyToken(), $outputText);
-
-
-
-
-
     // send message
     $response = $this->bot->replyMessage($replyToken, $messageBuilder);
   
