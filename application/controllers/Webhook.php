@@ -253,7 +253,7 @@ private function textMessage($event)
             //$actions = array("Pesan","Kembali");
             $actions = array(new PostbackTemplateActionBuilder("Add to Cart","action=carousel&button=".$i),
               new UriTemplateActionBuilder("View","http://www.google.com"));
-            $column = new CarouselColumnTemplateBuilder("Title", "description", $img_url , $actions);
+            $column = new CarouselColumnTemplateBuilder($menu['name'], "description", $img_url , $actions);
             $columns[] = $column;
           }
         }
