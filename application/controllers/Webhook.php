@@ -203,11 +203,11 @@ $confirmTemplateBuilder = new ConfirmTemplateBuilder(
    "apakah gw ganteng?",
    [
    new MessageTemplateActionBuilder('Ya',"/ya"),
-   new MessageTemplateActionBuilder('Tidak','/tidak'),
+   new MessageTemplateActionBuilder('Tidak','/tidak')
    ]
    );
 $templateMessage = new TemplateMessageBuilder('nama template', $confirmTemplateBuilder);
-$this->bot->replyMessage($event['replyToken'], $outputText);
+$this->bot->replyMessage($event['replyToken'], $templateMessage);
   
   
 }
