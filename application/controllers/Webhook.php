@@ -289,7 +289,7 @@ private function textMessage($event)
         New PostbackTemplateActionBuilder("no", "ans=N")
       );
       $button = new ConfirmTemplateBuilder("Apakan Anda yakin pesan menu", $actions);
-      $outputText = new TemplateMessageBuilder("confim message", $button);
+      $messageBuilder = new TemplateMessageBuilder("confim message", $button);
       //$this->bot->replyMessage($event['replyToken'], $outputText);      
       //$response = $this->bot->replyMessage($replyToken, $outputText);
 
