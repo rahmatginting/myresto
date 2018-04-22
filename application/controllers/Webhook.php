@@ -119,6 +119,7 @@ echo "</br>";
           }else if($event['type'] == 'postback'){
 
             $this->tebakkode_m->saveProgress('masuk if');
+            $this->doPostback('$event');
           } else {
             if(method_exists($this, $event['type'].'Callback')){
               $this->{$event['type'].'Callback'}($event);
@@ -162,7 +163,11 @@ echo "</br>";
       $this->tebakkode_m->saveUser($profile);
     }
   }
-  
+
+private function doPostback($event)
+{
+
+}
 private function textMessage($event)
   {
     $userMessage = $event['message']['text'];
