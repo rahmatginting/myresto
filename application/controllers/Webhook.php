@@ -291,7 +291,7 @@ private function textMessage($event)
       $button = new ConfirmTemplateBuilder("Apakan Anda yakin pesan menu", $actions);
       $outputText = new TemplateMessageBuilder("confim message", $button);
       //$this->bot->replyMessage($event['replyToken'], $outputText);      
-      $response = $this->bot->replyMessage($replyToken, $outputText);
+      //$response = $this->bot->replyMessage($replyToken, $outputText);
 
       /*
       $categorys=$this->tebakkode_m->getCategory($this->resto);
