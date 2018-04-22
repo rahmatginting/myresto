@@ -171,9 +171,7 @@ echo "</br>";
 
 private function doPostback($event)
 {
-  $this->tebakkode_m->saveProgress('masukFunc');
   $query = $event['postback']['data'];
-  $this->tebakkode_m->saveProgress($query);
   
   parse_str($query, $parsePostback);
   if ($parsePostback["action"] == "carousel") {
@@ -191,26 +189,12 @@ private function doPostback($event)
   
   
   $actions = array (
-    New PostbackTemplateActionBuilder("yes", "ans=y"),
-    New PostbackTemplateActionBuilder("no", "ans=N")
+    New PostbackTemplateActionBuilder("Ya", "ans=y"),
+    New PostbackTemplateActionBuilder("Tidak", "ans=N")
   );
-  $button = new ConfirmTemplateBuilder("apakah gw ganteng?", $actions);
+  $button = new ConfirmTemplateBuilder("Apakah Anda yakin pesan " . $menu ." ?", $actions);
   $outputText = new TemplateMessageBuilder("confim message", $button);
   $this->bot->replyMessage($event['replyToken'], $outputText);
-
-
-/*  
-$confirmTemplateBuilder = new ConfirmTemplateBuilder(
-   "apakah gw ganteng?",
-   [
-   new MessageTemplateActionBuilder('Ya',"/ya"),
-   new MessageTemplateActionBuilder('Tidak','/tidak'),
-   ]
-   );
-$templateMessage = new TemplateMessageBuilder('nama template', $confirmTemplateBuilder);
-$this->bot->replyMessage($event['replyToken'], $templateMessage);
-  */
-  
   
 }
 
@@ -286,16 +270,6 @@ private function textMessage($event)
       $messageBuilder = new TemplateMessageBuilder("Gunakan mobile app untuk melihat soal", $buttonTemplate);
 
     }else if ($questionNum==2) {
-      $actions = array (
-        New PostbackTemplateActionBuilder("yes", "ans=y"),
-        New PostbackTemplateActionBuilder("no", "ans=N")
-      );
-      $button = new ConfirmTemplateBuilder("Apakan Anda yakin pesan menu", $actions);
-      $messageBuilder = new TemplateMessageBuilder("confim message", $button);
-      //$this->bot->replyMessage($event['replyToken'], $outputText);      
-      //$response = $this->bot->replyMessage($replyToken, $outputText);
-
-      /*
       $categorys=$this->tebakkode_m->getCategory($this->resto);
       foreach($categorys as $category) {
       
@@ -309,7 +283,7 @@ private function textMessage($event)
      
       // build message
       $messageBuilder = new TemplateMessageBuilder("Gunakan mobile app untuk melihat soal", $buttonTemplate);
-      */
+      
 
     }else if ($questionNum==3) {
       
