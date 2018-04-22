@@ -13,7 +13,7 @@ use \LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
 use \LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
 use \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
-use \LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
+
 
 
 class Webhook extends CI_Controller {
@@ -116,12 +116,6 @@ echo "</br>";
             if(method_exists($this, $event['message']['type'].'Message')){
               $this->{$event['message']['type'].'Message'}($event);
             }
-            
-          //}else if($event['type'] == 'postback'){
-
-            //$this->tebakkode_m->saveProgress('masuk if');
-            //$this->doPostback($event);
-
           } else {
             if(method_exists($this, $event['type'].'Callback')){
               $this->{$event['type'].'Callback'}($event);
@@ -142,7 +136,6 @@ echo "</br>";
     $res = $this->bot->getProfile($event['source']['userId']);
     if ($res->isSucceeded())
     {
-
       $profile = $res->getJSONDecodedBody();
  
       // create welcome message
@@ -166,16 +159,7 @@ echo "</br>";
       $this->tebakkode_m->saveUser($profile);
     }
   }
-
-/*
-private function doPostback($event) {
-    $this->tebakkode_m->saveProgress('masuk doPostback');        
-
-    $this->tebakkode_m->saveProgress($event['message']['text']);        
-
-}
-*/
-
+  
 private function textMessage($event)
   {
     $userMessage = $event['message']['text'];
@@ -265,28 +249,17 @@ private function textMessage($event)
       {
         foreach($menus as $menu) {
           if(!empty($menu['name'])){
-            $actions = array(new PostbackTemplateActionBuilder("Add to Card","action=carousel&button=01"),
+            //$options[] = new MessageTemplateActionBuilder($menu['name'], $menu['name']);
+            //$actions = array("Pesan","Kembali");
+            $actions = array(new PostbackTemplateActionBuilder("Add to Cart","action=carousel&button=".$i),
               new UriTemplateActionBuilder("View","http://www.google.com"));
-            
-            //$actions = array(new MessageTemplateActionBuilder("Pesan","action=carousel&button=".$i),
-              //new MessageTemplateActionBuilder("Kembali","kembali"));
-            /*
-            $confirm = array (
-              New PostbackTemplateActionBuilder("yes", "ans=y"),
-              New PostbackTemplateActionBuilder("no", "ans=N")
-            );
-            $btnConfirm = new ConfirmTemplateBuilder("Anda yakin ingin pesan " . $menu['name']."?", $confirm);
-            $kembali = new MessageTemplateActionBuilder("Kembali","/kembali");
-            $actions = array($btnConfirm,$kembali);
-            */
-
-            $column = new CarouselColumnTemplateBuilder($menu['name'], $menu['description'], $menu['picture'], $actions);
+            $column = new CarouselColumnTemplateBuilder("Title", "description", $img_url , $actions);
             $columns[] = $column;
           }
         }
       }
       $carousel = new CarouselTemplateBuilder($columns);
-      $messageBuilder = new TemplateMessageBuilder("Pemesanan Menu", $carousel);
+      $messageBuilder = new TemplateMessageBuilder("Carousel Demo", $carousel);
 
     }
  
