@@ -176,9 +176,12 @@ private function doPostback($event)
   $query = $event['postback']['data'];
   $this->tebakkode_m->saveProgress($query);
   
-  parse_str($event->getPostbackData(), $parsePostback);
+  parse_str($query, $parsePostback);
   if ($parsePostback["action"] == "carousel") {
     $this->tebakkode_m->saveProgress('carousel');
+  }
+  if ($parsePostback["button"] == "01") {
+    $this->tebakkode_m->saveProgress('button');
   }
   
   $actions = array (
@@ -288,7 +291,7 @@ private function textMessage($event)
           if(!empty($menu['name'])){
             //$options[] = new MessageTemplateActionBuilder($menu['name'], $menu['name']);
             //$actions = array("Pesan","Kembali");
-            $actions = array(new PostbackTemplateActionBuilder("Add to Cart","action=carousel&button=".$i),
+            $actions = array(new PostbackTemplateActionBuilder("Add to Cart","action=carousel&button=01"),
               new UriTemplateActionBuilder("View","http://www.google.com"));
             $column = new CarouselColumnTemplateBuilder("Title", "description", $img_url , $actions);
             $columns[] = $column;
