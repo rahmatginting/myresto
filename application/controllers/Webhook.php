@@ -13,7 +13,7 @@ use \LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
 use \LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
 use \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
-
+use \LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 
 
 class Webhook extends CI_Controller {
