@@ -116,6 +116,9 @@ echo "</br>";
             if(method_exists($this, $event['message']['type'].'Message')){
               $this->{$event['message']['type'].'Message'}($event);
             }
+          }else if($event['type'] == 'postback'){
+
+            $this->tebakkode_m->saveProgress('masuk if');
           } else {
             if(method_exists($this, $event['type'].'Callback')){
               $this->{$event['type'].'Callback'}($event);
