@@ -189,6 +189,7 @@ private function doPostback($event)
     $this->tebakkode_m->saveProgress('no');
   }
   
+  /*
   $actions = array (
     New PostbackTemplateActionBuilder("yes", "ans=y"),
     New PostbackTemplateActionBuilder("no", "ans=N")
@@ -196,6 +197,18 @@ private function doPostback($event)
   $button = new ConfirmTemplateBuilder("Apakan Anda yakin pesan menu", $actions);
   $outputText = new TemplateMessageBuilder("confim message", $button);
   $this->bot->replyMessage($event['replyToken'], $outputText);
+  */
+  
+$confirmTemplateBuilder = new ConfirmTemplateBuilder(
+   "apakah gw ganteng?",
+   [
+   new MessageTemplateActionBuilder('Ya',"/ya"),
+   new MessageTemplateActionBuilder('Tidak','/tidak'),
+   ]
+   );
+$templateMessage = new TemplateMessageBuilder('nama template', $confirmTemplateBuilder);
+$this->bot->replyMessage($event['replyToken'], $outputText);
+  
   
 }
 
