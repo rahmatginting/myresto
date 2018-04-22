@@ -117,9 +117,9 @@ echo "</br>";
               $this->{$event['message']['type'].'Message'}($event);
             }
             
-          }else if($event['type'] == 'postback'){
+          //}else if($event['type'] == 'postback'){
 
-            $this->tebakkode_m->saveProgress('masuk if');
+            //$this->tebakkode_m->saveProgress('masuk if');
             //$this->doPostback($event);
 
           } else {
