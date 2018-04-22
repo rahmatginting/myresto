@@ -252,17 +252,14 @@ private function textMessage($event)
             //$actions = array(new PostbackTemplateActionBuilder("Add to Cart","action=carousel&button=".$i),
               //new UriTemplateActionBuilder("View","http://www.google.com"));
 
-            $confirm = new confirmTemplateBuilder
-                      (
-                        "Anda yakin ingin pesan " . $menu['name']."?",
-                        [
-                          new MessageTemplateActionBuilder('Ya',"/ya"),
-                          new MessageTemplateActionBuilder('Tidak',"/tidak"),
-                        ]
-                      );
+            $confirm = array (
+              New PostbackTemplateActionBuilder("yes", "ans=y"),
+              New PostbackTemplateActionBuilder("no", "ans=N")
+            );
+            $btnConfirm = new ConfirmTemplateBuilder("Anda yakin ingin pesan " . $menu['name']."?", $confirm);
             $kembali = new MessageTemplateActionBuilder("Kembali","/kembali");
-            $actions = array($confirm,$kembali);
-            
+            $actions = array($btnConfirm,$kembali);
+
             $column = new CarouselColumnTemplateBuilder($menu['name'], $menu['description'], $menu['picture'], $actions);
             $columns[] = $column;
           }
@@ -273,6 +270,21 @@ private function textMessage($event)
 
     }
  
+
+<?php
+
+$confirm = array (
+  New PostbackTemplateActionBuilder("yes", "ans=y"),
+  New PostbackTemplateActionBuilder("no", "ans=N")
+);
+$btnConfirm = new ConfirmTemplateBuilder("Anda yakin ingin pesan " . $menu['name']."?", $confirm);
+$outputText = new TemplateMessageBuilder("confim message", $btnConfirm);
+$response = $bot->replyMessage($event->getReplyToken(), $outputText);
+
+
+
+
+
     // send message
     $response = $this->bot->replyMessage($replyToken, $messageBuilder);
   
