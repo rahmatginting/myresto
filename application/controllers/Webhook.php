@@ -182,7 +182,7 @@ private function doPostback($event)
   $button = new ConfirmTemplateBuilder("Apakan Anda yakin pesan menu", $actions);
   $outputText = new TemplateMessageBuilder("confim message", $button);
   $response = $bot->replyMessage($event->getReplyToken(), $outputText);
-
+}
 
 
   //====================================================================================
