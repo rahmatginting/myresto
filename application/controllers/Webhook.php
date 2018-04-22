@@ -172,7 +172,6 @@ echo "</br>";
 private function doPostback($event)
 {
   $this->tebakkode_m->saveProgress('masukFunc');
-  //$query = $event->getPostbackData();
   $query = $event['postback']['data'];
   $this->tebakkode_m->saveProgress($query);
   
@@ -183,6 +182,12 @@ private function doPostback($event)
   if ($parsePostback["button"] == "01") {
     $this->tebakkode_m->saveProgress('button');
   }
+  if ($parsePostback["ans"] == "y") {
+    $this->tebakkode_m->saveProgress('yes');
+  }
+  if ($parsePostback["ans"] == "N") {
+    $this->tebakkode_m->saveProgress('no');
+  }
   
   $actions = array (
     New PostbackTemplateActionBuilder("yes", "ans=y"),
@@ -190,7 +195,8 @@ private function doPostback($event)
   );
   $button = new ConfirmTemplateBuilder("Apakan Anda yakin pesan menu", $actions);
   $outputText = new TemplateMessageBuilder("confim message", $button);
-  $response = $bot->replyMessage($event->getReplyToken(), $outputText);
+  $this->bot->replyMessage($event['replyToken'], $outputText);
+  
 }
 
 
