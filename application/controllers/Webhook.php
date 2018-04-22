@@ -111,12 +111,14 @@ echo "</br>";
         // if user not registered
         if(!$this->user) $this->followCallback($event);
         else {
+          $this->tebakkode_m->saveProgress($event['type']);
           // respond event
           if($event['type'] == 'message'){
             if(method_exists($this, $event['message']['type'].'Message')){
               $this->{$event['message']['type'].'Message'}($event);
             }
           } else {
+            $this->tebakkode_m->saveProgress($event['type']);
             if(method_exists($this, $event['type'].'Callback')){
               $this->{$event['type'].'Callback'}($event);
             }
@@ -136,6 +138,7 @@ echo "</br>";
     $res = $this->bot->getProfile($event['source']['userId']);
     if ($res->isSucceeded())
     {
+
       $profile = $res->getJSONDecodedBody();
  
       // create welcome message
@@ -249,9 +252,11 @@ private function textMessage($event)
       {
         foreach($menus as $menu) {
           if(!empty($menu['name'])){
-            $actions = array(new PostbackTemplateActionBuilder("Pesan","action=carousel&button=".$i),
-              new MessageTemplateActionBuilder("Kembali","kembali"));
+            $actions = array(new PostbackTemplateActionBuilder("Add to Card","action=carousel&button=01"),
+              new UriTemplateActionBuilder("View","http://www.google.com"));
             
+            //$actions = array(new MessageTemplateActionBuilder("Pesan","action=carousel&button=".$i),
+              //new MessageTemplateActionBuilder("Kembali","kembali"));
             /*
             $confirm = array (
               New PostbackTemplateActionBuilder("yes", "ans=y"),
