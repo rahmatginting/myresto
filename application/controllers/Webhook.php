@@ -13,7 +13,7 @@ use \LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
 use \LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
 use \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
-
+use \LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 
 
 class Webhook extends CI_Controller {
@@ -249,26 +249,28 @@ private function textMessage($event)
       {
         foreach($menus as $menu) {
           if(!empty($menu['name'])){
-            $actions = array("Pesan","Kembali");
             //$actions = array(new PostbackTemplateActionBuilder("Add to Cart","action=carousel&button=".$i),
               //new UriTemplateActionBuilder("View","http://www.google.com"));
+
+            $confirm = new confirmTemplateBuilder
+                      (
+                        "Anda yakin ingin pesan " . $menu['name']."?",
+                        [
+                          new MessageTemplateActionBuilder('Ya',"/ya"),
+                          new MessageTemplateActionBuilder('Tidak',"/tidak"),
+                        ]
+                      );
+            $kembali = new MessageTemplateActionBuilder("Kembali","/kembali");
+            $actions = array($confirm,$kembali);
+            
             $column = new CarouselColumnTemplateBuilder($menu['name'], $menu['description'], $menu['picture'], $actions);
             $columns[] = $column;
           }
         }
       }
       $carousel = new CarouselTemplateBuilder($columns);
-      $messageBuilder = new TemplateMessageBuilder("Carousel Demo", $carousel);
+      $messageBuilder = new TemplateMessageBuilder("Pemesanan Menu", $carousel);
 
-      /*
-      for($i=0;$i<5;$i++) {
-        $actions = array(new PostbackTemplateActionBuilder("Add to Cart","action=carousel&button=".$i),
-          new UriTemplateActionBuilder("View","http://www.google.com"));
-
-        $column = new CarouselColumnTemplateBuilder("Title", "description", $img_url , $actions);
-        $columns[] = $column;
-      }
-      */
     }
  
     // send message
