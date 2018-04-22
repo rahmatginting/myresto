@@ -119,7 +119,7 @@ echo "</br>";
           }else if($event['type'] == 'postback'){
 
             $this->tebakkode_m->saveProgress('masuk if');
-            //$this->doPostback('$event');
+            doPostback('$event');
           } else {
             if(method_exists($this, $event['type'].'Callback')){
               $this->{$event['type'].'Callback'}($event);
@@ -166,7 +166,7 @@ echo "</br>";
 
 private function doPostback($event)
 {
-
+  $this->tebakkode_m->saveProgress('masukFunc');
 }
 private function textMessage($event)
   {
