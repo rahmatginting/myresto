@@ -376,8 +376,10 @@ private function textMessage($event)
           if ($orderID == 0)
           {
             //save menu order header
-            $orderID = $this->tebakkode_m->saveOrderHed($this->user['user_id'], $user_name, $resto, $table);
-            $this->tebakkode_m->saveProgress($orderID);
+            $this->tebakkode_m->saveOrderHed($this->user['user_id'], $user_name, $resto, $table);
+            
+            //get last order id 
+            $orderID = $this->tebakkode_m->searchOrderID($this->user['user_id'], $resto, $table);
 
             //update order ID
             $this->tebakkode_m->setOrder($this->user['user_id'], $orderID);
