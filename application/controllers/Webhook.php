@@ -248,6 +248,8 @@ private function textMessage($event)
       $messageBuilder = new TemplateMessageBuilder("Gunakan mobile app untuk melihat soal", $buttonTemplate);
 
     }else if ($questionNum==2) {
+      $this->tebakkode_m->saveProgress('Masuk02');
+
       $categorys=$this->tebakkode_m->getCategory($this->resto);
       foreach($categorys as $category) {
       
@@ -262,7 +264,7 @@ private function textMessage($event)
       // build message
       $messageBuilder = new TemplateMessageBuilder("Gunakan mobile app untuk melihat soal", $buttonTemplate);
       
-
+      $this->tebakkode_m->saveProgress('Keluar02');
     }else if ($questionNum==3) {
     
       $columns = array();
