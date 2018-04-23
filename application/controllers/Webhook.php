@@ -256,7 +256,7 @@ private function textMessage($event)
       
           if(!empty($category['name'])) {
               $options[] = new MessageTemplateActionBuilder($category['name'], $category['name']);
-              $this->tebakkode_m->saveProgress($category['name']);            
+              $this->tebakkode_m->saveProgress($category['name']);
           }
       }
       $this->tebakkode_m->saveProgress('Masuk04');
@@ -264,9 +264,12 @@ private function textMessage($event)
       $this->tebakkode_m->saveProgress('number=' . $question['number']);
       $this->tebakkode_m->saveProgress('text=' . $question['text']);
       $this->tebakkode_m->saveProgress('image=' . $question['image']);
-      
+
       // prepare button template
-      $buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
+      //$buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
+
+      $imageURL="https://res.cloudinary.com/db9zavtws/image/upload/v1486219057/8_t9qjop.png";
+      $buttonTemplate = new ButtonTemplateBuilder("Kategori menu", "Pilih kategori menu yang ingin Anda pesan", $imageURL, $options);
       $this->tebakkode_m->saveProgress('Masuk05');
      
       // build message
