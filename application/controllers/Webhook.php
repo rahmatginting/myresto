@@ -171,7 +171,6 @@ echo "</br>";
 private function doPostback($event)
 {
   $query = $event['postback']['data'];
-  $this->tebakkode_m->saveProgress($query);
   
   $this->checkAnswer($query, $event['replyToken']);
   
@@ -265,7 +264,6 @@ private function textMessage($event)
       
 
     }else if ($questionNum==3) {
-      $this->tebakkode_m->saveProgress('SendQuest3');
     
       $columns = array();
       $img_url = "https://res.cloudinary.com/db9zavtws/image/upload/v1486222467/4_n5ai4k.png";
@@ -287,17 +285,14 @@ private function textMessage($event)
       $messageBuilder = new TemplateMessageBuilder("Carousel Demo", $carousel);
 
     }else if ($questionNum==4) {
-      $this->tebakkode_m->saveProgress('SendQuest4');
       //get menu code
       $menu_code = $this->tebakkode_m->getMenuProg($this->user['user_id']);
 
       //get menu code
       $resto = $this->tebakkode_m->getResto($this->user['user_id']);
-      $this->tebakkode_m->saveProgress("menu=".$menu_code."&resto=".$resto);
 
       //get menu name
       $menu_name = $this->tebakkode_m->getMenuName($resto, $menu_code);
-      $this->tebakkode_m->saveProgress("menuName=".$menu_name);
 
       $actions = array (
         New PostbackTemplateActionBuilder("Ya", "ans=Y"),
@@ -306,7 +301,6 @@ private function textMessage($event)
       $button = new ConfirmTemplateBuilder("Apakah Anda yakin pesan " . $menu_name ." ?", $actions);
       $messageBuilder = new TemplateMessageBuilder("confim message", $button);
       
-      $this->tebakkode_m->saveProgress('End_SendQuest4');
     }
 
     // send message
@@ -345,7 +339,6 @@ private function textMessage($event)
         $this->sendQuestion($replyToken, $this->user['number'] + 1);
         
       }else if ($this->user['number']==2) {
-        $this->tebakkode_m->saveProgress('checkAnswer2');
 
         //get restaurant id
         $this->resto = $this->tebakkode_m->getResto($this->user['user_id']);
@@ -360,7 +353,6 @@ private function textMessage($event)
         $this->sendQuestion($replyToken, $this->user['number'] + 1);
 
       }else if ($this->user['number']==3) {
-        $this->tebakkode_m->saveProgress('checkAnswer3');
     
         parse_str($message, $parseMessage);
 
@@ -386,7 +378,7 @@ private function textMessage($event)
             //save menu order header
             $orderID = $this->tebakkode_m->saveOrderHed($this->user['user_id'], $user_name, $resto, $table);
             $this->tebakkode_m->saveProgress($orderID);
-            
+
             //update order ID
             $this->tebakkode_m->setOrder($this->user['user_id'], $orderID);
 
