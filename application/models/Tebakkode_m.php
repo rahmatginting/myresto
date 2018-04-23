@@ -278,8 +278,22 @@ class Tebakkode_m extends CI_Model {
     //return $this->db->insert_id();
     $last_id = $this->db->insert_id();
     return $last_id; 
+
   }
 
+  function searchOrderID($user_id, $resto, $table)
+  {
+
+    $sql = "SELECT id FROM menu_order WHERE user_id = '". $user_id . "' AND resto_id = '" . $resto ."' AND table_id = '" . $table ."' LIMIT 1";
+    $query = $this->db->query($sql);
+
+     if ($query->num_rows() > 0) {
+         return $query->row()->id;
+     }
+     return false;    
+  }
+
+  
   function saveOrderDet($order_id, $menu_id, $porsi)
   {
     //kode disini
