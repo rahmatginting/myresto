@@ -220,7 +220,7 @@ class Tebakkode_m extends CI_Model {
     $this->db->select('name')
              ->from('restaurant_menu')
              ->where('code',$menu)
-             ->where('resto',$resto);
+             ->where('restaurant_id',$resto);
     $query = $this->db->get();
 
      if ($query->num_rows() > 0) {
