@@ -25,6 +25,19 @@ class Tebakkode_m extends CI_Model {
     return false;
   }
  
+   function getUserName($user_id)
+  {
+    $this->db->select('display_name')
+             ->from('users')
+             ->where('user_id',$user_id);
+    $query = $this->db->get();
+
+     if ($query->num_rows() > 0) {
+         return $query->row()->display_name;
+     }
+     return false;
+  }
+
   function saveUser($profile)
   {
     $this->db->set('user_id', $profile['userId'])
@@ -196,18 +209,72 @@ class Tebakkode_m extends CI_Model {
 
   function getMenu($restoID,$categoryID)
   {
-    /*
-    $this->db->select('name')
-             ->from('restaurant_menu')
-             ->where('category_id',$categoryID)
-             ->where('restaurant_id',$restoID);
-    $query = $this->db->get();
-    */
-
     $sql = "SELECT name, code, description, picture FROM restaurant_menu WHERE category_id = '". $categoryID . "' AND restaurant_id = '" . $restoID ."'";
     $query = $this->db->query($sql);
     if($query->num_rows() == 0) return false;
     return $query->result_array();
   }
+
+  function getMenuName($resto, $menu)
+  {
+    $this->db->select('name')
+             ->from('restaurant_menu')
+             ->where('code',$menu)
+             ->where('resto',$resto);
+    $query = $this->db->get();
+
+     if ($query->num_rows() > 0) {
+         return $query->row()->name;
+     }
+     return false;
+
+  }
+
+  function getOrder($user_id)
+  {
+    $this->db->select('order')
+             ->from('users')
+             ->where('user_id',$user_id);
+    $query = $this->db->get();
+
+     if ($query->num_rows() > 0) {
+         return $query->row()->order;
+     }
+     return false;
+  }
+
+ function setOrder($user_id, $oderID)
+  {
+    $this->db->set('order', $oderID)
+      ->where('user_id', $user_id)
+      ->update('users');
+ 
+    return $this->db->affected_rows();
+  }  
+
+  function saveOrderHed($user_id, $user_name, $resto_id, $table_id)
+  {
+    //kode disini
+    $this->db->set('user_id', $user_id)
+    ->set('user_name', $user_name)
+    ->set('resto_id', $resto_id)
+    ->set('table_id', $table_id)
+    ->insert('menu_order');
+
+    return $this->db->insert_id();
+
+  }
+
+  function saveOrderDet($order_id, $menu_id, $porsi)
+  {
+    //kode disini
+    $this->db->set('id', $order_id)
+    ->set('menu', $menu_id)
+    ->set('quantity', $porsi)
+    ->insert('menu_order_det');
+
+    return $this->db->insert_id();
+  }
+
 }
 
