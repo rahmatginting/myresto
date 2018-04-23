@@ -305,8 +305,8 @@ private function textMessage($event)
       );
       $button = new ConfirmTemplateBuilder("Apakah Anda yakin pesan " . $menu_name ." ?", $actions);
       $messageBuilder = new TemplateMessageBuilder("confim message", $button);
-
-      $this->tebakkode_m->saveProgress('End_SendQuest4');      
+      
+      $this->tebakkode_m->saveProgress('End_SendQuest4');
     }
 
     // send message
@@ -379,8 +379,8 @@ private function textMessage($event)
 
           $orderID = $this->tebakkode_m->getOrder($this->user['user_id']);
           $user_name = $this->tebakkode_m->getUserName($this->user['user_id']);
-          $resto = $this->tebakkode_m->getOrder($this->user['user_id']);
-          $table = $this->tebakkode_m->getOrder($this->user['user_id']);
+          $resto = $this->tebakkode_m->getResto($this->user['user_id']);
+          $table = $this->tebakkode_m->getTable($this->user['user_id']);
           if ($orderID == 0)
           {
             //save menu order header
@@ -390,7 +390,7 @@ private function textMessage($event)
             $this->tebakkode_m->setOrder($this->user['user_id'], $orderID);
 
           }
-                
+          
           //save menu order detail
           $this->tebakkode_m->saveOrderDet($orderID, $menu_code, 1);
 
