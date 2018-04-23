@@ -170,6 +170,16 @@ class Tebakkode_m extends CI_Model {
     //return $restoNum;
   }
 
+ function setMenu($user_id, $menu_code)
+  {
+    $this->db->set('menu', $menu_code)
+      ->where('user_id', $user_id)
+      ->update('users');
+ 
+    return $this->db->affected_rows();
+    //return $restoNum;
+  }
+
   function getMenu($restoID,$categoryID)
   {
     /*
