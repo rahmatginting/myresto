@@ -136,6 +136,20 @@ class Tebakkode_m extends CI_Model {
      return false;
 
   }
+
+  function getTable($user_id)
+  {
+    $this->db->select('table')
+             ->from('users')
+             ->where('user_id',$user_id);
+    $query = $this->db->get();
+
+     if ($query->num_rows() > 0) {
+         return $query->row()->table;
+     }
+     return false;
+
+  }
   // Menu category
   function getCategory($restoID)
   {
