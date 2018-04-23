@@ -250,7 +250,8 @@ private function textMessage($event)
     }else if ($questionNum==2) {
       $this->tebakkode_m->saveProgress('Masuk02');
 
-      $categorys=$this->tebakkode_m->getCategory($this->resto);
+      $resto=$this->tebakkode_m->getResto($this->user['user_id'])
+      $categorys=$this->tebakkode_m->getCategory($resto);
       $this->tebakkode_m->saveProgress('Masuk03');
       foreach($categorys as $category) {
       
