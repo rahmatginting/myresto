@@ -251,15 +251,18 @@ private function textMessage($event)
       $this->tebakkode_m->saveProgress('Masuk02');
 
       $categorys=$this->tebakkode_m->getCategory($this->resto);
+      $this->tebakkode_m->saveProgress('Masuk03');
       foreach($categorys as $category) {
       
           if(!empty($category['name'])) {
               $options[] = new MessageTemplateActionBuilder($category['name'], $category['name']);
           }
       }
+      $this->tebakkode_m->saveProgress('Masuk04');
 
       // prepare button template
       $buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
+      $this->tebakkode_m->saveProgress('Masuk05');
      
       // build message
       $messageBuilder = new TemplateMessageBuilder("Gunakan mobile app untuk melihat soal", $buttonTemplate);
