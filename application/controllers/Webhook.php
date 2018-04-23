@@ -389,6 +389,8 @@ private function textMessage($event)
             $this->tebakkode_m->setOrder($this->user['user_id'], $orderID);
 
           }
+          $this->tebakkode_m->saveProgress('order='.$orderID);
+          $this->tebakkode_m->saveProgress('menu='.$menu_code);
           
           //save menu order detail
           $this->tebakkode_m->saveOrderDet($orderID, $menu_code, 1);
