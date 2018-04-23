@@ -118,7 +118,6 @@ echo "</br>";
             }
           }else if($event['type'] == 'postback'){
 
-            $this->tebakkode_m->saveProgress('masuk if');
             $this->doPostback($event);
 
           } else {
@@ -172,6 +171,7 @@ echo "</br>";
 private function doPostback($event)
 {
   $query = $event['postback']['data'];
+  $this->tebakkode_m->saveProgress($query);
   
 
   if ($this->user['number']==3) {
@@ -190,6 +190,7 @@ private function doPostback($event)
     $this->tebakkode_m->setUserProgress($this->user['user_id'], $this->user['number'] + 1);
 
     //update progress menu code
+    $this->tebakkode_m->saveProgress($parsePostback["code"]);
     $this->tebakkode_m->setMenuProg($this->user['user_id'], $parsePostback["code"]);
 
   }else if ($this->user['number']==4) {
