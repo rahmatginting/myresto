@@ -297,6 +297,7 @@ private function textMessage($event)
 
       //get menu name
       $menu_name = $this->tebakkode_m->getMenuName($resto, $menu_code);
+      $this->tebakkode_m->saveProgress("menuName=".$menu_name);
 
       $actions = array (
         New PostbackTemplateActionBuilder("Ya", "ans=Y"),
