@@ -170,7 +170,7 @@ class Tebakkode_m extends CI_Model {
     //return $restoNum;
   }
 
- function setMenu($user_id, $menu_code)
+ function setMenuProg($user_id, $menu_code)
   {
     $this->db->set('menu', $menu_code)
       ->where('user_id', $user_id)
@@ -178,6 +178,20 @@ class Tebakkode_m extends CI_Model {
  
     return $this->db->affected_rows();
     //return $restoNum;
+  }
+
+  function getMenuProg($user_id)
+  {
+    $this->db->select('menu')
+             ->from('users')
+             ->where('user_id',$user_id);
+    $query = $this->db->get();
+
+     if ($query->num_rows() > 0) {
+         return $query->row()->menu;
+     }
+     return false;
+
   }
 
   function getMenu($restoID,$categoryID)
