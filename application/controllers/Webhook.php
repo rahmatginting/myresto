@@ -398,10 +398,12 @@ private function textMessage($event)
           // send next question
           $this->sendQuestion($replyToken, 2);
           
-        }else if (parseMessage["ans"] == "N") {
+        }else if ($parseMessage["ans"] == "N") {
+          $this->tebakkode_m->saveProgress('msukN01');
           //Masukkan kode disini
           // update number progress
           $this->tebakkode_m->setUserProgress($this->user['user_id'], 2);
+          $this->tebakkode_m->saveProgress('msukN02');
 
           // send next question
           $this->sendQuestion($replyToken, 2);
