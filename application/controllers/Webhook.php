@@ -173,28 +173,43 @@ private function doPostback($event)
 {
   $query = $event['postback']['data'];
   
-  parse_str($query, $parsePostback);
-  if ($parsePostback["action"] == "carousel") {
-    $this->tebakkode_m->saveProgress('carousel');
-  }
-  if ($parsePostback["button"] == "01") {
-    $this->tebakkode_m->saveProgress('button');
-  }
-  if ($parsePostback["ans"] == "y") {
-    $this->tebakkode_m->saveProgress('yes');
-  }
-  if ($parsePostback["ans"] == "N") {
-    $this->tebakkode_m->saveProgress('no');
+
+  if ($this->user['number']==3) {
+    
+    parse_str($query, $parsePostback);
+
+    $actions = array (
+      New PostbackTemplateActionBuilder("Ya", "ans=Y"),
+      New PostbackTemplateActionBuilder("Tidak", "ans=N")
+    );
+    $button = new ConfirmTemplateBuilder("Apakah Anda yakin pesan " . $parsePostback["menu"] ." ?", $actions);
+    $outputText = new TemplateMessageBuilder("confim message", $button);
+    $this->bot->replyMessage($event['replyToken'], $outputText);
+
+    // update number progress
+    $this->tebakkode_m->setUserProgress($this->user['user_id'], $this->user['number'] + 1);
+
+    //update progress menu code
+    $this->tebakkode_m->setMenuProg($this->user['user_id'], $parsePostback["code"]);
+
+  }else if ($this->user['number']==4) {
+
+    $menu_code = $this->tebakkode_m->getMenuProg($this->user['user_id']);
+
+    parse_str($query, $parsePostback);
+    if ($parsePostback["ans"] == "Y") {
+      $this->tebakkode_m->saveProgress($menu_code);
+
+      //save menu order
+      //sendQuestion
+      
+    }else if ($parsePostback["ans"] == "N") {
+      //Masukkan kode disini
+
+    }
+
   }
   
-  
-  $actions = array (
-    New PostbackTemplateActionBuilder("Ya", "ans=y"),
-    New PostbackTemplateActionBuilder("Tidak", "ans=N")
-  );
-  $button = new ConfirmTemplateBuilder("Apakah Anda yakin pesan " . $menu ." ?", $actions);
-  $outputText = new TemplateMessageBuilder("confim message", $button);
-  $this->bot->replyMessage($event['replyToken'], $outputText);
   
 }
 
@@ -296,9 +311,9 @@ private function textMessage($event)
           if(!empty($menu['name'])){
             //$options[] = new MessageTemplateActionBuilder($menu['name'], $menu['name']);
             //$actions = array("Pesan","Kembali");
-            $actions = array(new PostbackTemplateActionBuilder("Add to Cart","action=carousel&button=01"),
+            $actions = array(new PostbackTemplateActionBuilder("Pesan","code=".$menu['code']."&menu=".$menu['name']),
               new UriTemplateActionBuilder("View","http://www.google.com"));
-            $column = new CarouselColumnTemplateBuilder("Title", "description", $img_url , $actions);
+            $column = new CarouselColumnTemplateBuilder($menu['name'], $menu['description'], $img_url , $actions);
             $columns[] = $column;
           }
         }
