@@ -275,8 +275,9 @@ class Tebakkode_m extends CI_Model {
     ->set('table_id', $table_id)
     ->insert('menu_order');
 
-    return $this->db->insert_id();
-
+    //return $this->db->insert_id();
+    $last_id = $this->db->insert_id();
+    return $last_id; 
   }
 
   function saveOrderDet($order_id, $menu_id, $porsi)
