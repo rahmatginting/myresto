@@ -256,6 +256,7 @@ private function textMessage($event)
       
           if(!empty($category['name'])) {
               $options[] = new MessageTemplateActionBuilder($category['name'], $category['name']);
+              $this->tebakkode_m->saveProgress($category['name']);            
           }
       }
       $this->tebakkode_m->saveProgress('Masuk04');
