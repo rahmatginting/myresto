@@ -257,6 +257,7 @@ private function textMessage($event)
               $options[] = new MessageTemplateActionBuilder($category['name'], $category['name']);
           }
       }
+      $options[] = new MessageTemplateActionBuilder("SELESAI","SELESAI");
 
       // prepare button template
       //$buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
@@ -342,18 +343,35 @@ private function textMessage($event)
         $this->sendQuestion($replyToken, $this->user['number'] + 1);
         
       }else if ($this->user['number']==2) {
+        if ($message!="SELESAI") {
+          //get restaurant id
+          $this->resto = $this->tebakkode_m->getResto($this->user['user_id']);
+                 
+          // get Category ID
+          $this->categoryID = $this->tebakkode_m->getCategoryID($this->resto, $message);
 
-        //get restaurant id
-        $this->resto = $this->tebakkode_m->getResto($this->user['user_id']);
-               
-        // get Category ID
-        $this->categoryID = $this->tebakkode_m->getCategoryID($this->resto, $message);
+          // update Category code
+          $this->tebakkode_m->setCategory($this->user['user_id'], $this->categoryID);
 
-        // update Category code
-        $this->tebakkode_m->setCategory($this->user['user_id'], $this->categoryID);
+          // send next question
+          $this->sendQuestion($replyToken, $this->user['number'] + 1);
 
-        // send next question
-        $this->sendQuestion($replyToken, $this->user['number'] + 1);
+        } else {
+          //get order ID
+          $order = $this->tebakkode_m->getOrder($this->user['user_id']);
+
+          if ($order!=0) {
+
+            //publish complete order 
+            $this->tebakkode_m->setOrderComplete($order);
+          }
+
+
+          //set user progress finish = 0
+          $this->tebakkode_m->setUserProgress($this->user['user_id'],0);
+
+        }
+
 
       }else if ($this->user['number']==3) {
     
@@ -399,11 +417,8 @@ private function textMessage($event)
           $this->sendQuestion($replyToken, 2);
           
         }else if ($parseMessage["ans"] == "N") {
-          $this->tebakkode_m->saveProgress('msukN01');
-          //Masukkan kode disini
           // update number progress
           $this->tebakkode_m->setUserProgress($this->user['user_id'], 2);
-          $this->tebakkode_m->saveProgress('msukN02');
 
           // send next question
           $this->sendQuestion($replyToken, 2);
