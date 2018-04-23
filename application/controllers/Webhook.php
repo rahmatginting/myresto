@@ -248,31 +248,24 @@ private function textMessage($event)
       $messageBuilder = new TemplateMessageBuilder("Gunakan mobile app untuk melihat soal", $buttonTemplate);
 
     }else if ($questionNum==2) {
-      $this->tebakkode_m->saveProgress('Masuk02');
 
       $resto=$this->tebakkode_m->getResto($this->user['user_id']);
       $categorys=$this->tebakkode_m->getCategory($resto);
-      $this->tebakkode_m->saveProgress('Masuk03');
       foreach($categorys as $category) {
       
           if(!empty($category['name'])) {
               $options[] = new MessageTemplateActionBuilder($category['name'], $category['name']);
-              $this->tebakkode_m->saveProgress($category['name']);
           }
       }
-      $this->tebakkode_m->saveProgress('Masuk04');
 
       // prepare button template
       //$buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
-
-      $imageURL="https://res.cloudinary.com/db9zavtws/image/upload/v1486219057/8_t9qjop.png";
+      $imageURL="https://myrestobot.herokuapp.com/img/categories.jpg";
       $buttonTemplate = new ButtonTemplateBuilder("Kategori menu", "Pilih kategori menu yang ingin Anda pesan", $imageURL, $options);
-      $this->tebakkode_m->saveProgress('Masuk05');
      
       // build message
       $messageBuilder = new TemplateMessageBuilder("Gunakan mobile app untuk melihat soal", $buttonTemplate);
       
-      $this->tebakkode_m->saveProgress('Keluar02');
     }else if ($questionNum==3) {
     
       $columns = array();
