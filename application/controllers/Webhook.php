@@ -265,7 +265,8 @@ private function textMessage($event)
       
 
     }else if ($questionNum==3) {
-      
+      $this->tebakkode_m->saveProgress('SendQuest3');
+    
       $columns = array();
       $img_url = "https://res.cloudinary.com/db9zavtws/image/upload/v1486222467/4_n5ai4k.png";
       $menus=$this->tebakkode_m->getMenu($this->resto,$this->categoryID);
@@ -340,6 +341,7 @@ private function textMessage($event)
         $this->sendQuestion($replyToken, $this->user['number'] + 1);
         
       }else if ($this->user['number']==2) {
+        $this->tebakkode_m->saveProgress('checkAnswer2');
 
         //get restaurant id
         $this->resto = $this->tebakkode_m->getResto($this->user['user_id']);
@@ -354,6 +356,7 @@ private function textMessage($event)
         $this->sendQuestion($replyToken, $this->user['number'] + 1);
 
       }else if ($this->user['number']==3) {
+        $this->tebakkode_m->saveProgress('checkAnswer3');
     
         parse_str($message, $parseMessage);
 
