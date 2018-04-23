@@ -293,6 +293,7 @@ private function textMessage($event)
 
       //get menu code
       $resto = $this->tebakkode_m->getResto($this->user['user_id']);
+      $this->tebakkode_m->saveProgress("menu=".$menu_code."&resto=".$resto);
 
       //get menu name
       $menu_name = $this->tebakkode_m->getMenuName($resto, $menu_code);
