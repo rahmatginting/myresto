@@ -257,7 +257,7 @@ private function textMessage($event)
               $options[] = new MessageTemplateActionBuilder($category['name'], $category['name']);
           }
       }
-      array_push($options[], new MessageTemplateActionBuilder("SELESAI","SELESAI");
+      array_push($options, new MessageTemplateActionBuilder("SELESAI","SELESAI");
 
       // prepare button template
       //$buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
