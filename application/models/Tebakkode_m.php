@@ -305,5 +305,14 @@ class Tebakkode_m extends CI_Model {
     return $this->db->insert_id();
   }
 
+  function setOrderComplete($oderID)
+  {
+    $this->db->set('status', '1')
+      ->where('id', $oderID)
+      ->update('menu_order');
+ 
+    return $this->db->affected_rows();
+  }
+
 }
 
