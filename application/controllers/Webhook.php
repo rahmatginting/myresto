@@ -261,10 +261,6 @@ private function textMessage($event)
       }
       $this->tebakkode_m->saveProgress('Masuk04');
 
-      $this->tebakkode_m->saveProgress('number=' . $question['number']);
-      $this->tebakkode_m->saveProgress('text=' . $question['text']);
-      $this->tebakkode_m->saveProgress('image=' . $question['image']);
-      
       // prepare button template
       $buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
       $this->tebakkode_m->saveProgress('Masuk05');
