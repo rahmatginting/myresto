@@ -398,7 +398,7 @@ private function textMessage($event)
           // send next question
           $this->sendQuestion($replyToken, 2);
           
-        }else if ($parsePostback["ans"] == "N") {
+        }else if (parseMessage["ans"] == "N") {
           //Masukkan kode disini
           // update number progress
           $this->tebakkode_m->setUserProgress($this->user['user_id'], 2);
