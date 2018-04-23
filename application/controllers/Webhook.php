@@ -385,7 +385,8 @@ private function textMessage($event)
           {
             //save menu order header
             $orderID = $this->tebakkode_m->saveOrderHed($this->user['user_id'], $user_name, $resto, $table);
-
+            $this->tebakkode_m->saveProgress($orderID);
+            
             //update order ID
             $this->tebakkode_m->setOrder($this->user['user_id'], $orderID);
 
