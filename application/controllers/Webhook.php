@@ -287,11 +287,12 @@ private function textMessage($event)
       $messageBuilder = new TemplateMessageBuilder("Carousel Demo", $carousel);
 
     }else if ($questionNum==4) {
+      $this->tebakkode_m->saveProgress('SendQuest4');
       //get menu code
-      $menu_code = $this->tebakkode_m->getMenuProg($user_id);
+      $menu_code = $this->tebakkode_m->getMenuProg($this->user['user_id']);
 
       //get menu code
-      $resto = $this->tebakkode_m->getResto($user_id);
+      $resto = $this->tebakkode_m->getResto($this->user['user_id']);
 
       //get menu name
       $menu_name = $this->tebakkode_m->getMenuName($resto, $menu_code);
