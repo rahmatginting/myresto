@@ -164,60 +164,23 @@ echo "</br>";
     }
   }
 
-  //====================================================================================
-  //====================================================================================
-  //====================================================================================
+//====================================================================================
+//====================================================================================
+//====================================================================================
 
 private function doPostback($event)
 {
   $query = $event['postback']['data'];
   $this->tebakkode_m->saveProgress($query);
   
-
-  if ($this->user['number']==3) {
-    
-    parse_str($query, $parsePostback);
-
-    $actions = array (
-      New PostbackTemplateActionBuilder("Ya", "ans=Y"),
-      New PostbackTemplateActionBuilder("Tidak", "ans=N")
-    );
-    $button = new ConfirmTemplateBuilder("Apakah Anda yakin pesan " . $parsePostback["menu"] ." ?", $actions);
-    $outputText = new TemplateMessageBuilder("confim message", $button);
-    $this->bot->replyMessage($event['replyToken'], $outputText);
-
-    // update number progress
-    $this->tebakkode_m->setUserProgress($this->user['user_id'], $this->user['number'] + 1);
-
-    //update progress menu code
-    $this->tebakkode_m->saveProgress($parsePostback["code"]);
-    $this->tebakkode_m->setMenuProg($this->user['user_id'], $parsePostback["code"]);
-
-  }else if ($this->user['number']==4) {
-
-    $menu_code = $this->tebakkode_m->getMenuProg($this->user['user_id']);
-
-    parse_str($query, $parsePostback);
-    if ($parsePostback["ans"] == "Y") {
-      $this->tebakkode_m->saveProgress($menu_code);
-
-      //save menu order
-      //sendQuestion
-      
-    }else if ($parsePostback["ans"] == "N") {
-      //Masukkan kode disini
-
-    }
-
-  }
-  
+  $this->checkAnswer($query, $event['replyToken']);
   
 }
 
 
-  //====================================================================================
-  //====================================================================================
-  //====================================================================================
+//====================================================================================
+//====================================================================================
+//====================================================================================
 private function textMessage($event)
   {
     $userMessage = $event['message']['text'];
@@ -322,8 +285,25 @@ private function textMessage($event)
       $carousel = new CarouselTemplateBuilder($columns);
       $messageBuilder = new TemplateMessageBuilder("Carousel Demo", $carousel);
 
+    }else if ($questionNum==4) {
+      //get menu code
+      $menu_code = $this->tebakkode_m->getMenuProg($user_id);
+
+      //get menu code
+      $resto = $this->tebakkode_m->getResto($user_id);
+
+      //get menu name
+      $menu_name = $this->tebakkode_m->getMenuName($resto, $menu_code);
+
+      $actions = array (
+        New PostbackTemplateActionBuilder("Ya", "ans=Y"),
+        New PostbackTemplateActionBuilder("Tidak", "ans=N")
+      );
+      $button = new ConfirmTemplateBuilder("Apakah Anda yakin pesan " . $menu_name ." ?", $actions);
+      $messageBuilder = new TemplateMessageBuilder("confim message", $button);
+      
     }
- 
+
     // send message
     $response = $this->bot->replyMessage($replyToken, $messageBuilder);
   
@@ -355,13 +335,11 @@ private function textMessage($event)
         // update restaurant code
         $this->resto = $this->tebakkode_m->checkResto($message);
         $this->tebakkode_m->setResto($this->user['user_id'], $this->resto);
-
+       
         // send next question
         $this->sendQuestion($replyToken, $this->user['number'] + 1);
-       
         
       }else if ($this->user['number']==2) {
-
 
         //get restaurant id
         $this->resto = $this->tebakkode_m->getResto($this->user['user_id']);
@@ -375,8 +353,53 @@ private function textMessage($event)
         // send next question
         $this->sendQuestion($replyToken, $this->user['number'] + 1);
 
-      }
+      }else if ($this->user['number']==3) {
+    
+        parse_str($message, $parseMessage);
 
+        //update progress menu code
+        $this->tebakkode_m->setMenuProg($this->user['user_id'], $parseMessage["code"]);
+
+        // send next question
+        $this->sendQuestion($replyToken, $this->user['number'] + 1);
+
+      }else if ($this->user['number']==4) {
+
+        $menu_code = $this->tebakkode_m->getMenuProg($this->user['user_id']);
+
+        parse_str($message, $parseMessage);
+        if ($parseMessage["ans"] == "Y") {
+
+          $orderID = $this->tebakkode_m->getOrder($this->user['user_id']);
+          $user_name = $this->tebakkode_m->getUserName($this->user['user_id']);
+          $resto = $this->tebakkode_m->getOrder($this->user['user_id']);
+          $table = $this->tebakkode_m->getOrder($this->user['user_id']);
+          if ($orderID == 0)
+          {
+            //save menu order header
+            $orderID = $this->tebakkode_m->saveOrderHed($this->user['user_id'], $user_name, $resto, $table);
+
+            //update order ID
+            $this->tebakkode_m->setOrder($this->user['user_id'], $orderID);
+
+          }
+                
+          //save menu order detail
+          $this->tebakkode_m->saveOrderDet($orderID, $menu_code, 1);
+
+          // update number progress
+          $this->tebakkode_m->setUserProgress($this->user['user_id'], $this->user['number'] - 1);
+
+          // send next question
+          $this->sendQuestion($replyToken, $this->user['number'] -1);
+          
+        }else if ($parsePostback["ans"] == "N") {
+          //Masukkan kode disini
+
+        }
+
+      }
+            
     } else {
       // create user score message
       $message = 'Skormu '. $this->user['score'];
