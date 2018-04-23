@@ -380,7 +380,8 @@ private function textMessage($event)
             
             //get last order id 
             $orderID = $this->tebakkode_m->searchOrderID($this->user['user_id'], $resto, $table);
-
+            $this->tebakkode_m->saveProgress('ordID='.$orderID);
+            
             //update order ID
             $this->tebakkode_m->setOrder($this->user['user_id'], $orderID);
 
