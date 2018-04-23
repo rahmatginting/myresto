@@ -383,14 +383,11 @@ private function textMessage($event)
             
             //get last order id 
             $orderID = $this->tebakkode_m->searchOrderID($this->user['user_id'], $resto, $table);
-            $this->tebakkode_m->saveProgress('ordID='.$orderID);
 
             //update order ID
             $this->tebakkode_m->setOrder($this->user['user_id'], $orderID);
 
           }
-          $this->tebakkode_m->saveProgress('order='.$orderID);
-          $this->tebakkode_m->saveProgress('menu='.$menu_code);
           
           //save menu order detail
           $this->tebakkode_m->saveOrderDet($orderID, $menu_code, 1);
@@ -403,6 +400,11 @@ private function textMessage($event)
           
         }else if ($parsePostback["ans"] == "N") {
           //Masukkan kode disini
+          // update number progress
+          $this->tebakkode_m->setUserProgress($this->user['user_id'], 2);
+
+          // send next question
+          $this->sendQuestion($replyToken, 2);
 
         }
 
