@@ -269,10 +269,12 @@ private function textMessage($event)
       //$buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
       $imageURL="https://myrestobot.herokuapp.com/img/categories.jpg";
       $buttonTemplate = new ButtonTemplateBuilder("Kategori menu", "Pilih kategori menu yang ingin Anda pesan", $imageURL, $options);
-     
+      $this->tebakkode_m->saveProgress('masuk06');
+      
       // build message
       $messageBuilder = new TemplateMessageBuilder("Gunakan mobile app untuk melihat soal", $buttonTemplate);
       
+      $this->tebakkode_m->saveProgress('masuk07');
     }else if ($questionNum==3) {
     
       $columns = array();
