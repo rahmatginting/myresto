@@ -267,7 +267,7 @@ private function textMessage($event)
       $restoDesc=$this->tebakkode_m->getRestoDesc($resto);
       $this->tebakkode_m->saveProgress('jml='.count($restoDesc));
       
-      if (is_array($restoDesc) || is_object($restoDesc))
+      if (is_array($restoDesc) || is_object($restoDesc)) {
         $this->tebakkode_m->saveProgress('masukArray');
         if(!empty($restoDesc['name'])) {
           $this->tebakkode_m->saveProgress('masuk02');
