@@ -264,6 +264,7 @@ private function textMessage($event)
       //$buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
       $this->tebakkode_m->saveProgress('masuk01');
       $restoDesc=$this->tebakkode_m->getRestoDesc($resto);
+      $this->tebakkode_m->saveProgress('resto='.$resto);      
       $this->tebakkode_m->saveProgress('masuk02');
       $this->tebakkode_m->saveProgress($restoDesc['name']);
       $this->tebakkode_m->saveProgress('masuk03');
