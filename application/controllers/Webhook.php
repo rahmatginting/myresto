@@ -265,7 +265,7 @@ private function textMessage($event)
           }
           if ($i==$amount) {
            $this->tebakkode_m->saveProgress('tambah'); 
-            $options[] = new MessageTemplateActionBuilder('SELESAI','SELESAI'));
+            $options[] = new MessageTemplateActionBuilder('SELESAI','SELESAI');
           }
       }
       $this->tebakkode_m->saveProgress('masuk05');
