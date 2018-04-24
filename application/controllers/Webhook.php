@@ -240,7 +240,6 @@ private function textMessage($event)
  
     if ($questionNum==1) {
       $options[] = new MessageTemplateActionBuilder('NOMOR MEJA', 'NOMOR MEJA');
-      $options[] = new MessageTemplateActionBuilder('NOMOR MEJA01', 'NOMOR MEJA01');
 
       // prepare button template
       $buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
@@ -252,22 +251,12 @@ private function textMessage($event)
 
       $resto=$this->tebakkode_m->getResto($this->user['user_id']);
       $categorys=$this->tebakkode_m->getCategory($resto);
-      $this->tebakkode_m->saveProgress('masuk01');
-      $category['name']="SELESAI";
-      //array_push($categorys['name'], 'SELESAI');
-      $this->tebakkode_m->saveProgress('masuk02');
-      $options=array();
-      $this->tebakkode_m->saveProgress('masuk03');
       foreach($categorys as $category) {
           if(!empty($category['name'])) {
               $options[] = new MessageTemplateActionBuilder($category['name'], $category['name']);
                     $this->tebakkode_m->saveProgress($category['name']);
           }
       }
-      $this->tebakkode_m->saveProgress('masuk05');
-      //array_push($options, new MessageTemplateActionBuilder('SELESAI','SELESAI'));
-      //$options[] = new MessageTemplateActionBuilder('NOMOR MEJA', 'NOMOR MEJA');
-      $this->tebakkode_m->saveProgress('masuk06');
 
       // prepare button template
       //$buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
