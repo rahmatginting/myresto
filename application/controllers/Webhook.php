@@ -416,6 +416,7 @@ private function textMessage($event)
           //set user progress finish = 0
           $this->tebakkode_m->setUserProgress($this->user['user_id'],0);
 
+          $this->tebakkode_m->saveProgress('Panggil5');
           // send next question
           $this->sendQuestion($replyToken, 5);
 
