@@ -312,12 +312,14 @@ private function textMessage($event)
 
     }else if ($questionNum==5) {
       //Progress Complete
-
+      $this->tebakkode_m->saveProgress('masuk5');
       $ImageCarouselTemplateBuilder = new ImageCarouselTemplateBuilder([
         new ImageCarouselColumnTemplateBuilder("https://myrestobot.herokuapp.com/img/thanks01.jpg",
-        new PostbackTemplateActionBuilder("MULAI", "MULAI")),
+        new PostbackTemplateActionBuilder("MULAI", "MULAI"))
         ]);
+      $this->tebakkode_m->saveProgress('masuk6');
       $messageBuilder = new TemplateMessageBuilder('Terimakasih',$ImageCarouselTemplateBuilder);
+      $this->tebakkode_m->saveProgress('masuk7');
       
     }
 
@@ -416,7 +418,8 @@ private function textMessage($event)
           //set user progress finish = 0
           $this->tebakkode_m->setUserProgress($this->user['user_id'],0);
 
-          $this->tebakkode_m->saveProgress('Panggil5');
+        $this->tebakkode_m->saveProgress('Panggil5');
+
           // send next question
           $this->sendQuestion($replyToken, 5);
 
