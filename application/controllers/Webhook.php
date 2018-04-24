@@ -385,6 +385,9 @@ private function textMessage($event)
         parse_str($message, $parseMessage);
 
         if ($parseMessage="KEMBALI") {
+          $this->tebakkode_m->saveProgress('satu=' . $parseMessage);
+          $this->tebakkode_m->saveProgress('dua=' . $message);
+          
           // update number progress
           $this->tebakkode_m->setUserProgress($this->user['user_id'], 2);
 
