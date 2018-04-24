@@ -314,19 +314,16 @@ private function textMessage($event)
     }else if ($questionNum==5) {
       //Progress Complete
       $this->tebakkode_m->saveProgress('masuk5');
+      $img_url="https://myrestobot.herokuapp.com/img/thanks01.jpg";
+      $options[] = new MessageTemplateActionBuilder('MULAI LAGI', 'MULAI');
+      $options[] = new MessageTemplateActionBuilder('PANGGIL PRAMUSAJI', 'WAITER');
+      
+      // prepare button template
+      $buttonTemplate = new ButtonTemplateBuilder("Terimakasih", $question['text'], $img_url, $options);
+     
+      // build message
+      $messageBuilder = new TemplateMessageBuilder("Terimakasih", $buttonTemplate);
 
-      $imgMessageBuilder = new ImageMessageBuilder("https://myrestobot.herokuapp.com/img/thanks01.jpg");
-
-/*
-      $ImageCarouselTemplateBuilder = new ImageCarouselTemplateBuilder([
-        new ImageCarouselColumnTemplateBuilder("https://myrestobot.herokuapp.com/img/thanks01.jpg",
-        new PostbackTemplateActionBuilder("MULAI", "MULAI")),
-        new ImageCarouselColumnTemplateBuilder("https://myrestobot.herokuapp.com/img/thanks01.jpg",
-        new PostbackTemplateActionBuilder("MULAI", "MULAI")),
-        ]);
-      $this->tebakkode_m->saveProgress('masuk6');
-*/
-      $messageBuilder = new TemplateMessageBuilder('Terimakasih',$imgMessageBuilder);
       $this->tebakkode_m->saveProgress('masuk7');
       
     }
