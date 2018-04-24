@@ -254,27 +254,34 @@ private function textMessage($event)
       $this->tebakkode_m->saveProgress('masuk01');
       $options=array();
       $this->tebakkode_m->saveProgress('masuk02');
+      $amount=count($categorys);
+      $i=0;
+      $this->tebakkode_m->saveProgress('masuk03');
       foreach($categorys as $category) {
-      
+          $i++;
           if(!empty($category['name'])) {
               $options[] = new MessageTemplateActionBuilder($category['name'], $category['name']);
-                    $this->tebakkode_m->saveProgress('masuk03');
+                    $this->tebakkode_m->saveProgress('masuk04');
+          }
+          if ($i==$amount) {
+           $this->tebakkode_m->saveProgress('tambah'); 
+            $options[] = new MessageTemplateActionBuilder('SELESAI','SELESAI'));
           }
       }
-      $this->tebakkode_m->saveProgress('masuk04');
-      array_push($options, new MessageTemplateActionBuilder('SELESAI','SELESAI'));
       $this->tebakkode_m->saveProgress('masuk05');
+      //array_push($options, new MessageTemplateActionBuilder('SELESAI','SELESAI'));
+      $this->tebakkode_m->saveProgress('masuk06');
 
       // prepare button template
       //$buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
       $imageURL="https://myrestobot.herokuapp.com/img/categories.jpg";
       $buttonTemplate = new ButtonTemplateBuilder("Kategori menu", "Pilih kategori menu yang ingin Anda pesan", $imageURL, $options);
-      $this->tebakkode_m->saveProgress('masuk06');
+      $this->tebakkode_m->saveProgress('masuk07');
       
       // build message
       $messageBuilder = new TemplateMessageBuilder("Gunakan mobile app untuk melihat soal", $buttonTemplate);
       
-      $this->tebakkode_m->saveProgress('masuk07');
+      $this->tebakkode_m->saveProgress('masuk08');
     }else if ($questionNum==3) {
     
       $columns = array();
