@@ -262,7 +262,7 @@ private function textMessage($event)
           }
       }
       $this->tebakkode_m->saveProgress('masuk04');
-      //array_push($options, new MessageTemplateActionBuilder("SELESAI","SELESAI"));
+      array_push($options, new MessageTemplateActionBuilder('SELESAI','SELESAI'));
       $this->tebakkode_m->saveProgress('masuk05');
 
       // prepare button template
