@@ -279,8 +279,14 @@ private function textMessage($event)
           if(!empty($menu['name'])){
             //$options[] = new MessageTemplateActionBuilder($menu['name'], $menu['name']);
             //$actions = array("Pesan","Kembali");
-            $actions = array(new PostbackTemplateActionBuilder("Pesan","code=".$menu['code']."&menu=".$menu['name']),
-              new UriTemplateActionBuilder("View","http://www.google.com"));
+            //$actions = array(new PostbackTemplateActionBuilder("Pesan","code=".$menu['code']."&menu=".$menu['name']),
+              //new UriTemplateActionBuilder("View","http://www.google.com"));
+            $actions = array(
+              new PostbackTemplateActionBuilder("PESAN","code=".$menu['code']."&menu=".$menu['name']),
+              new PostbackTemplateActionBuilder("KEMBALI","KEMBALI"),
+              new PostbackTemplateActionBuilder("SELESAI","SELESAI")
+            );
+            
             $column = new CarouselColumnTemplateBuilder($menu['name'], $menu['description'], $img_url , $actions);
             $columns[] = $column;
           }
