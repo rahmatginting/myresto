@@ -267,18 +267,21 @@ private function textMessage($event)
       $restoDesc=$this->tebakkode_m->getRestoDesc($resto);
       $this->tebakkode_m->saveProgress('jml='.count($restoDesc));
       
-      if(!empty($restoDesc['name'])) {
-        $this->tebakkode_m->saveProgress('masuk02');
-        $this->tebakkode_m->saveProgress($restoDesc['name']);
-        $this->tebakkode_m->saveProgress('masuk03');
-      }
-      if(!empty($restoDesc['description'])) {
-       $this->tebakkode_m->saveProgress('masuk04');
-       $this->tebakkode_m->saveProgress($restoDesc['description']);
-      }
-      if(!empty($restoDesc['address'])) {
-        $this->tebakkode_m->saveProgress('masuk05');
-        $this->tebakkode_m->saveProgress($restoDesc['address']);
+      if (is_array($restoDesc) || is_object($restoDesc))
+        $this->tebakkode_m->saveProgress('masukArray');
+        if(!empty($restoDesc['name'])) {
+          $this->tebakkode_m->saveProgress('masuk02');
+          $this->tebakkode_m->saveProgress($restoDesc['name']);
+          $this->tebakkode_m->saveProgress('masuk03');
+        }
+        if(!empty($restoDesc['description'])) {
+         $this->tebakkode_m->saveProgress('masuk04');
+         $this->tebakkode_m->saveProgress($restoDesc['description']);
+        }
+        if(!empty($restoDesc['address'])) {
+          $this->tebakkode_m->saveProgress('masuk05');
+          $this->tebakkode_m->saveProgress($restoDesc['address']);
+        }
       }
       
       $imageURL="https://myrestobot.herokuapp.com/img/categories.jpg";
