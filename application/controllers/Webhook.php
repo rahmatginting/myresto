@@ -286,8 +286,9 @@ private function textMessage($event)
       
       $imageURL="https://myrestobot.herokuapp.com/img/categories.jpg";
       $alamat = $restoDesc['description'] . " " . $restoDesc['address'];
-      $buttonTemplate = new ButtonTemplateBuilder($restoDesc['name'], $alamat, $imageURL, $options);
-
+      //$buttonTemplate = new ButtonTemplateBuilder($restoDesc['name'], $alamat, $imageURL, $options);
+      $buttonTemplate = new ButtonTemplateBuilder("Kategori menu", "Pilih kategori menu yang ingin Anda pesan", $imageURL, $
+                                                  
       // build message
       $messageBuilder = new TemplateMessageBuilder("Kategori Menu", $buttonTemplate);
       
