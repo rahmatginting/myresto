@@ -255,6 +255,7 @@ private function textMessage($event)
       $options=array();
       $this->tebakkode_m->saveProgress('masuk02');
       $amount=count($categorys);
+      $this->tebakkode_m->saveProgress('amt=' . $amount);
       $i=0;
       $this->tebakkode_m->saveProgress('masuk03');
       foreach($categorys as $category) {
