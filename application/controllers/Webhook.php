@@ -261,6 +261,7 @@ private function textMessage($event)
       foreach($categorys as $category) {
           if(!empty($category['name'])) {
               $options[] = new MessageTemplateActionBuilder($category['name'], $category['name']);
+              $options[] = new MessageTemplateActionBuilder('SELESAI', 'SELESAI');
                     $this->tebakkode_m->saveProgress($category['name']);
           }
       }
