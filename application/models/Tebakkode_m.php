@@ -137,6 +137,15 @@ class Tebakkode_m extends CI_Model {
 
   }
 
+
+  function getRestoDesc($resto)
+  {
+    $sql = "SELECT name, description, address, image FROM restaurants WHERE id = '". $resto . "'";
+    $query = $this->db->query($sql);
+    if($query->num_rows() == 0) return false;
+    return $query->result_array();
+  }
+  
   function getTable($user_id)
   {
     $this->db->select('table')
