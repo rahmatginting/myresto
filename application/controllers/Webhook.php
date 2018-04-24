@@ -252,21 +252,14 @@ private function textMessage($event)
       $resto=$this->tebakkode_m->getResto($this->user['user_id']);
       $categorys=$this->tebakkode_m->getCategory($resto);
       $this->tebakkode_m->saveProgress('masuk01');
-      $options=array();
+      $categorys[]="SELESAI";
       $this->tebakkode_m->saveProgress('masuk02');
-      $amount=count($categorys);
-      $this->tebakkode_m->saveProgress('amt=' . $amount);
-      $i=0;
+      $options=array();
       $this->tebakkode_m->saveProgress('masuk03');
       foreach($categorys as $category) {
-          $i++;
           if(!empty($category['name'])) {
               $options[] = new MessageTemplateActionBuilder($category['name'], $category['name']);
                     $this->tebakkode_m->saveProgress('masuk04');
-          }
-          if ($i==$amount) {
-           $this->tebakkode_m->saveProgress('tambah'); 
-            $options[] = new MessageTemplateActionBuilder('SELESAI','SELESAI');
           }
       }
       $this->tebakkode_m->saveProgress('masuk05');
