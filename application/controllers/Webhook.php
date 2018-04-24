@@ -146,7 +146,8 @@ echo "</br>";
  
       // create welcome message
       $message  = "Salam kenal, " . $profile['displayName'] . "!\n";
-      $message .= "Silakan kirim pesan \"MULAI\" untuk memulai kuis.";
+      $message .= "Layanan chatbot ini ditujukan untuk pemesanan dan reservasi" . "!\n";
+      $message .= "Silakan ketik \"MULAI\" untuk melakukan pemesanan.";
       $textMessageBuilder = new TextMessageBuilder($message);
  
       // create sticker message
@@ -198,7 +199,7 @@ private function textMessage($event)
         $this->sendQuestion($event['replyToken'], 1);
 
       } else {
-        $message = 'Silakan kirim pesan "MULAI" untuk memulai kuis.';
+        $message = 'Silakan ketik pesan "MULAI" untuk melakukan pemesanankuis.';
         $textMessageBuilder = new TextMessageBuilder($message);
 
         $this->bot->replyMessage($event['replyToken'], $textMessageBuilder);
@@ -247,7 +248,7 @@ private function textMessage($event)
       $buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
      
       // build message
-      $messageBuilder = new TemplateMessageBuilder("Gunakan mobile app untuk melihat soal", $buttonTemplate);
+      $messageBuilder = new TemplateMessageBuilder("Nomor Meja", $buttonTemplate);
 
     }else if ($questionNum==2) {
 
@@ -261,11 +262,12 @@ private function textMessage($event)
 
       // prepare button template
       //$buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
+      $restoDesc=$this->tebakkode_m->getRestoDesc($resto);
       $imageURL="https://myrestobot.herokuapp.com/img/categories.jpg";
-      $buttonTemplate = new ButtonTemplateBuilder("Kategori menu", "Pilih kategori menu yang ingin Anda pesan", $imageURL, $options);
+      $buttonTemplate = new ButtonTemplateBuilder($restoDesc['name'], $restoDesc['description'] . " " $restoDesc['address'], $imageURL, $options);
       
       // build message
-      $messageBuilder = new TemplateMessageBuilder("Gunakan mobile app untuk melihat soal", $buttonTemplate);
+      $messageBuilder = new TemplateMessageBuilder("Kategori Menu", $buttonTemplate);
       
     }else if ($questionNum==3) {
     
@@ -322,7 +324,7 @@ private function textMessage($event)
       //$options[] = new MessageTemplateActionBuilder('PANGGIL PRAMUSAJI', 'WAITER');
       
       // prepare button template
-      $buttonTemplate = new ButtonTemplateBuilder("Pemesanan berakhir", "Silahkan menunggu pesananan Anda", $img_url, $options);
+      $buttonTemplate = new ButtonTemplateBuilder("Pemesanan berakhir", "Silahkan menunggu pesanan Anda", $img_url, $options);
      
       // build message
       $messageBuilder = new TemplateMessageBuilder("Terimakasih", $buttonTemplate);
