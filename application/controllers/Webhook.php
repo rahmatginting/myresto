@@ -251,13 +251,14 @@ private function textMessage($event)
 
       $resto=$this->tebakkode_m->getResto($this->user['user_id']);
       $categorys=$this->tebakkode_m->getCategory($resto);
+      $options=array();
       foreach($categorys as $category) {
       
           if(!empty($category['name'])) {
               $options[] = new MessageTemplateActionBuilder($category['name'], $category['name']);
           }
       }
-      array_push($options[], new MessageTemplateActionBuilder("SELESAI","SELESAI"));
+      array_push($options, new MessageTemplateActionBuilder("SELESAI","SELESAI"));
 
       // prepare button template
       //$buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
