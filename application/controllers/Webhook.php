@@ -381,14 +381,45 @@ private function textMessage($event)
 
 
       }else if ($this->user['number']==3) {
-    
+        
         parse_str($message, $parseMessage);
 
-        //update progress menu code
-        $this->tebakkode_m->setMenuProg($this->user['user_id'], $parseMessage["code"]);
+        if ($parseMessage="KEMBALI") {
+          // update number progress
+          $this->tebakkode_m->setUserProgress($this->user['user_id'], 2);
 
-        // send next question
-        $this->sendQuestion($replyToken, $this->user['number'] + 1);
+          // send next question
+          $this->sendQuestion($replyToken, 2);
+
+        }else if ($parseMessage="SELESAI") {
+          //Proses complete order
+
+          //Set cmplete order
+          //get order ID
+          $order = $this->tebakkode_m->getOrder($this->user['user_id']);
+
+          if ($order!=0) {
+            //publish complete order 
+            $this->tebakkode_m->setOrderComplete($order);
+          }
+
+          //set user progress finish = 0
+          $this->tebakkode_m->setUserProgress($this->user['user_id'],0);
+
+          // send next question
+          $this->sendQuestion($replyToken, 6);
+
+
+        }else {
+          //Proses order makanan
+
+          //update progress menu code
+          $this->tebakkode_m->setMenuProg($this->user['user_id'], $parseMessage["code"]);
+
+          // send next question
+          $this->sendQuestion($replyToken, $this->user['number'] + 1);
+
+        }
 
       }else if ($this->user['number']==4) {
 
@@ -406,7 +437,7 @@ private function textMessage($event)
             //save menu order header
             $this->tebakkode_m->saveOrderHed($this->user['user_id'], $user_name, $resto, $table);
             
-            //get last order id 
+            //get last order id
             $orderID = $this->tebakkode_m->searchOrderID($this->user['user_id'], $resto, $table);
 
             //update order ID
