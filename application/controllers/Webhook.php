@@ -313,19 +313,20 @@ private function textMessage($event)
 
     }else if ($questionNum==5) {
       //Progress Complete
-      $this->tebakkode_m->saveProgress('masuk5');
+
+      //set user progress finish = 0
+      $this->tebakkode_m->setUserProgress($this->user['user_id'],0);
+
       $img_url="https://myrestobot.herokuapp.com/img/thanks01.jpg";
       $options[] = new MessageTemplateActionBuilder('MULAI LAGI', 'MULAI');
-      $options[] = new MessageTemplateActionBuilder('PANGGIL PRAMUSAJI', 'WAITER');
+      //$options[] = new MessageTemplateActionBuilder('PANGGIL PRAMUSAJI', 'WAITER');
       
       // prepare button template
-      $buttonTemplate = new ButtonTemplateBuilder("Terimakasih", $question['text'], $img_url, $options);
+      $buttonTemplate = new ButtonTemplateBuilder("Pesanan komplit", "Silahkan menunggu pesananan Anda", $img_url, $options);
      
       // build message
       $messageBuilder = new TemplateMessageBuilder("Terimakasih", $buttonTemplate);
 
-      $this->tebakkode_m->saveProgress('masuk7');
-      
     }
 
     // send message
@@ -397,9 +398,6 @@ private function textMessage($event)
       }else if ($this->user['number']==3) {
         
         parse_str($message, $parseMessage);
-          $this->tebakkode_m->saveProgress('satu=' . $parseMessage);
-          $this->tebakkode_m->saveProgress('dua=' . $message);
-
         if ($message=="KEMBALI") {
 
           // update number progress
@@ -422,8 +420,6 @@ private function textMessage($event)
 
           //set user progress finish = 0
           $this->tebakkode_m->setUserProgress($this->user['user_id'],0);
-
-        $this->tebakkode_m->saveProgress('Panggil5');
 
           // send next question
           $this->sendQuestion($replyToken, 5);
