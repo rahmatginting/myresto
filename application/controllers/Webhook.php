@@ -14,7 +14,8 @@ use \LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
 use \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
 use \LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
-
+use \LINE\LINEBot\MessageBuilder\TemplateBuilder\ImageCarouselTemplateBuilder;
+use \LINE\LINEBot\MessageBuilder\TemplateBuilder\ImageCarouselColumnTemplateBuilder;
 
 class Webhook extends CI_Controller {
 
@@ -309,6 +310,15 @@ private function textMessage($event)
       $button = new ConfirmTemplateBuilder("Apakah Anda yakin pesan " . $menu_name ." ?", $actions);
       $messageBuilder = new TemplateMessageBuilder("confim message", $button);
       
+    }else if ($questionNum==5) {
+      //Progress Complete
+
+      $ImageCarouselTemplateBuilder = new ImageCarouselTemplateBuilder([
+        new ImageCarouselColumnTemplateBuilder("https://myrestobot.herokuapp.com/img/thanks01.jpg",
+        new PostbackTemplateActionBuilder("MULAI", "MULAI")),
+        ]);
+      $messageBuilder = new TemplateMessageBuilder('Terimakasih',$ImageCarouselTemplateBuilder);
+
     }
 
     // send message
@@ -358,7 +368,7 @@ private function textMessage($event)
           $this->tebakkode_m->setCategory($this->user['user_id'], $this->categoryID);
 
           // send next question
-          $this->sendQuestion($replyToken, $this->user['number'] + 1);
+          $this->sendQuestion($replyToken, 5);
 
         } else {
           //get order ID
@@ -407,7 +417,7 @@ private function textMessage($event)
           $this->tebakkode_m->setUserProgress($this->user['user_id'],0);
 
           // send next question
-          $this->sendQuestion($replyToken, 6);
+          $this->sendQuestion($replyToken, 5);
 
 
         }else {
