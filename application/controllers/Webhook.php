@@ -383,7 +383,7 @@ private function textMessage($event)
           $this->tebakkode_m->saveProgress('satu=' . $parseMessage);
           $this->tebakkode_m->saveProgress('dua=' . $message);
 
-        if ($parseMessage=="KEMBALI") {
+        if ($message=="KEMBALI") {
 
           // update number progress
           $this->tebakkode_m->setUserProgress($this->user['user_id'], 2);
@@ -391,7 +391,7 @@ private function textMessage($event)
           // send next question
           $this->sendQuestion($replyToken, 2);
 
-        }else if ($parseMessage=="SELESAI") {
+        }else if ($message=="SELESAI") {
           //Proses complete order
 
           //Set cmplete order
