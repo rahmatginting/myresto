@@ -16,6 +16,7 @@ use \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
 use \LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 use \LINE\LINEBot\MessageBuilder\TemplateBuilder\ImageCarouselTemplateBuilder;
 use \LINE\LINEBot\MessageBuilder\TemplateBuilder\ImageCarouselColumnTemplateBuilder;
+use \LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 
 class Webhook extends CI_Controller {
 
@@ -313,6 +314,10 @@ private function textMessage($event)
     }else if ($questionNum==5) {
       //Progress Complete
       $this->tebakkode_m->saveProgress('masuk5');
+
+      $imgMessageBuilder = new ImageMessageBuilder("https://myrestobot.herokuapp.com/img/thanks01.jpg");
+
+/*
       $ImageCarouselTemplateBuilder = new ImageCarouselTemplateBuilder([
         new ImageCarouselColumnTemplateBuilder("https://myrestobot.herokuapp.com/img/thanks01.jpg",
         new PostbackTemplateActionBuilder("MULAI", "MULAI")),
@@ -320,7 +325,8 @@ private function textMessage($event)
         new PostbackTemplateActionBuilder("MULAI", "MULAI")),
         ]);
       $this->tebakkode_m->saveProgress('masuk6');
-      $messageBuilder = new TemplateMessageBuilder('Terimakasih',$ImageCarouselTemplateBuilder);
+*/
+      $messageBuilder = new TemplateMessageBuilder('Terimakasih',$imgMessageBuilder);
       $this->tebakkode_m->saveProgress('masuk7');
       
     }
