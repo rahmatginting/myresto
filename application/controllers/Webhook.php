@@ -263,20 +263,23 @@ private function textMessage($event)
       // prepare button template
       //$buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
       $this->tebakkode_m->saveProgress('masuk01');
-      $restoDesc=$this->tebakkode_m->getRestoDesc($resto);
       $this->tebakkode_m->saveProgress('resto='.$resto);
-      $this->tebakkode_m->saveProgress('jml=' . count($restoDesc));
+      $restoDesc=$this->tebakkode_m->getRestoDesc($resto);
+      $this->tebakkode_m->saveProgress('jml='.count($restoDesc));
       $this->tebakkode_m->saveProgress('masuk02');
-      $this->tebakkode_m->saveProgress($restoDesc['name']);
+      $restoName=$restoDesc['name'];
       $this->tebakkode_m->saveProgress('masuk03');
-      $this->tebakkode_m->saveProgress($restoDesc['description']);
+      $this->tebakkode_m->saveProgress($restoName);
       $this->tebakkode_m->saveProgress('masuk04');
-      $this->tebakkode_m->saveProgress($restoDesc['address']);
+      $this->tebakkode_m->saveProgress($restoDesc['description']);
       $this->tebakkode_m->saveProgress('masuk05');
+      $this->tebakkode_m->saveProgress($restoDesc['address']);
+      $this->tebakkode_m->saveProgress('masuk06');
 
       $imageURL="https://myrestobot.herokuapp.com/img/categories.jpg";
-      $buttonTemplate = new ButtonTemplateBuilder($restoDesc['name'], $restoDesc['description'] . " " . $restoDesc['address'], $imageURL, $options);
-      
+      $alamat = $restoDesc['description'] . " " . $restoDesc['address'];
+      $buttonTemplate = new ButtonTemplateBuilder($restoDesc['name'], $alamat, $imageURL, $options);
+
       // build message
       $messageBuilder = new TemplateMessageBuilder("Kategori Menu", $buttonTemplate);
       
