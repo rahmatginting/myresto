@@ -316,6 +316,8 @@ private function textMessage($event)
       $ImageCarouselTemplateBuilder = new ImageCarouselTemplateBuilder([
         new ImageCarouselColumnTemplateBuilder("https://myrestobot.herokuapp.com/img/thanks01.jpg",
         new PostbackTemplateActionBuilder("MULAI", "MULAI")),
+        new ImageCarouselColumnTemplateBuilder("https://myrestobot.herokuapp.com/img/thanks01.jpg",
+        new PostbackTemplateActionBuilder("MULAI", "MULAI")),
         ]);
       $this->tebakkode_m->saveProgress('masuk6');
       $messageBuilder = new TemplateMessageBuilder('Terimakasih',$ImageCarouselTemplateBuilder);
