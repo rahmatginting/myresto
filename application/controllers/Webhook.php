@@ -263,6 +263,10 @@ private function textMessage($event)
       // prepare button template
       //$buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
       $restoDesc=$this->tebakkode_m->getRestoDesc($resto);
+      $this->tebakkode_m->saveProgress($restoDesc['name']);
+      $this->tebakkode_m->saveProgress($restoDesc['description']);
+      $this->tebakkode_m->saveProgress($restoDesc['address']);
+
       $imageURL="https://myrestobot.herokuapp.com/img/categories.jpg";
       $buttonTemplate = new ButtonTemplateBuilder($restoDesc['name'], $restoDesc['description'] . " " . $restoDesc['address'], $imageURL, $options);
       
