@@ -264,7 +264,7 @@ private function textMessage($event)
       //$buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
       $restoDesc=$this->tebakkode_m->getRestoDesc($resto);
       $imageURL="https://myrestobot.herokuapp.com/img/categories.jpg";
-      $buttonTemplate = new ButtonTemplateBuilder($restoDesc['name'], $restoDesc['description'] . " " $restoDesc['address'], $imageURL, $options);
+      $buttonTemplate = new ButtonTemplateBuilder($restoDesc['name'], $restoDesc['description'] . " " . $restoDesc['address'], $imageURL, $options);
       
       // build message
       $messageBuilder = new TemplateMessageBuilder("Kategori Menu", $buttonTemplate);
