@@ -322,7 +322,7 @@ private function textMessage($event)
       //$options[] = new MessageTemplateActionBuilder('PANGGIL PRAMUSAJI', 'WAITER');
       
       // prepare button template
-      $buttonTemplate = new ButtonTemplateBuilder("Pesanan komplit", "Silahkan menunggu pesananan Anda", $img_url, $options);
+      $buttonTemplate = new ButtonTemplateBuilder("Pemesanan berakhir", "Silahkan menunggu pesananan Anda", $img_url, $options);
      
       // build message
       $messageBuilder = new TemplateMessageBuilder("Terimakasih", $buttonTemplate);
