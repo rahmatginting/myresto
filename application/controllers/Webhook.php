@@ -254,7 +254,6 @@ private function textMessage($event)
       foreach($categorys as $category) {
           if(!empty($category['name'])) {
               $options[] = new MessageTemplateActionBuilder($category['name'], $category['name']);
-                    $this->tebakkode_m->saveProgress($category['name']);
           }
       }
 
@@ -262,12 +261,10 @@ private function textMessage($event)
       //$buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
       $imageURL="https://myrestobot.herokuapp.com/img/categories.jpg";
       $buttonTemplate = new ButtonTemplateBuilder("Kategori menu", "Pilih kategori menu yang ingin Anda pesan", $imageURL, $options);
-      $this->tebakkode_m->saveProgress('masuk07');
       
       // build message
       $messageBuilder = new TemplateMessageBuilder("Gunakan mobile app untuk melihat soal", $buttonTemplate);
       
-      $this->tebakkode_m->saveProgress('masuk08');
     }else if ($questionNum==3) {
     
       $columns = array();
@@ -384,17 +381,17 @@ private function textMessage($event)
         
         parse_str($message, $parseMessage);
 
-        if ($parseMessage="KEMBALI") {
+        if ($parseMessage=="KEMBALI") {
           $this->tebakkode_m->saveProgress('satu=' . $parseMessage);
           $this->tebakkode_m->saveProgress('dua=' . $message);
-          
+
           // update number progress
           $this->tebakkode_m->setUserProgress($this->user['user_id'], 2);
 
           // send next question
           $this->sendQuestion($replyToken, 2);
 
-        }else if ($parseMessage="SELESAI") {
+        }else if ($parseMessage=="SELESAI") {
           //Proses complete order
 
           //Set cmplete order
