@@ -149,6 +149,9 @@ class Tebakkode_m extends CI_Model {
     $data = $this->db->where('id', $resto)
       ->get('restaurants')
       ->row_array();
+ 
+    if(count($data)>0) return $data;
+    return false;
 
   }
   
