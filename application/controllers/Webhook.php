@@ -267,21 +267,32 @@ private function textMessage($event)
 
       // prepare button template
       //$buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
-      $restoDesc=$this->tebakkode_m->getRestoDesc($resto);
       $this->tebakkode_m->saveProgress('masuk01');
-      $this->tebakkode_m->saveProgress('juml=' . count($restoDesc));
+      $this->tebakkode_m->saveProgress('resto='.$resto);
+      $restoDesc=$this->tebakkode_m->getRestoDesc($resto);
+      $this->tebakkode_m->saveProgress('jml='.count($restoDesc));
       
       if (is_array($restoDesc) || is_object($restoDesc)) {
-        $this->tebakkode_m->saveProgress('masuk02');
+        $this->tebakkode_m->saveProgress('masukArray');
         if(!empty($restoDesc['name'])) {
+          $this->tebakkode_m->saveProgress('masuk02');
+          $this->tebakkode_m->saveProgress($restoDesc['name']);
           $this->tebakkode_m->saveProgress('masuk03');
-          $alamat = $restoDesc['description'] . " " . $restoDesc['address'];
+        }
+        if(!empty($restoDesc['description'])) {
+         $this->tebakkode_m->saveProgress('masuk04');
+         $this->tebakkode_m->saveProgress($restoDesc['description']);
+        }
+        if(!empty($restoDesc['address'])) {
+          $this->tebakkode_m->saveProgress('masuk05');
+          $this->tebakkode_m->saveProgress($restoDesc['address']);
         }
       }
       
       $imageURL="https://myrestobot.herokuapp.com/img/categories.jpg";
-      $buttonTemplate = new ButtonTemplateBuilder($restoDesc['name'], $alamat, $imageURL, $options);
-      //$buttonTemplate = new ButtonTemplateBuilder("Kategori menu", "Pilih kategori menu yang ingin Anda pesan", $imageURL, $options);
+      $alamat = $restoDesc['description'] . " " . $restoDesc['address'];
+      //$buttonTemplate = new ButtonTemplateBuilder($restoDesc['name'], $alamat, $imageURL, $options);
+      $buttonTemplate = new ButtonTemplateBuilder("Kategori menu", "Pilih kategori menu yang ingin Anda pesan", $imageURL, $options);
                                                   
       // build message
       $messageBuilder = new TemplateMessageBuilder("Kategori Menu", $buttonTemplate);
