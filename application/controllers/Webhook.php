@@ -271,11 +271,7 @@ private function textMessage($event)
       
       if (is_array($restoDesc) || is_object($restoDesc)) {
         if(!empty($restoDesc['name'])) {
-          if(!empty($restoDesc['description'])) {
-            if(!empty($restoDesc['address'])) {
-              $alamat = $restoDesc['description'] . " " . $restoDesc['address'];
-            }
-          }
+          $alamat = $restoDesc['description'] . " " . $restoDesc['address'];
         }
       }
       
