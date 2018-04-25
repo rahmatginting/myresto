@@ -268,9 +268,13 @@ private function textMessage($event)
       // prepare button template
       //$buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
       $restoDesc=$this->tebakkode_m->getRestoDesc($resto);
+      $this->tebakkode_m->saveProgress('masuk01');
+      $this->tebakkode_m->saveProgress('juml='count($restoDesc));
       
       if (is_array($restoDesc) || is_object($restoDesc)) {
+        $this->tebakkode_m->saveProgress('masuk02');
         if(!empty($restoDesc['name'])) {
+          $this->tebakkode_m->saveProgress('masuk03');
           $alamat = $restoDesc['description'] . " " . $restoDesc['address'];
         }
       }
