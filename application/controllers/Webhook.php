@@ -199,7 +199,7 @@ private function textMessage($event)
         $this->sendQuestion($event['replyToken'], 1);
 
       } else {
-        $message = 'Silakan ketik pesan "MULAI" untuk melakukan pemesanankuis.';
+        $message = 'Silakan ketik pesan "MULAI" untuk melakukan pemesanan.';
         $textMessageBuilder = new TextMessageBuilder($message);
 
         $this->bot->replyMessage($event['replyToken'], $textMessageBuilder);
@@ -221,7 +221,7 @@ private function textMessage($event)
     $stickerMessageBuilder = new StickerMessageBuilder(1, 106);
  
     // create text message
-    $message = 'Silakan kirim pesan "MULAI" untuk memulai kuis.';
+    $message = 'Silakan ketik pesan "MULAI" untuk memulai pemesanan.';
     $textMessageBuilder = new TextMessageBuilder($message);
  
     // merge all message
@@ -242,13 +242,18 @@ private function textMessage($event)
     $question = $this->tebakkode_m->getQuestion($questionNum);
  
     if ($questionNum==1) {
+      /*
       $options[] = new MessageTemplateActionBuilder('NOMOR MEJA', 'NOMOR MEJA');
 
       // prepare button template
-      $buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
+      $buttonTemplate = new ButtonTemplateBuilder("Ketik nomor meja dimana Anda berada saat ini", $question['text'], $question['image'], $options);
      
       // build message
       $messageBuilder = new TemplateMessageBuilder("Nomor Meja", $buttonTemplate);
+      */
+
+      $message = 'Silakan ketik nomor meja dimana Anda berada saat ini.';
+      $messageBuilder = new TextMessageBuilder($message);
 
     }else if ($questionNum==2) {
 
@@ -355,8 +360,8 @@ private function textMessage($event)
     }
 
     // send message
-    $response = $this->bot->replyMessage($replyToken, $messageBuilder);
-  
+    $response = $this->bot->replyMessage($replyToken, $messageBuilder);;
+
   }
 
   //====================================================================================
