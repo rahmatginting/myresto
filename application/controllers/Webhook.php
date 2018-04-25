@@ -290,7 +290,7 @@ private function textMessage($event)
       }
       
       $imageURL="https://myrestobot.herokuapp.com/img/categories.jpg";
-      $alamat = $restoDesc['description'] . " " . $restoDesc['address'];
+      $alamat = $restoDesc['description'] . ", " . $restoDesc['address'];
       $this->tebakkode_m->saveProgress($alamat);
       $buttonTemplate = new ButtonTemplateBuilder($restoDesc['name'], $alamat, $imageURL, $options);
       //$buttonTemplate = new ButtonTemplateBuilder("Kategori menu", "Pilih kategori menu yang ingin Anda pesan", $imageURL, $options);
