@@ -73,7 +73,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="index.php">
+                    <a href="../index.php">
                         <i class="fa fa-power-off fa-fw pull-right"></i>
                         Log out
                     </a>
