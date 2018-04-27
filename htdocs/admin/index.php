@@ -32,7 +32,7 @@ session_destroy();
         <!-- Login Form -->
 		<ul class="nav nav-pills nav-justified">
 			<li class="active"><a data-toggle="pill" href="#admin">Admin</a></li>
-			<li><a data-toggle="pill" href="#kasir">Merchant</a></li>
+			<li><a data-toggle="pill" href="#merchant">Merchant</a></li>
 		</ul>
 		
 		
@@ -64,25 +64,25 @@ session_destroy();
 				</form>
 			</div>
 
-			<!-- Kasir -->
-			<div id="kasir" class="tab-pane fade">
+			<!-- merchant -->
+			<div id="merchant" class="tab-pane fade">
 				<br />
-				<form id="kasir-login" method="post" class="form-horizontal">
+				<form id="merchant-login" method="post" class="form-horizontal">
 					<div class="form-group">
-						<label for="kasir-email" class="col-xs-12">Email Admin</label>
+						<label for="merchant-email" class="col-xs-12">Email Merchant</label>
 						<div class="col-xs-12">
-							<input type="text" id="kasir-email" name="kasir-email" class="form-control" placeholder="Email Admin..">
+							<input type="text" id="merchant-email" name="merchant-email" class="form-control" placeholder="Email Merchant..">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="kasir-password" class="col-xs-12">Pasword Admin</label>
+						<label for="merchant-password" class="col-xs-12">Pasword Merchant</label>
 						<div class="col-xs-12">
-							<input type="password" id="kasir-password" name="kasir-password" class="form-control" placeholder="Password Admin..">
+							<input type="password" id="merchant-password" name="merchant-password" class="form-control" placeholder="Password Merchant..">
 						</div>
 					</div>
 					<div class="form-group form-actions">
 						<div class="col-xs-12 text-right">
-							<button class="btn btn-block btn-success" id = "btn-kasir" name = "btn-kasir">Log in</button>
+							<button class="btn btn-block btn-success" id = "btn-merchant" name = "btn-merchant">Log in</button>
 						</div>
 					</div>
 					<div class="form-group" id="alert-msg2">
