@@ -93,6 +93,20 @@ $primary_nav = array(
         )
     ),
     array(
+        'name'  => 'Order Management',
+        'icon'  => 'fa fa-university',
+        'sub'   => array(
+            array(
+                'name'  => 'Monitoring',
+                'url'   => 'monitor.php'
+            ),
+            array(
+                'name'  => 'Pesan Makanan',
+                'url'   => 'ordermenu.php'
+            )
+        )
+    ),
+    array(
         'url'   => 'separator',
     ),
     array(
@@ -122,7 +136,7 @@ $primary_nav = array(
             ),
             array(
                 'name'  => 'Log Out',
-                'url'   => 'index.php'
+                'url'   => '../index.php'
             ),
         )
     ),
