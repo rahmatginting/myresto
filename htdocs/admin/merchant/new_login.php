@@ -35,7 +35,7 @@
  		$_SESSION['emailAlumni']=$row['user_emil'];
  		$_SESSION['sys_restoID']=$row['user_resto'];
  		$_SESSION['sys_restoName']=$row['name'];
-		echo 1; 
+		echo 1;
 	}else{
 		echo 0;
 	}
