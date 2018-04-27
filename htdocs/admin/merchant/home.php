@@ -8,13 +8,13 @@
 	include('connect.php');
     /*
 	$result = $db->prepare("SELECT COUNT(*) AS totRegist FROM tb_alumnim");
-	$result->execute();
+	$result->execute();											
 	for($i=0; $row = $result->fetch(); $i++){
 			$totRegist=$row['totRegist']; 
 	}
 
 	$result = $db->prepare("SELECT COUNT(*) AS totVote FROM tb_votingm");
-	$result->execute();
+	$result->execute();											
 	for($i=0; $row = $result->fetch(); $i++){
 			$totVote=$row['totVote']; 
 	}
@@ -32,13 +32,13 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="header-section">
-                    <!-- <h1><strong> <?php echo $_SESSION['sys_restoName'];?></strong></h1> -->
+                    <h1><strong> <?php echo $_SESSION['sys_restoName'];?></strong></h1>
                 </div>
             </div>
             <div class="col-sm-6 hidden-xs">
                 <div class="header-section">
                     <ul class="breadcrumb breadcrumb-top">
-                        <!--  <li><?php echo $_SESSION['namaAlumni']; ?></li> -->
+                        <li><?php echo $_SESSION['namaAlumni']; ?></li>
                     </ul>
                 </div>
             </div>
