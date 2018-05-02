@@ -42,8 +42,12 @@ include('connect.php');
 	$sql .= "FROM menu_order ";
 	$sql .= "WHERE resto_id = '" . $resto_id . "' ";
 	$sql .= "AND DATE(timestamp) = CURRENT_DATE ";
-	$sql .= "AND status = 0 ";
+	$sql .= "AND status = '0' ";
+	$sql .= "GROUP BY timestamp  ";
 	$sql .= "ORDER BY timestamp ASC ";
+	$statement = $db->prepare($sql);
+	$statement->execute();
+
 	$statement = $db->prepare($sql);
 	$statement->execute();
 
