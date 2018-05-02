@@ -1,9 +1,10 @@
 <?php
 include('connect.php');
 
+/*
 	$user_sys  = $_GET['param01'];
 	$resto_id = $_GET['param02'];
-/*
+	
 	$user_sys  = $_POST['param01'];
 	$resto_id = $_POST['param02'];
 	
@@ -36,6 +37,9 @@ include('connect.php');
 	$sql .= "AND type = '01' ";
 	
 */	
+	$user_sys  = 'user@chatbot.com';
+	$resto_id = '1';
+
 	//Get notif
 	$notif = 0;
 	$sql = "SELECT count(id) as notif ";
