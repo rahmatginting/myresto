@@ -1,3 +1,4 @@
+<?php session_start(); ?>    
 <?php include 'inc/config.php'; $template['header_link'] = 'Monitoring'; ?>
 <?php include 'inc/template_start.php'; ?>
 <?php include 'inc/page_head.php'; ?>
@@ -34,6 +35,9 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="js/ion.sound.js"></script>
 
+
+<input type="hidden" name="resto_id" id="resto_id" value="<?=$_SESSION['sys_restoID']?>" />
+
 <!-- Page content -->
 <div id="page-content">
     <!-- Tickets Header -->
@@ -41,7 +45,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="header-section">
-                    <h1>Order Monitoring</h1>
+                    <h1><?php echo $_SESSION['sys_restoName'];?></h1>
                 </div>
             </div>
             <div class="col-sm-6 hidden-xs">
@@ -374,7 +378,8 @@
             volume: 1.0
         });
 
-        startAjaxMonitor();
+        var resto_id = document.getElementById('resto_id').value; 
+        startAjaxMonitor(resto_id);
     });
 
     $(document).on("click", ".open-ModalEdit", function () {
