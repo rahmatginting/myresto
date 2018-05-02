@@ -1,5 +1,5 @@
 <?php session_start(); ?>    
-<?php include 'inc/config.php'; $template['header_link'] = 'Monitoring'; ?>
+<?php include 'inc/config.php'; $template['header_link'] = $_SESSION['sys_restoName']; ?>
 <?php include 'inc/template_start.php'; ?>
 <?php include 'inc/page_head.php'; ?>
 <?php
@@ -45,7 +45,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="header-section">
-                    <h1><?php echo $_SESSION['sys_restoName'];?></h1>
+                    <h1>Order Monitoring</h1>
                 </div>
             </div>
             <div class="col-sm-6 hidden-xs">
