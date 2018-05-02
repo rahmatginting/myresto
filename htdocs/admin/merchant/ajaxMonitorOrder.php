@@ -51,4 +51,27 @@ include('connect.php');
 
 
 
+
+
+
+//==================================================================================
+function getDetailOrders($id, $resto_id)
+{
+include('connect_loc.php');
+	$hasil='';
+	//Get new data
+	$sql = "SELECT a.menu, b.name, a.quantity, a.description ";
+	$sql .= "FROM menu_order_det a INNER JOIN restaurant_menu b ";
+	$sql .= "ON a.menu = b.code AND b.restaurant_id = '" . $resto_id . "' ";
+	$sql .= "WHERE a.id = '" . $id . "' ";
+	$sql .= "ORDER BY a.timestamp ASC ";
+	$statement = $db->prepare($sql);
+	$statement->execute();
+
+	while($row=$statement->fetch(PDO::FETCH_ASSOC)){
+		$hasil .= "(" . $row['quantity'] . ") " . $row['menu'] . " | " . $row['name'] . " ==> " . $row['description'] . " \n";
+	}
+	return $hasil;
+}
+
 ?>
