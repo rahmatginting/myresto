@@ -35,15 +35,18 @@
 		    url: "ajaxMonitorOrder.php",
 		    dataType: "json",
 		    success: function(JSONObject) {
-
+alert('JSON Sukses');
 		      //Clear first old data
 		      $('#tblOrders tbody').html('');
-
+alert('JSON 01');
 			  var table = document.getElementById("tblOrders").getElementsByTagName('tbody')[0];
+alert('JSON 02');
 
 		      // Loop through Object and 
 		      for (var key in JSONObject) {
 		        if (JSONObject.hasOwnProperty(key)) {
+alert('JSON 03');
+				
 				    /*
 				        ORDER STATUS
 				        0 = Open
