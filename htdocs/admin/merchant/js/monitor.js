@@ -23,8 +23,9 @@
 	function ajaxMonitorOrder(parameters)
 	{
 
-		alert('nilai parameters = ' + parameters);
+		alert('nilai parameters 01= ' + parameters);
 		try {
+		alert('nilai parameters 02= ' + parameters);
 
 		  $.ajax({
 		    type: "POST",
@@ -36,6 +37,7 @@
 		    url: "ajaxMonitorOrder.php",
 		    dataType: "json",
 		    success: function(JSONObject) {
+		alert('nilai parameters 03= ' + parameters);
 
 		      //Clear first old data
 		      $('#tblOrders tbody').html('');
