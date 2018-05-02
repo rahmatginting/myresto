@@ -1,12 +1,12 @@
 	//=====================================================================================
 	//=====================================================================================
 	//=====================================================================================
-	function startAjaxMonitor()
+	function startAjaxMonitor(resto_id)
 	{
 		//varFareTimeOut = setTimeout(ajaxMonitoring, 2000);
-		setInterval(ajaxMonitorOrder, 5000);
-		setInterval(ajaxMonitorWaitress, 5000);
-		setInterval(ajaxMonitorBayar, 5000);
+		setInterval(ajaxMonitorOrder(resto_id), 5000);
+		setInterval(ajaxMonitorWaitress(resto_id), 5000);
+		setInterval(ajaxMonitorBayar(resto_id), 5000);
 
 /*
 		if (iFarelLoop< 20) {
@@ -23,13 +23,14 @@
 	function ajaxMonitorOrder(parameters)
 	{
 
+		alert('nilai parameters = ' + parameters);
 		try {
 
 		  $.ajax({
 		    type: "POST",
 		    data: {
 		      "param01": 'user@chatbot.com',
-		      "param02": '1'
+		      "param02": parameters
 		    },
 		    url: "ajaxMonitorOrder.php",
 		    dataType: "json",
@@ -125,7 +126,7 @@
 		    type: "POST",
 		    data: {
 		      "param01": 'user@chatbot.com',
-		      "param02": '1'
+		      "param02": parameters
 		    },
 		    url: "ajaxMonitorWaitress.php",
 		    dataType: "json",
@@ -221,7 +222,7 @@
 		    type: "POST",
 		    data: {
 		      "param01": 'user@chatbot.com',
-		      "param02": '1'
+		      "param02": parameters
 		    },
 		    url: "ajaxMonitorBayar.php",
 		    dataType: "json",
