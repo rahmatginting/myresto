@@ -25,28 +25,28 @@
 
 		alert('nilai parameters = ' + parameters);
 		try {
-alert('Masuk Try parameter = ' + parameters);
+
 		  $.ajax({
 		    type: "POST",
 		    data: {
 		      "param01": 'user@chatbot.com',
 		      "param02": parameters
 		    },
-alert('panggil URL = ' + parameters);
+
 		    url: "ajaxMonitorOrder.php",
 		    dataType: "json",
 		    success: function(JSONObject) {
-alert('JSON Sukses');
+
 		      //Clear first old data
 		      $('#tblOrders tbody').html('');
-alert('JSON 01');
+
 			  var table = document.getElementById("tblOrders").getElementsByTagName('tbody')[0];
-alert('JSON 02');
+
 
 		      // Loop through Object and 
 		      for (var key in JSONObject) {
 		        if (JSONObject.hasOwnProperty(key)) {
-alert('JSON 03');
+
 				
 				    /*
 				        ORDER STATUS
@@ -76,7 +76,6 @@ alert('JSON 03');
 				    var cell4 = row.insertCell(3);
 				    var cell5 = row.insertCell(4);
 				    var cell6 = row.insertCell(5);
-				alert('masuk sini 02');
 
 					var newText1 = document.createTextNode("#" + JSONObject[key]["id"]);
 					cell1.appendChild(newText1);
