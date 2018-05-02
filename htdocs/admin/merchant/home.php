@@ -32,7 +32,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="header-section">
-                    <h1><strong> <?php echo $_SESSION['sys_restoName'];?></strong></h1>
+                    <h1><strong>Dashoard</strong></h1>
                 </div>
             </div>
             <div class="col-sm-6 hidden-xs">
