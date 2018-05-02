@@ -1,11 +1,11 @@
 <?php
 include('connect.php');
 
-	$user_sys  = $_POST['param01'];
-	$resto_id = $_POST['param02'];
-/*
 	$user_sys  = $_GET['param01'];
 	$resto_id = $_GET['param02'];
+/*
+	$user_sys  = $_POST['param01'];
+	$resto_id = $_POST['param02'];
 	
 	//Clear yesterday data
 	$sql = "DELETE FROM order_temp ";
