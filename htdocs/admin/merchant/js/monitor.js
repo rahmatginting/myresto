@@ -25,13 +25,14 @@
 
 		alert('nilai parameters = ' + parameters);
 		try {
-
+alert('Masuk Try parameter = ' + parameters);
 		  $.ajax({
 		    type: "POST",
 		    data: {
 		      "param01": 'user@chatbot.com',
 		      "param02": parameters
 		    },
+alert('panggil URL = ' + parameters);
 		    url: "ajaxMonitorOrder.php",
 		    dataType: "json",
 		    success: function(JSONObject) {
