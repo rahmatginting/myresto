@@ -1,312 +1,389 @@
-<?php include 'inc/config.php'; $template['header_link'] = 'ORDER MONITORING'; ?>
+<?php include 'inc/config.php'; $template['header_link'] = 'Monitoring'; ?>
 <?php include 'inc/template_start.php'; ?>
 <?php include 'inc/page_head.php'; ?>
+<?php
+    $today = date('d-m-Y');
+    /*
+        ORDER STATUS
+        0 = Open
+        1 = Progress
+        2 = Close
+        3 = Urgent
+        4 = Invalid
+    */
+?>
+<!-- DataTables Responsive CSS -->
+<link href="src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
+<script src="lib/jquery.js" type="text/javascript"></script>
+<script src="src/facebox.js" type="text/javascript"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $('a[rel*=facebox]').facebox({
+            loadingImage : 'src/loading.gif',
+            closeImage   : 'src/closelabel.png'
+        })
+    })
+</script>
+
+<style type="text/css">
+    .newline {
+        white-space:pre-wrap;
+    }
+</style>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="js/ion.sound.js"></script>
 
 <!-- Page content -->
-<!--
-    Available classes when #page-content-sidebar is used:
+<div id="page-content">
+    <!-- Tickets Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Order Monitoring</h1>
+                </div>
+            </div>
+            <div class="col-sm-6 hidden-xs">
+                <div class="header-section">
+                    <ul class="breadcrumb breadcrumb-top">
+                        <li><?php echo $today; ?></li>
+                    </ul>
+                </div>
+            </div>            
+        </div>
+    </div>
+    <!-- END Tickets Header -->
 
-    'inner-sidebar-left'      for a left inner sidebar
-    'inner-sidebar-right'     for a right inner sidebar
--->
-<div id="page-content" class="inner-sidebar-left">
-    <!-- Inner Sidebar -->
-    <div id="page-content-sidebar">
+    <!-- Tickets Content -->
+    <div class="row">
+        <div class="col-md-4 col-lg-3">
+            <!-- Menu Block -->
+            <div class="block full">
+                <!-- Menu Title -->
+                <div class="block-title clearfix">
+                    <div class="block-options pull-right">
+                        <a href="javascript:void(0)" class="btn btn-effect-ripple btn-default" data-toggle="tooltip" title="Settings"><i class="fa fa-cog"></i></a>
+                    </div>
+                    <h2>Manage Orders</h2>
+                </div>
+                <!-- END Menu Title -->
 
-        <!-- Collapsible Navigation -->
-        <a href="javascript:void(0)" class="btn btn-block btn-effect-ripple btn-default visible-xs" data-toggle="collapse" data-target="#email-nav">Navigation</a>
-        <div id="email-nav" class="collapse navbar-collapse remove-padding">
-            <!-- Menu -->
-            <div class="block-section">
+                <!-- Menu Content -->
                 <ul class="nav nav-pills nav-stacked">
                     <li class="active">
-                        <a href="monitor.php">
-                            <i class="fa fa-fw fa-inbox icon-push"></i> <strong>Monitor</strong>
+                        <a href="page_app_email.php">
+                            <span class="badge pull-right">350</span>
+                            <i class="fa fa-fw fa-ticket icon-push"></i> <strong>All</strong>
                         </a>
                     </li>
                     <li>
                         <a href="javascript:void(0)">
-                            <i class="fa fa-fw fa-star icon-push"></i> <strong>Menu</strong>
+                            <span class="badge pull-right">5</span>
+                            <i class="fa fa-fw fa-exclamation-triangle icon-push"></i> <strong>Urgent</strong>
                         </a>
                     </li>
                     <li>
                         <a href="javascript:void(0)">
-                            <i class="fa fa-fw fa-exclamation-circle icon-push"></i> <strong>Waiter</strong>
+                            <span class="badge pull-right">10</span>
+                            <i class="fa fa-fw fa-folder-open-o icon-push"></i> <strong>Open</strong>
                         </a>
                     </li>
                     <li>
                         <a href="javascript:void(0)">
-                            <i class="fa fa-fw fa-send icon-push"></i> <strong>Bayar</strong>
+                            <span class="badge pull-right">50</span>
+                            <i class="fa fa-fw fa-folder-o icon-push"></i> <strong>Closed</strong>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <span class="badge pull-right">8</span>
+                            <i class="fa fa-fw fa-ban icon-push"></i> <strong>Invalid</strong>
                         </a>
                     </li>
                 </ul>
+                <!-- END Menu Content -->
             </div>
-            <!-- END Menu -->
+            <!-- END Menu Block -->
 
-        </div>
-        <!-- END Collapsible Navigation -->
-    </div>
-    <!-- END Inner Sidebar -->
-
-    <!-- Email Center Content -->
-    <div class="block overflow-hidden">
-        <!-- Message List -->
-        <div id="message-list">
-            <!-- Title -->
-            <div class="block-title clearfix">
-                <div class="block-options pull-right">
-                    <a href="javascript:void(0)" class="btn btn-effect-ripple btn-default"><i class="fa fa-arrow-left"></i> Prev</a>
-                    <a href="javascript:void(0)" class="btn btn-effect-ripple btn-default">Next <i class="fa fa-arrow-right"></i></a>
+            <!-- Quick Month Stats Block -->
+            <div class="block">
+                <!-- Quick Month Stats Title -->
+                <div class="block-title">
+                    <div class="block-options pull-right">
+                        <a href="javascript:void(0)" class="btn btn-effect-ripple btn-default" data-toggle="tooltip" title="Settings"><i class="fa fa-cog"></i></a>
+                    </div>
+                    <h2>Statistik</h2>
                 </div>
-                <div class="block-options pull-left">
-                    <a href="javascript:void(0)" class="btn btn-effect-ripple btn-info" data-toggle="tooltip" title="Archive Selected"><i class="fa fa-briefcase"></i></a>
-                    <a href="javascript:void(0)" class="btn btn-effect-ripple btn-warning" data-toggle="tooltip" title="Star Selected"><i class="fa fa-star"></i></a>
-                    <a href="javascript:void(0)" class="btn btn-effect-ripple btn-danger" data-toggle="tooltip" title="Delete Selected"><i class="fa fa-times"></i></a>
-                </div>
-            </div>
-            <!-- END Title -->
+                <!-- END Quick Month Stats Title -->
 
-            <!-- Messages -->
-            <div class="block-content-full">
-                <table class="table table-borderless table-striped table-vcenter remove-margin">
+                <!-- Quick Month Stats Content -->
+                <table class="table table-striped table-borderless table-vcenter">
                     <tbody>
-                        <!-- Use the first row as a prototype for your column widths -->
                         <tr>
-                            <td class="td-label td-label-muted text-center" style="width: 5%;">
-                                <label class="csscheckbox csscheckbox-primary"><input type="checkbox"><span></span></label>
+                            <td style="width: 60%;">
+                                <strong>Total Tickets</strong>
                             </td>
-                            <td class="text-center" style="width: 7%;">
-                                <img src="img/placeholders/avatars/avatar<?php echo rand(1, 16); ?>.jpg" alt="avatar" class="img-circle">
-                            </td>
-                            <td>
-                                <h4>
-                                    <a href="javascript:void(0)" class="text-dark"><strong>Product updates</strong></a>
-                                </h4>
-                                <span class="text-muted">This is the preview text of this message..</span>
-                            </td>
-                            <td class="hidden-xs text-center" style="width: 30px;">
-                                <i class="fa fa-paperclip fa-2x text-muted"></i>
-                            </td>
-                            <td class="hidden-xs text-right text-muted" style="width: 120px;"><em>just now</em></td>
+                            <td>1500</td>
                         </tr>
                         <tr>
-                            <td class="td-label td-label-danger text-center">
-                                <label class="csscheckbox csscheckbox-primary"><input type="checkbox"><span></span></label>
-                            </td>
-                            <td class="text-center">
-                                <img src="img/placeholders/avatars/avatar<?php echo rand(1, 16); ?>.jpg" alt="avatar" class="img-circle">
-                            </td>
                             <td>
-                                <h4><a href="javascript:void(0)" class="text-dark"><strong>New friend request</strong></a></h4>
-                                <span class="text-muted">This is the preview text of this message..</span>
+                                <strong>Total Responses</strong>
                             </td>
-                            <td class="hidden-xs">
-                                <i class="fa fa-paperclip fa-2x text-muted"></i>
-                            </td>
-                            <td class="hidden-xs text-right text-muted"><em>15 min ago</em></td>
+                            <td>2590</td>
                         </tr>
                         <tr>
-                            <td class="td-label td-label-success text-center">
-                                <label class="csscheckbox csscheckbox-primary"><input type="checkbox"><span></span></label>
-                            </td>
-                            <td class="text-center">
-                                <img src="img/placeholders/avatars/avatar<?php echo rand(1, 16); ?>.jpg" alt="avatar" class="img-circle">
-                            </td>
                             <td>
-                                <h4>
-                                    <a href="javascript:void(0)" class="text-dark"><strong>New project details</strong></a>
-                                </h4>
-                                <span class="text-muted">This is the preview text of this message..</span>
+                                <strong>Forum Tickets</strong>
                             </td>
-                            <td class="hidden-xs"></td>
-                            <td class="hidden-xs text-right text-muted"><em>40 min ago</em></td>
+                            <td>320</td>
                         </tr>
                         <tr>
-                            <td class="td-label td-label-success text-center">
-                                <label class="csscheckbox csscheckbox-primary"><input type="checkbox"><span></span></label>
-                            </td>
-                            <td class="text-center">
-                                <img src="img/placeholders/avatars/avatar<?php echo rand(1, 16); ?>.jpg" alt="avatar" class="img-circle">
-                            </td>
                             <td>
-                                <h4><a href="javascript:void(1)" class="text-dark"><strong>Hi admin</strong></a></h4>
-                                <span class="text-muted">This is the preview text of this message..</span>
+                                <strong>Email Tickets</strong>
                             </td>
-                            <td class="hidden-xs"></td>
-                            <td class="hidden-xs text-right text-muted"><em>1 hour ago</em></td>
+                            <td>200</td>
                         </tr>
                         <tr>
-                            <td class="td-label td-label-warning text-center">
-                                <label class="csscheckbox csscheckbox-primary"><input type="checkbox"><span></span></label>
-                            </td>
-                            <td class="text-center">
-                                <img src="img/placeholders/avatars/avatar<?php echo rand(1, 16); ?>.jpg" alt="avatar" class="img-circle">
-                            </td>
                             <td>
-                                <h4><a href="javascript:void(0)" class="text-dark"><strong>Balance changed</strong></a></h4>
-                                <span class="text-muted">This is the preview text of this message..</span>
+                                <strong>Contact Form Tickets</strong>
                             </td>
-                            <td class="hidden-xs"></td>
-                            <td class="hidden-xs text-right text-muted"><em>2 hours ago</em></td>
+                            <td>70</td>
                         </tr>
                         <tr>
-                            <td class="td-label td-label-info text-center">
-                                <label class="csscheckbox csscheckbox-primary"><input type="checkbox"><span></span></label>
-                            </td>
-                            <td class="text-center">
-                                <img src="img/placeholders/avatars/avatar<?php echo rand(1, 16); ?>.jpg" alt="avatar" class="img-circle">
-                            </td>
                             <td>
-                                <h4><a href="javascript:void(0)" class="text-dark"><strong>Just wanted to say hi</strong></a></h4>
-                                <span class="text-muted">This is the preview text of this message..</span>
+                                <strong>Avg Response Time</strong>
                             </td>
-                            <td class="hidden-xs"></td>
-                            <td class="hidden-xs text-right text-muted"><em>5 hours ago</em></td>
-                        </tr>
-                        <tr>
-                            <td class="td-label td-label-info text-center">
-                                <label class="csscheckbox csscheckbox-primary"><input type="checkbox"><span></span></label>
-                            </td>
-                            <td class="text-center">
-                                <img src="img/placeholders/avatars/avatar<?php echo rand(1, 16); ?>.jpg" alt="avatar" class="img-circle">
-                            </td>
-                            <td>
-                                <h4><a href="javascript:void(0)" class="text-dark"><strong>Building a new website</strong></a></h4>
-                                <span class="text-muted">This is the preview text of this message..</span>
-                            </td>
-                            <td class="hidden-xs"></td>
-                            <td class="hidden-xs text-right text-muted"><em>10 hours ago</em></td>
-                        </tr>
-                        <tr>
-                            <td class="td-label td-label-danger text-center">
-                                <label class="csscheckbox csscheckbox-primary"><input type="checkbox"><span></span></label>
-                            </td>
-                            <td class="text-center">
-                                <img src="img/placeholders/avatars/avatar<?php echo rand(1, 16); ?>.jpg" alt="avatar" class="img-circle">
-                            </td>
-                            <td>
-                                <h4>
-                                    <a href="javascript:void(0)" class="text-dark"><strong>Your subscription was updated</strong></a>
-                                </h4>
-                                <span class="text-muted">This is the preview text of this message..</span>
-                            </td>
-                            <td class="hidden-xs">
-                                <i class="fa fa-paperclip fa-2x text-muted"></i>
-                            </td>
-                            <td class="hidden-xs text-right text-muted"><em>2 days ago</em></td>
-                        </tr>
-                        <tr>
-                            <td class="td-label td-label-danger text-center">
-                                <label class="csscheckbox csscheckbox-primary"><input type="checkbox"><span></span></label>
-                            </td>
-                            <td class="text-center">
-                                <img src="img/placeholders/avatars/avatar<?php echo rand(1, 16); ?>.jpg" alt="avatar" class="img-circle">
-                            </td>
-                            <td>
-                                <h4><a href="javascript:void(0)" class="text-dark"><strong>A great opportunity</strong></a></h4>
-                                <span class="text-muted">This is the preview text of this message..</span>
-                            </td>
-                            <td class="hidden-xs"></td>
-                            <td class="hidden-xs text-right text-muted"><em>1 week ago</em></td>
-                        </tr>
-                        <tr>
-                            <td class="td-label td-label-success text-center">
-                                <label class="csscheckbox csscheckbox-primary"><input type="checkbox"><span></span></label>
-                            </td>
-                            <td class="text-center">
-                                <img src="img/placeholders/avatars/avatar<?php echo rand(1, 16); ?>.jpg" alt="avatar" class="img-circle">
-                            </td>
-                            <td>
-                                <h4><a href="javascript:void(0)" class="text-dark"><strong>Account Activation</strong></a></h4>
-                                <span class="text-muted">This is the preview text of this message..</span>
-                            </td>
-                            <td class="hidden-xs"></td>
-                            <td class="hidden-xs text-right text-muted"><em>2 weeks ago</em></td>
+                            <td>2 hrs</td>
                         </tr>
                     </tbody>
                 </table>
+                <!-- END Quick Month Stats Content -->
             </div>
-            <!-- END Messages -->
+            <!-- END Quick Month Stats Block -->
         </div>
-        <!-- END Message List -->
+        <div class="col-md-8 col-lg-9">
+            <!-- Tickets Block -->
+            <div class="block">
+                <!-- Tickets Title -->
+                <div class="block-title">
+                    <div class="block-options pull-right">
+                        <a href="javascript:void(0)" class="btn btn-effect-ripple btn-default" data-toggle="tooltip" title="Settings"><i class="fa fa-cog"></i></a>
+                    </div>
+                    <ul class="nav nav-tabs" data-toggle="tabs">
+                        <li class="active">
+                            <a href="#order-list">
+                                <span id="spnOrder" class="label label-danger pull-right"></span>Daftar Pemesanan
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#waiters">
+                                <span id="spnWaitress" class="label label-danger pull-right"></span>Panggilan Pramusaji
+                            </a>  
+                        </li>
+                        <li>
+                            <a href="#tagihan">
+                                <span id="spnTagihan" class="label label-danger pull-right"></span>Permintaan Tagihan
+                            </a>  
+                        </li>
+                    </ul>
+                </div>
+                <!-- END Tickets Title -->
 
-        <!-- Message View -->
-        <div id="message-view" class="block-section display-none">
-            <!-- Title -->
-            <div class="block-title clearfix">
-                <div class="block-options pull-right">
-                    <a href="javascript:void(0)" class="btn btn-effect-ripple btn-warning" data-toggle="tooltip" title="Star"><i class="fa fa-star"></i></a>
-                    <a href="javascript:void(0)" class="btn btn-effect-ripple btn-danger" data-toggle="tooltip" title="Delete"><i class="fa fa-times"></i></a>
+                <!-- Tabs Content -->
+                <div class="tab-content">
+                    <!-- Orders List -->
+                    <div class="tab-pane active" id="order-list">
+                        <div class="block-content-full">
+                            <div class="table-responsive remove-margin-bottom">
+                                <table id="tblOrders" class="table table-striped table-vcenter remove-margin-bottom">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">ID</th>
+                                            <th>Status</th>
+                                            <th>Meja</th>
+                                            <th>Pemesan</th>
+                                            <th>Daftar Pesanan</th>
+                                            <th class="text-center"><i class="fa fa-comments"></i></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Disini coding order -->
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Rubah Status</h4>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form action="saveeditstatus.php" method="post" class = "form-group">
+                                        <div id="ac">       
+                                            <input type="hidden" class = "form-control"  name="orderID" id="orderID" value=""/>
+
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">Status Pemesanan</label>
+                                                <div class="col-md-9">
+                                                    <div class="radio">
+                                                        <label for="radio1">
+                                                            <input type="radio" id="radio1" name="status" value="0"> Open
+                                                        </label>
+                                                    </div>
+                                                    <div class="radio">
+                                                        <label for="radio2">
+                                                            <input type="radio" id="radio2" name="status" value="1"> Progress
+                                                        </label>
+                                                    </div>
+                                                    <div class="radio">
+                                                        <label for="radio3">
+                                                            <input type="radio" id="radio3" name="status" value="2"> Close
+                                                        </label>
+                                                    </div>
+                                                    <div class="radio">
+                                                        <label for="radio4">
+                                                            <input type="radio" id="radio4" name="status" value="3"> Urgent
+                                                        </label>
+                                                    </div>
+                                                    <div class="radio">
+                                                        <label for="radio5">
+                                                            <input type="radio" id="radio5" name="status" value="4"> Invalid
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                        </div>          
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="text-center">
+                                <ul class="pagination">
+                                    <li class="disabled"><a href="javascript:void(0)"><i class="fa fa-chevron-left"></i></a></li>
+                                    <li class="active"><a href="javascript:void(0)">1</a></li>
+                                    <li><a href="javascript:void(0)">2</a></li>
+                                    <li><a href="javascript:void(0)">3</a></li>
+                                    <li><a href="javascript:void(0)"><i class="fa fa-chevron-right"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END Orders List -->
+
+                    <!-- Waiters View -->
+                    <div class="tab-pane" id="waiters">
+                        <div class="block-content-full">
+                            <div class="table-responsive remove-margin-bottom">
+                                <table id="tblWaitress" class="table table-striped table-vcenter remove-margin-bottom">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">ID</th>
+                                            <th>Status</th>
+                                            <th>Meja</th>
+                                            <th>Pemesan</th>
+                                            <th>Daftar Pesanan</th>
+                                            <th class="text-center"><i class="fa fa-comments"></i></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Disini coding order -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-center">
+                                <ul class="pagination">
+                                    <li class="disabled"><a href="javascript:void(0)"><i class="fa fa-chevron-left"></i></a></li>
+                                    <li class="active"><a href="javascript:void(0)">1</a></li>
+                                    <li><a href="javascript:void(0)">2</a></li>
+                                    <li><a href="javascript:void(0)">3</a></li>
+                                    <li><a href="javascript:void(0)"><i class="fa fa-chevron-right"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END waiters View -->
+
+                    <!-- Bayar View -->
+                    <div class="tab-pane" id="tagihan">
+                        <div class="block-content-full">
+                            <div class="table-responsive remove-margin-bottom">
+                                <table id="tblBayar" class="table table-striped table-vcenter remove-margin-bottom">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">ID</th>
+                                            <th>Status</th>
+                                            <th>Meja</th>
+                                            <th>Pemesan</th>
+                                            <th>Daftar Pesanan</th>
+                                            <th class="text-center"><i class="fa fa-comments"></i></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Disini coding order -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-center">
+                                <ul class="pagination">
+                                    <li class="disabled"><a href="javascript:void(0)"><i class="fa fa-chevron-left"></i></a></li>
+                                    <li class="active"><a href="javascript:void(0)">1</a></li>
+                                    <li><a href="javascript:void(0)">2</a></li>
+                                    <li><a href="javascript:void(0)">3</a></li>
+                                    <li><a href="javascript:void(0)"><i class="fa fa-chevron-right"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END Bayar View -->
                 </div>
-                <div class="block-options pull-left">
-                    <a href="javascript:void(0)" class="btn btn-effect-ripple btn-default" id="message-view-back"><i class="fa fa-chevron-left"></i> Back to Inbox</a>
-                </div>
+                <!-- END Tabs Content -->
             </div>
-            <!-- END Title -->
-
-            <!-- Header -->
-            <h3><strong>Project updates </strong> <small><em>1 week ago</em></small></h3>
-            <p><a href="javascript:void(0)"><strong>John Doe</strong></a> <strong>&lt;john.doe@example.com&gt;</strong> to <a href="javascript:void(0)"><strong>Admin</strong></a> <strong>&lt;admin@example.com&gt;</strong></p>
-            <!-- END Header -->
-
-            <!-- Message Body -->
-            <hr>
-            <p>Hi,</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultrices, justo vel imperdiet gravida, urna ligula hendrerit nibh, ac cursus nibh sapien in purus. Mauris tincidunt tincidunt turpis in porta. Integer fermentum tincidunt auctor. Vestibulum ullamcorper, odio sed rhoncus imperdiet, enim elit sollicitudin orci, eget dictum leo mi nec lectus. Nam commodo turpis id lectus scelerisque vulputate. Integer sed dolor erat. Fusce erat ipsum, varius vel euismod sed, tristique et lectus? Etiam egestas fringilla enim, id convallis lectus laoreet at. Fusce purus nisi, gravida sed consectetur ut, interdum quis nisi. Quisque egestas nisl id lectus facilisis scelerisque? Proin rhoncus dui at ligula vestibulum ut facilisis ante sodales! Suspendisse potenti. Aliquam tincidunt sollicitudin sem nec ultrices. Sed at mi velit. Ut egestas tempor est, in cursus enim venenatis eget! Nulla quis ligula ipsum. Donec vitae ultrices dolor?</p>
-            <p>Donec lacinia venenatis metus at bibendum? In hac habitasse platea dictumst. Proin ac nibh rutrum lectus rhoncus eleifend. Sed porttitor pretium venenatis. Suspendisse potenti. Aliquam quis ligula elit. Aliquam at orci ac neque semper dictum. Sed tincidunt scelerisque ligula, et facilisis nulla hendrerit non. Suspendisse potenti. Pellentesque non accumsan orci. Praesent at lacinia dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultrices, justo vel imperdiet gravida, urna ligula hendrerit nibh, ac cursus nibh sapien in purus. Mauris tincidunt tincidunt turpis in porta. Integer fermentum tincidunt auctor. Vestibulum ullamcorper, odio sed rhoncus imperdiet, enim elit sollicitudin orci, eget dictum leo mi nec lectus. Nam commodo turpis id lectus scelerisque vulputate. Integer sed dolor erat. Fusce erat ipsum, varius vel euismod sed, tristique et lectus? Etiam egestas fringilla enim, id convallis lectus laoreet at. Fusce purus nisi, gravida sed consectetur ut, interdum quis nisi. Quisque egestas nisl id lectus facilisis scelerisque? Proin rhoncus dui at ligula vestibulum ut facilisis ante sodales! Suspendisse potenti. Aliquam tincidunt sollicitudin sem nec ultrices. Sed at mi velit. Ut egestas tempor est, in cursus enim venenatis eget! Nulla quis ligula ipsum. Donec vitae ultrices dolor?</p>
-            <p>Best Regards,</p>
-            <p>John</p>
-            <hr>
-            <!-- END Message Body -->
-
-            <!-- Attachments Row -->
-            <div class="row block-section">
-                <div class="col-xs-6 col-sm-3 col-lg-2 text-center">
-                    <a href="img/placeholders/photos/photo2.jpg" data-toggle="lightbox-image">
-                        <img src="img/placeholders/photos/photo2.jpg" alt="photo" class="img-responsive push-bit">
-                    </a>
-                    <span class="text-muted">IMG0001.JPG</span>
-                </div>
-                <div class="col-xs-6 col-sm-3 col-lg-2 text-center">
-                    <a href="img/placeholders/photos/photo16.jpg" data-toggle="lightbox-image">
-                        <img src="img/placeholders/photos/photo16.jpg" alt="photo" class="img-responsive push-bit">
-                    </a>
-                    <span class="text-muted">IMG0002.JPG</span>
-                </div>
-                <div class="col-xs-6 col-sm-3 col-lg-2 text-center">
-                    <a href="img/placeholders/photos/photo9.jpg" data-toggle="lightbox-image">
-                        <img src="img/placeholders/photos/photo9.jpg" alt="photo" class="img-responsive push-bit">
-                    </a>
-                    <span class="text-muted">IMG0003.JPG</span>
-                </div>
-                <div class="col-xs-6 col-sm-3 col-lg-2 text-center">
-                    <a href="img/placeholders/photos/photo15.jpg" data-toggle="lightbox-image">
-                        <img src="img/placeholders/photos/photo15.jpg" alt="photo" class="img-responsive push-bit">
-                    </a>
-                    <span class="text-muted">IMG0004.JPG</span>
-                </div>
-            </div>
-            <!-- END Attachments Row -->
-
-            <!-- Quick Reply Form -->
-            <form action="page_app_email.php" method="post" onsubmit="return false;">
-                <textarea id="message-quick-reply" name="message-quick-reply" rows="5" class="form-control push-bit" placeholder="Your message.."></textarea>
-                <button class="btn btn-effect-ripple btn-primary"><i class="fa fa-share"></i> Reply</button>
-            </form>
-            <!-- END Quick Reply Form -->
+            <!-- END Tickets Block -->
         </div>
-        <!-- END Message View -->
     </div>
-    <!-- END Email Center Content -->
+    <!-- END Tickets Content -->
 </div>
 <!-- END Page Content -->
 
 <?php include 'inc/page_footer.php'; ?>
 <?php include 'inc/template_scripts.php'; ?>
 
-<!-- Load and execute javascript code used only in this page -->
-<script src="js/pages/appEmail.js"></script>
-<script>$(function(){ AppEmail.init(); });</script>
+
+<script src="js/pages/readyTickets.js"></script>
+<script>$(function(){ ReadyTickets.init(); });</script>
+<script type="text/javascript" src="js/monitor.js"></script>
+
+<script type="text/javascript" >
+    $(document).ready(function() {
+        ion.sound({
+            sounds: [
+                {name: "bell_ring"},
+            ],
+            path: "sounds/",
+            preload: true,
+            volume: 1.0
+        });
+
+        startAjaxMonitor();
+    });
+
+    $(document).on("click", ".open-ModalEdit", function () {
+         var myOrderId = $(this).data('id');
+         $(".modal-body #orderID").val( myOrderId );
+         // As pointed out in comments, 
+         // it is superfluous to have to manually call the modal.
+         $('#myModal').modal('show');
+    });    
+</script>
 
 <?php include 'inc/template_end.php'; ?>
