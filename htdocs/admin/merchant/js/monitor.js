@@ -7,17 +7,6 @@
 		setInterval(ajaxMonitorOrder(resto_id), 5000);
 		setInterval(ajaxMonitorWaitress(resto_id), 5000);
 		setInterval(ajaxMonitorBayar(resto_id), 5000);
-
-/*
-		if (iFarelLoop< 20) {
-			iFarelLoop=iFarelLoop+1;
-			varFareTimeOut = setTimeout(startAjaxFare, 2000);
-			var param=document.getElementById('phpString4').value;
-			ajaxMonitoring(param);
-		} else {
-			clearTimeout(varFareTimeOut);
-		}
-*/	
 	}
 
 	function ajaxMonitorOrder(parameters)
@@ -34,8 +23,8 @@
 		    dataType: "json",
 		    success: function(JSONObject) {
 
-		      //Clear first old data
-		      $('#tblOrders tbody').html('');
+		    //Clear first old data
+		    $('#tblOrders tbody').html('');
 			var table = document.getElementById("tblOrders").getElementsByTagName('tbody')[0];
 
 		      // Loop through Object and 
