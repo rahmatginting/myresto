@@ -379,7 +379,10 @@
         });
 
         var resto_id = document.getElementById('resto_id').value; 
-        startAjaxMonitor(resto_id);
+        //startAjaxMonitor(resto_id);
+		setInterval(ajaxMonitorOrder(resto_id), 5000);
+		setInterval(ajaxMonitorWaitress(resto_id), 5000);
+		setInterval(ajaxMonitorBayar(resto_id), 5000);
     });
 
     $(document).on("click", ".open-ModalEdit", function () {
