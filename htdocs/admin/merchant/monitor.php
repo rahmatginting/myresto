@@ -231,31 +231,44 @@
                                             <input type="hidden" class = "form-control"  name="orderID" id="orderID" value=""/>
 
                                             <div class="form-group">
+                                                <label class="col-md-3 control-label" for="nama-pemesan">Nama Pemesan:</label>
+                                                <div class="col-md-9">
+                                                    <input type="text" id="nama-pemesan" name="nama-pemesan" class="form-control" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label" for="nomor-meja">No. Meja:</label>
+                                                <div class="col-md-9">
+                                                    <input type="text" id="nomor-meja" name="nomor-meja" class="form-control" disabled>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="form-group">
                                                 <label class="col-md-3 control-label">Status Pemesanan</label>
                                                 <div class="col-md-9">
                                                     <div class="radio">
                                                         <label for="radio1">
-                                                            <input type="radio" id="radio1" name="status" value="0"> Open
+                                                            <input type="radio" id="radio1" name="status" value="0"> <span class="label label-primary">OPEN</span>
                                                         </label>
                                                     </div>
                                                     <div class="radio">
                                                         <label for="radio2">
-                                                            <input type="radio" id="radio2" name="status" value="1"> Progress
+                                                            <input type="radio" id="radio2" name="status" value="1"> <span class="label label-info">IN-PROGRESS</span>
                                                         </label>
                                                     </div>
                                                     <div class="radio">
                                                         <label for="radio3">
-                                                            <input type="radio" id="radio3" name="status" value="2"> Close
+                                                            <input type="radio" id="radio3" name="status" value="2"> <span class="label label-success">CLOSE</span>
                                                         </label>
                                                     </div>
                                                     <div class="radio">
                                                         <label for="radio4">
-                                                            <input type="radio" id="radio4" name="status" value="3"> Urgent
+                                                            <input type="radio" id="radio4" name="status" value="3"> <span class="label label-warning">URGENT</span>
                                                         </label>
                                                     </div>
                                                     <div class="radio">
                                                         <label for="radio5">
-                                                            <input type="radio" id="radio5" name="status" value="4"> Invalid
+                                                            <input type="radio" id="radio5" name="status" value="4"> <span class="label label-danger">INVALID</span>
                                                         </label>
                                                     </div>
                                                 </div>
@@ -380,14 +393,19 @@
 
         var resto_id = document.getElementById('resto_id').value; 
         //startAjaxMonitor(resto_id);
-		setInterval(ajaxMonitorOrder(resto_id), 5000);
-		setInterval(ajaxMonitorWaitress(resto_id), 5000);
-		setInterval(ajaxMonitorBayar(resto_id), 5000);
+        setInterval(ajaxMonitorOrder(resto_id), 10000);
+        //setInterval(ajaxMonitorWaitress(resto_id), 5000);
+        //setInterval(ajaxMonitorBayar(resto_id), 5000);
+
     });
 
     $(document).on("click", ".open-ModalEdit", function () {
          var myOrderId = $(this).data('id');
-         $(".modal-body #orderID").val( myOrderId );
+         //$(".modal-body #orderID").val( myOrderId );
+         var res = myOrderId.split("&");
+         $(".modal-body #orderID").val( res[0] );
+         $(".modal-body #nomor-meja").val( res[1] );
+         $(".modal-body #nama-pemesan").val( res[2] );
          // As pointed out in comments, 
          // it is superfluous to have to manually call the modal.
          $('#myModal').modal('show');
