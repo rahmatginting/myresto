@@ -46,9 +46,13 @@ include('connect.php');
 	}
 
 
-  // Convert the Array to a JSON String and echo it
-  $someJSON = json_encode($someArray);
-  echo $someJSON;
+    if($row) {
+	  // Convert the Array to a JSON String and echo it
+	  $someJSON = json_encode($someArray);
+	  echo $someJSON;
+    }else {
+	  return false;    	
+    }
 
 //==================================================================================
 
