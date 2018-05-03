@@ -22,11 +22,7 @@
 
 	function ajaxMonitorOrder(parameters)
 	{
-
-		alert('nilai parameters 01= ' + parameters);
 		try {
-		alert('nilai parameters 02= ' + parameters);
-
 		  $.ajax({
 		    type: "POST",
 		    data: {
@@ -37,19 +33,15 @@
 		    url: "ajaxMonitorOrder.php",
 		    dataType: "json",
 		    success: function(JSONObject) {
-		alert('nilai parameters 03= ' + parameters);
 
 		      //Clear first old data
 		      $('#tblOrders tbody').html('');
-
-			  var table = document.getElementById("tblOrders").getElementsByTagName('tbody')[0];
-
+			var table = document.getElementById("tblOrders").getElementsByTagName('tbody')[0];
 
 		      // Loop through Object and 
 		      for (var key in JSONObject) {
 		        if (JSONObject.hasOwnProperty(key)) {
 
-				
 				    /*
 				        ORDER STATUS
 				        0 = Open
@@ -70,8 +62,8 @@
 				    }else if (JSONObject[key]["status"]=='4') {
 				    	status = '<span class="label label-danger">INVALID</span>';
 				    }
-				alert('masuk sini 01');
-					var row = table.insertRow(table.rows.length);
+
+				    var row = table.insertRow(table.rows.length);
 				    var cell1 = row.insertCell(0);
 				    var cell2 = row.insertCell(1);
 				    var cell3 = row.insertCell(2);
@@ -103,7 +95,6 @@
 					var strHTML01 = '';
 					var strHTML02 = '<button type="button" class="open-ModalEdit btn btn-primary btn-lg" data-toggle="modal" data-id="' + JSONObject[key]["id"] + '">Edit</button>';
 					cell6.innerHTML = strHTML01 + strHTML02;
-				alert('masuk sini 03');
 
 				    //Create notification
 				    if (JSONObject[key]["notif"]>0) {
