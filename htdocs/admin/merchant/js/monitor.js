@@ -84,8 +84,8 @@
 
 					var newText6 = document.createTextNode("5");
 					cell6.appendChild(newText6);
-					var strHTML01 = '';
-					var strHTML02 = '<button type="button" class="open-ModalEdit btn btn-primary btn-lg" data-toggle="modal" data-id="' + JSONObject[key]["id"] + '">Edit</button>';
+					var strParse = JSONObject[key]["id"] + '&'+ JSONObject[key]["table_id"] + '&'+JSONObject[key]["user_name"];
+					var strHTML = '<button type="button" class="open-ModalEdit btn btn-primary btn-lg" data-toggle="modal" data-id="' + strParse + '">Edit</button>';
 					cell6.innerHTML = strHTML01 + strHTML02;
 
 				    //Create notification
