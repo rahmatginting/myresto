@@ -1,8 +1,45 @@
 <?php
 include('connect.php');
+	$user_sys  = $_POST['param01'];
+	$resto_id = $_POST['param02'];
 
+	/*
 	$user_sys  = 'user@chatbot.com';
 	$resto_id = '1';
+
+	$user_sys  = $_GET['param01'];
+	$resto_id = $_GET['param02'];	
+
+	//Clear yesterday data
+	$sql = "DELETE FROM order_temp ";
+	$sql .= "WHERE DATE(order_date) < CURRENT_DATE ";
+	$sql .= "AND user_id = '" . $user_sys . "' ";
+	$sql .= "AND type = '01' ";
+
+	//Refresh Order List
+	$sql = "INSERT INTO order_temp (user_id, order_id, order_date) ";
+	$sql .= "SELECT '" . $user_sys . "' AS user_id, a.id FROM menu_order a LEFT JOIN order_temp b  ";
+	$sql .= "ON a.id = b.order_id AND b.user_id = '" . $user_sys . "' ";
+	$sql .= "WHERE b.order_id IS NULL ";
+	$sql .= "AND a.resto_id = '" . $resto_id . "' ";
+	$sql .= "AND DATE(a.timestamp) = CURRENT_DATE ";
+
+	//Get new data
+	$sql = "SELECT a.* FROM menu_order a INNER JOIN order_temp b ";
+	$sql .= "ON a.id = b.order_id ";
+	$sql .= "WHERE b.user_id = '" . $user_sys . "' ";
+	$sql .= "AND DATE(a.timestamp) = CURRENT_DATE ";
+	$sql .= "AND b.sent_status = '0' ";
+	$sql .= "AND a.resto_id = '" . $resto_id . "' ";
+	$sql .= "AND b.type = '01' ";
+
+	$sql = "UPDATE order_temp SET ";
+	$sql .= "sent_status = '1' ";
+	$sql .= "WHERE user_id = '" . $user_sys . "' ";
+	$sql .= "AND type = '01' ";
+
+	*/	
+
 
 	//Get notif
 	$notif = 0;
@@ -32,8 +69,8 @@ include('connect.php');
 	$statement->execute();
 	$someArray = [];
 	while($row=$statement->fetch(PDO::FETCH_ASSOC)){
-		//$details = getDetailOrders($row['id'], $row['resto_id']);
-		$details = 'test';
+		$details = getDetailOrders($row['id'], $row['resto_id']);
+		//$details = 'test';
 	    array_push($someArray, [
 	      'id'   	  => $row['id'],
 	      'table_id'  => $row['table_id'],
@@ -44,10 +81,14 @@ include('connect.php');
 	    ]);
 	}
 
+    if($row) {
+	  // Convert the Array to a JSON String and echo it
+	  $someJSON = json_encode($someArray);
+	  echo $someJSON;
+    }else {
+	  return false;    	
+    }
 
-  // Convert the Array to a JSON String and echo it
-  $someJSON = json_encode($someArray);
-  echo $someJSON;
 
 
 
@@ -57,7 +98,7 @@ include('connect.php');
 //==================================================================================
 function getDetailOrders($id, $resto_id)
 {
-include('connect_loc.php');
+include('connect.php');
 	$hasil='';
 	//Get new data
 	$sql = "SELECT a.menu, b.name, a.quantity, a.description ";
