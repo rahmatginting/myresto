@@ -6,10 +6,10 @@
 		//varFareTimeOut = setTimeout(ajaxMonitoring, 2000);
 		alert('Panggil ajaxMonitorOrder = ' + resto_id);
 		setInterval(ajaxMonitorOrder(resto_id), 5000);
-		alert('Panggil ajaxMonitorWaitress = ' + resto_id);
-		setInterval(ajaxMonitorWaitress(resto_id), 5000);
-		alert('Panggil ajaxMonitorBayar = ' + resto_id);
-		setInterval(ajaxMonitorBayar(resto_id), 5000);
+		//alert('Panggil ajaxMonitorWaitress = ' + resto_id);
+		//setInterval(ajaxMonitorWaitress(resto_id), 5000);
+		//alert('Panggil ajaxMonitorBayar = ' + resto_id);
+		//setInterval(ajaxMonitorBayar(resto_id), 5000);
 		alert('Selesai');
 	}
 
