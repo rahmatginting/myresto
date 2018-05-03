@@ -1,15 +1,20 @@
 <?php
 include('connect.php');
+//include('connect_loc.php');
+
 	$user_sys  = $_POST['param01'];
 	$resto_id = $_POST['param02'];
 
-	/*
+/*
 	$user_sys  = 'user@chatbot.com';
 	$resto_id = '1';
 
+	$user_sys  = $_POST['param01'];
+	$resto_id = $_POST['param02'];
+
 	$user_sys  = $_GET['param01'];
 	$resto_id = $_GET['param02'];	
-
+	
 	//Clear yesterday data
 	$sql = "DELETE FROM order_temp ";
 	$sql .= "WHERE DATE(order_date) < CURRENT_DATE ";
@@ -37,8 +42,8 @@ include('connect.php');
 	$sql .= "sent_status = '1' ";
 	$sql .= "WHERE user_id = '" . $user_sys . "' ";
 	$sql .= "AND type = '01' ";
-
-	*/	
+	
+*/	
 
 
 	//Get notif
@@ -68,7 +73,9 @@ include('connect.php');
 	$statement = $db->prepare($sql);
 	$statement->execute();
 	$someArray = [];
+	$i=0;
 	while($row=$statement->fetch(PDO::FETCH_ASSOC)){
+		$i++;
 		$details = getDetailOrders($row['id'], $row['resto_id']);
 		//$details = 'test';
 	    array_push($someArray, [
@@ -81,7 +88,7 @@ include('connect.php');
 	    ]);
 	}
 
-    if($row) {
+    if($i>0) {
 	  // Convert the Array to a JSON String and echo it
 	  $someJSON = json_encode($someArray);
 	  echo $someJSON;
@@ -94,11 +101,11 @@ include('connect.php');
 
 
 
-
 //==================================================================================
 function getDetailOrders($id, $resto_id)
 {
 include('connect.php');
+//include('connect_loc.php');
 	$hasil='';
 	//Get new data
 	$sql = "SELECT a.menu, b.name, a.quantity, a.description ";
