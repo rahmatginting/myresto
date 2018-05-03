@@ -4,13 +4,15 @@
 	function startAjaxMonitor(resto_id)
 	{
 		//varFareTimeOut = setTimeout(ajaxMonitoring, 2000);
+		alert('Masuk startAjaxMonitor = ' + resto_id);
 		setInterval(ajaxMonitorOrder(resto_id), 5000);
-		setInterval(ajaxMonitorWaitress(resto_id), 5000);
-		setInterval(ajaxMonitorBayar(resto_id), 5000);
+		//setInterval(ajaxMonitorWaitress(resto_id), 5000);
+		//setInterval(ajaxMonitorBayar(resto_id), 5000);
 	}
 
 	function ajaxMonitorOrder(parameters)
 	{
+		alert('Masuk ajaxMonitorOrder = ' + parameters);
 		try {
 		  $.ajax({
 		    type: "POST",
@@ -31,6 +33,7 @@
 		      for (var key in JSONObject) {
 		        if (JSONObject.hasOwnProperty(key)) {
 
+		alert('Masuk ajaxMonitorOrder 01 = ' + parameters);
 				    /*
 				        ORDER STATUS
 				        0 = Open
@@ -73,6 +76,7 @@
 
 					var newText4 = document.createTextNode(JSONObject[key]["user_name"]);
 					cell4.appendChild(newText4);
+		alert('Nilai = ' + JSONObject[key]["user_name"]);
 
 					var newText5 = document.createTextNode(JSONObject[key]["details"]);
 					//var newText5 = document.createTextNode(res);
