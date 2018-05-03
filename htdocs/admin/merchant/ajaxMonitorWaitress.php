@@ -1,11 +1,8 @@
 <?php
 include('connect.php');
 
-	// $user_sys  = $_POST['param01'];
-	// $resto_id = $_POST['param02'];
-
-	$user_sys  = 'sfdf';
-	$resto_id = '1';
+	$user_sys  = $_POST['param01'];
+	$resto_id = $_POST['param02'];
 
 	//Get notification
 	$notif = 0;
@@ -34,7 +31,9 @@ include('connect.php');
 	$statement = $db->prepare($sql);
 	$statement->execute();
 	$someArray = [];
+	$i=0;
 	while($row=$statement->fetch(PDO::FETCH_ASSOC)){
+		$i++;
 	    array_push($someArray, [
 	      'id'   	  	=> $row['id'],
 	      'table_id' 	=> $row['table_id'],
@@ -46,7 +45,7 @@ include('connect.php');
 	}
 
 
-    if($row) {
+    if($i>0) {
 	  // Convert the Array to a JSON String and echo it
 	  $someJSON = json_encode($someArray);
 	  echo $someJSON;
