@@ -4,10 +4,13 @@
 	function startAjaxMonitor(resto_id)
 	{
 		//varFareTimeOut = setTimeout(ajaxMonitoring, 2000);
-		alert('Masuk startAjaxMonitor = ' + resto_id);
+		alert('Panggil ajaxMonitorOrder = ' + resto_id);
 		setInterval(ajaxMonitorOrder(resto_id), 5000);
-		//setInterval(ajaxMonitorWaitress(resto_id), 5000);
-		//setInterval(ajaxMonitorBayar(resto_id), 5000);
+		alert('Panggil ajaxMonitorWaitress = ' + resto_id);
+		setInterval(ajaxMonitorWaitress(resto_id), 5000);
+		alert('Panggil ajaxMonitorBayar = ' + resto_id);
+		setInterval(ajaxMonitorBayar(resto_id), 5000);
+		alert('Selesai');
 	}
 
 	function ajaxMonitorOrder(parameters)
