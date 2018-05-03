@@ -2,8 +2,11 @@
 include('connect.php');
 //include('connect_loc.php');
 
-	$user_sys  = $_POST['param01'];
-	$resto_id = $_POST['param02'];
+	//$user_sys  = $_POST['param01'];
+	//$resto_id = $_POST['param02'];
+
+	$user_sys  = 'user@chatbot.com';
+	$resto_id = '1';
 
 /*
 	$user_sys  = 'user@chatbot.com';
