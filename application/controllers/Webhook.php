@@ -166,7 +166,7 @@ echo "</br>";
       $options[] = new MessageTemplateActionBuilder('Panggil Pramusaji', 'PANGGIL');
       $options[] = new MessageTemplateActionBuilder('Minta Tagihan', 'BAYAR');
 
-      $greetings= 'Bapak/ibu ' . $profile['displayName'] . ', silahkan klik tombol di bawah untuk memulai'
+      $greetings= 'Bapak/ibu ' . $profile['displayName'] . ', silahkan klik tombol di bawah untuk memulai';
       $imageURL="https://myrestobot.herokuapp.com/img/logo.jpg";
 
       // prepare button template      
