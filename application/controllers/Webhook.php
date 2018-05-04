@@ -162,9 +162,15 @@ echo "</br>";
       $this->bot->replyMessage($event['replyToken'], $multiMessageBuilder);
 */ 
   
-      $options[] = new MessageTemplateActionBuilder('Pesan Makanan', 'MULAI');
-      $options[] = new MessageTemplateActionBuilder('Panggil Pramusaji', 'PANGGIL');
-      $options[] = new MessageTemplateActionBuilder('Minta Tagihan', 'BAYAR');
+      for ($x = 1; $x <= 3; $x++) {
+        if ($x==1) {
+          $options[] = new MessageTemplateActionBuilder('Pesan Makanan', 'MULAI');          
+        }else if ($x==2) {
+          $options[] = new MessageTemplateActionBuilder('Panggil Pramusaji', 'PANGGIL');
+        }else if ($x==3) {
+          $options[] = new MessageTemplateActionBuilder('Minta Tagihan', 'BAYAR');
+        }
+      }
 
       $greetings= 'Bapak/ibu ' . $profile['displayName'] . ', silahkan klik tombol di bawah untuk memulai';
       $imageURL="https://myrestobot.herokuapp.com/img/logo.jpg";
