@@ -162,7 +162,6 @@ echo "</br>";
       $this->bot->replyMessage($event['replyToken'], $multiMessageBuilder);
 */ 
   
-
       $options[] = new MessageTemplateActionBuilder('Pesan Makanan', 'MULAI');
       $options[] = new MessageTemplateActionBuilder('Panggil Pramusaji', 'PANGGIL');
       $options[] = new MessageTemplateActionBuilder('Minta Tagihan', 'BAYAR');
@@ -175,6 +174,9 @@ echo "</br>";
                                                   
       // build message
       $messageBuilder = new TemplateMessageBuilder("Kategori Menu", $buttonTemplate);
+
+      // send reply message
+      $this->bot->replyMessage($event['replyToken'], $messageBuilder);
 
       // save user data
       $this->tebakkode_m->saveUser($profile);
