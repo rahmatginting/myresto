@@ -143,7 +143,7 @@ echo "</br>";
     if ($res->isSucceeded())
     {
       $profile = $res->getJSONDecodedBody();
-/* 
+ 
       // create welcome message
       $message  = "Salam kenal, " . $profile['displayName'] . "!\n";
       $message .= "Layanan chatbot ini ditujukan untuk pemesanan dan reservasi" . "!\n";
@@ -158,32 +158,10 @@ echo "</br>";
       $multiMessageBuilder->add($textMessageBuilder);
       $multiMessageBuilder->add($stickerMessageBuilder);
  
+
       // send reply message
       $this->bot->replyMessage($event['replyToken'], $multiMessageBuilder);
-*/ 
-  
-      for ($x = 1; $x <= 3; $x++) {
-        if ($x==1) {
-          $options[] = new MessageTemplateActionBuilder('Pesan Makanan', 'MULAI');          
-        }else if ($x==2) {
-          $options[] = new MessageTemplateActionBuilder('Panggil Pramusaji', 'PANGGIL');
-        }else if ($x==3) {
-          $options[] = new MessageTemplateActionBuilder('Minta Tagihan', 'BAYAR');
-        }
-      }
-
-      $greetings= 'Bapak/ibu ' . $profile['displayName'] . ', silahkan klik tombol di bawah untuk memulai';
-      $imageURL="https://myrestobot.herokuapp.com/img/logo.jpg";
-
-      // prepare button template      
-      $buttonTemplate = new ButtonTemplateBuilder('Selamat Datang', $greetings, $imageURL, $options);
-                                                  
-      // build message
-      $messageBuilder = new TemplateMessageBuilder("Kategori Menu", $buttonTemplate);
-
-      // send reply message
-      $this->bot->replyMessage($event['replyToken'], $messageBuilder);
-
+ 
       // save user data
       $this->tebakkode_m->saveUser($profile);
     }
@@ -289,18 +267,34 @@ private function textMessage($event)
 
       // prepare button template
       //$buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
+      $this->tebakkode_m->saveProgress('masuk01');
+      $this->tebakkode_m->saveProgress('resto='.$resto);
       $restoDesc=$this->tebakkode_m->getRestoDesc($resto);
+      $this->tebakkode_m->saveProgress('jml='.count($restoDesc));
       
       if (is_array($restoDesc) || is_object($restoDesc)) {
-        $imageURL="https://myrestobot.herokuapp.com/img/categories.jpg";
-        $buttonTemplate = new ButtonTemplateBuilder($restoDesc['name'], $restoDesc['address'], $imageURL, $options);
-        //$buttonTemplate = new ButtonTemplateBuilder("Kategori menu", "Pilih kategori menu yang ingin Anda pesan", $imageURL, $options);
-                                                    
-        // build message
-        $messageBuilder = new TemplateMessageBuilder("Kategori Menu", $buttonTemplate);
-
+        $this->tebakkode_m->saveProgress('masukArray');
+        if(!empty($restoDesc['name'])) {
+          $this->tebakkode_m->saveProgress('masuk02');
+          $this->tebakkode_m->saveProgress($restoDesc['name']);
+          $this->tebakkode_m->saveProgress('masuk03');
+        }
+        if(!empty($restoDesc['description'])) {
+         $this->tebakkode_m->saveProgress('masuk04');
+         $this->tebakkode_m->saveProgress($restoDesc['description']);
+        }
+        if(!empty($restoDesc['address'])) {
+          $this->tebakkode_m->saveProgress('masuk05');
+          $this->tebakkode_m->saveProgress($restoDesc['address']);
+        }
       }
       
+      $imageURL="https://myrestobot.herokuapp.com/img/categories.jpg";
+      $buttonTemplate = new ButtonTemplateBuilder($restoDesc['name'], $restoDesc['address'], $imageURL, $options);
+      //$buttonTemplate = new ButtonTemplateBuilder("Kategori menu", "Pilih kategori menu yang ingin Anda pesan", $imageURL, $options);
+                                                  
+      // build message
+      $messageBuilder = new TemplateMessageBuilder("Kategori Menu", $buttonTemplate);
       
     }else if ($questionNum==3) {
     
