@@ -88,7 +88,7 @@ echo "</br>";
       
 */      
            
-      echo "Hello Resto05!";
+      echo "Webhook Linebot Batavia Labs";
       header('HTTP/1.1 400 Only POST method allowed');
       exit;
     }
