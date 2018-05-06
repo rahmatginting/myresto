@@ -1,20 +1,18 @@
 	//=====================================================================================
 	//=====================================================================================
 	//=====================================================================================
-	function startAjaxMonitor(resto_id)
+	function startAjaxMonitor()
 	{
-		//varFareTimeOut = setTimeout(ajaxMonitoring, 2000);
-		alert('Panggil ajaxMonitorOrder = ' + resto_id);
-		setInterval(ajaxMonitorOrder(resto_id), 5000);
-		//alert('Panggil ajaxMonitorWaitress = ' + resto_id);
-		//setInterval(ajaxMonitorWaitress(resto_id), 5000);
-		//alert('Panggil ajaxMonitorBayar = ' + resto_id);
-		//setInterval(ajaxMonitorBayar(resto_id), 5000);
-		alert('Selesai');
+		varFareTimeOut = setTimeout(startAjaxMonitor, 2000);
+		var resto_id=document.getElementById('resto_id').value;
+		ajaxMonitorOrder(resto_id);
+		ajaxMonitorWaitress(resto_id);
+		ajaxMonitorBayar(resto_id);
 	}
 
 	function ajaxMonitorOrder(parameters)
 	{
+		
 		try {
 		  $.ajax({
 		    type: "POST",
@@ -67,8 +65,7 @@
 					cell1.appendChild(newText1);
 
 					var newText2 = document.createTextNode(status);
-					cell2.appendChild(newText2);
-					//cell2.innerHTML = '<span class="label label-danger">OPEN</span>';
+					//cell2.appendChild(newText2);
 					cell2.innerHTML = status;
 
 					var newText3 = document.createTextNode(JSONObject[key]["table_id"]);
@@ -78,19 +75,17 @@
 					cell4.appendChild(newText4);
 
 					var newText5 = document.createTextNode(JSONObject[key]["details"]);
-					//var newText5 = document.createTextNode(res);
 					cell5.className = "newline";
 					cell5.appendChild(newText5);
 
-					var newText6 = document.createTextNode("5");
-					cell6.appendChild(newText6);
 					var strParse = JSONObject[key]["id"] + '&'+ JSONObject[key]["table_id"] + '&'+JSONObject[key]["user_name"];
 					var strHTML = '<button type="button" class="open-ModalEdit btn btn-primary btn-lg" data-toggle="modal" data-id="' + strParse + '">Edit</button>';
-					cell6.innerHTML = strHTML01 + strHTML02;
+					cell6.innerHTML = strHTML;
 
 				    //Create notification
 				    if (JSONObject[key]["notif"]>0) {
 						document.getElementById("spnOrder").textContent=JSONObject[key]["notif"];
+						//alert('panggil lonceng');
 			            ion.sound.play("bell_ring");
 				    }else {
 				    	document.getElementById("spnOrder").textContent="";
@@ -106,6 +101,7 @@
 			  txt+="Click OK to continue.\n\n";
 			  alert(txt);			
 		}
+	
 	}
 	
 	function ajaxMonitorWaitress(parameters)
@@ -177,10 +173,15 @@
 					//var newText5 = document.createTextNode(res);
 					cell5.className = "newline";
 					cell5.appendChild(newText5);
-
+/*
 					var newText6 = document.createTextNode("5");
 					cell6.appendChild(newText6);
 					cell6.innerHTML = '<align="center"><a rel="facebox" class="btn btn-primary" href="editkategori.php?id=' + JSONObject[key]["id"] + '"> <i class="fa fa-pencil"></i> </a>  <a href="#" id="'  + JSONObject[key]["id"] + '" class="btn btn-danger delbutton" title="Click To Delete"><i class = "fa fa-trash"></i></a>';
+
+*/
+					var strParse = JSONObject[key]["id"] + '&'+ JSONObject[key]["table_id"] + '&'+JSONObject[key]["user_name"];
+					var strHTML = '<button type="button" class="open-ModalEdit btn btn-primary btn-lg" data-toggle="modal" data-id="' + strParse + '">Edit</button>';
+					cell6.innerHTML = strHTML;
 
 				    //Create notification
 				    if (JSONObject[key]["notif"]>0) {
@@ -273,10 +274,14 @@
 					//var newText5 = document.createTextNode(res);
 					cell5.className = "newline";
 					cell5.appendChild(newText5);
-
+/*
 					var newText6 = document.createTextNode("5");
 					cell6.appendChild(newText6);
 					cell6.innerHTML = '<align="center"><a rel="facebox" class="btn btn-primary" href="editkategori.php?id=' + JSONObject[key]["id"] + '"> <i class="fa fa-pencil"></i> </a>  <a href="#" id="'  + JSONObject[key]["id"] + '" class="btn btn-danger delbutton" title="Click To Delete"><i class = "fa fa-trash"></i></a>';
+*/
+					var strParse = JSONObject[key]["id"] + '&'+ JSONObject[key]["table_id"] + '&'+JSONObject[key]["user_name"];
+					var strHTML = '<button type="button" class="open-ModalEdit btn btn-primary btn-lg" data-toggle="modal" data-id="' + strParse + '">Edit</button>';
+					cell6.innerHTML = strHTML;
 
 				    //Create notification
 				    if (JSONObject[key]["notif"]>0) {
