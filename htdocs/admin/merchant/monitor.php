@@ -307,8 +307,8 @@
                                             <th class="text-center">ID</th>
                                             <th>Status</th>
                                             <th>Meja</th>
-                                            <th>Pemesan</th>
-                                            <th>Daftar Pesanan</th>
+                                            <th>Nama Tamu</th>
+                                            <th>Keterangan</th>
                                             <th class="text-center"><i class="fa fa-comments"></i></th>
                                         </tr>
                                     </thead>
@@ -340,8 +340,8 @@
                                             <th class="text-center">ID</th>
                                             <th>Status</th>
                                             <th>Meja</th>
-                                            <th>Pemesan</th>
-                                            <th>Daftar Pesanan</th>
+                                            <th>Nama Tamu</th>
+                                            <th>Keterangan</th>
                                             <th class="text-center"><i class="fa fa-comments"></i></th>
                                         </tr>
                                     </thead>
@@ -392,8 +392,8 @@
         });
 
         var resto_id = document.getElementById('resto_id').value; 
-        //startAjaxMonitor(resto_id);
-        setInterval(ajaxMonitorOrder(resto_id), 10000);
+        startAjaxMonitor();
+        //setInterval(ajaxMonitorOrder(resto_id), 5000);
         //setInterval(ajaxMonitorWaitress(resto_id), 5000);
         //setInterval(ajaxMonitorBayar(resto_id), 5000);
 
