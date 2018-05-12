@@ -143,7 +143,7 @@ echo "</br>";
     if ($res->isSucceeded())
     {
       $profile = $res->getJSONDecodedBody();
- 
+/* 
       // create welcome message
       $message  = "Salam kenal, " . $profile['displayName'] . "!\n";
       $message .= "Layanan chatbot ini ditujukan untuk pemesanan dan reservasi" . "!\n";
@@ -157,11 +157,27 @@ echo "</br>";
       $multiMessageBuilder = new MultiMessageBuilder();
       $multiMessageBuilder->add($textMessageBuilder);
       $multiMessageBuilder->add($stickerMessageBuilder);
- 
 
       // send reply message
       $this->bot->replyMessage($event['replyToken'], $multiMessageBuilder);
  
+*/
+      //=====================================================================
+      //=====================================================================
+
+      $img_url="https://myrestobot.herokuapp.com/img/thanks01.jpg";
+      $options[] = new MessageTemplateActionBuilder('MULAI', 'MULAI');
+      //$options[] = new MessageTemplateActionBuilder('PANGGIL PRAMUSAJI', 'WAITER');
+      
+      // prepare button template
+      $buttonTemplate = new ButtonTemplateBuilder("Selamat datang " . $profile['displayName'], "Silahkan klik tombol pilihan dibawah", $img_url, $options);
+     
+      // build message
+      $messageBuilder = new TemplateMessageBuilder("Selamat Datang", $buttonTemplate);
+
+      // send message
+      $this->bot->replyMessage($event['replyToken'], $messageBuilder);
+
       // save user data
       $this->tebakkode_m->saveUser($profile);
     }
