@@ -369,7 +369,7 @@ private function textMessage($event)
           New PostbackTemplateActionBuilder("Ya", "ans=Y"),
           New PostbackTemplateActionBuilder("Tidak", "ans=N")
         );
-        $button = new ConfirmTemplateBuilder("Pilih <b>YA</b> untuk memesan dan pilih \"TIDAK\" untuk mengganti pesanan ", $actions);
+        $button = new ConfirmTemplateBuilder("Pilih <b>YA</b> untuk memesan dan pilih \"TIDAK\" untuk merubah pesanan ", $actions);
         $confirmMsgBuilder = new TemplateMessageBuilder("confirm order list", $button);
 
         // merge all message
