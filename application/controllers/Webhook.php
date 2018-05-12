@@ -45,8 +45,8 @@ class Webhook extends CI_Controller {
 
       //get menu order
       $orders_list="Berikut ini adalah daftar seluruh pesanan Anda: ". "!\n";
-      $menu_name = $this->tebakkode_m->getMenuOrder(49, 1);
-      foreach($orders as $order) {
+      $menu_order = $this->tebakkode_m->getMenuOrder(49, 1);
+      foreach($menu_order as $order) {
           if(!empty($order['name'])) {
               $orders_list .= "(" . $order['quantity'] . ")   " . $order['name'] . "    ==> " . $order['description'] . "!\n";
           }
