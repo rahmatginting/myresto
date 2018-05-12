@@ -42,6 +42,16 @@ class Webhook extends CI_Controller {
   {
  
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+      //get menu order
+      $orders_list="Berikut ini adalah daftar seluruh pesanan Anda: ". "!\n";
+      $menu_name = $this->tebakkode_m->getMenuOrder(1, 49);
+      foreach($orders as $order) {
+          if(!empty($order['name'])) {
+              $orders_list .= "(" . $order['quantity'] . ")   " . $order['name'] . "    ==> " . $order['description'] . "!\n";
+          }
+      }
+      echo $orders_list;
+      
 /*      
         //Save Progress debug
         $this->resto = $this->tebakkode_m->getResto('1001');
