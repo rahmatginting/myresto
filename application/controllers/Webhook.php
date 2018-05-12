@@ -376,20 +376,14 @@ private function textMessage($event)
         $messageBuilder = new MultiMessageBuilder();
         $messageBuilder->add($textMessageBuilder);
         $messageBuilder->add($confirmMsgBuilder);
-        $this->tebakkode_m->saveProgress('end multiMessageBuilder');
       }
       
       catch(Exception $e) {
         $this->tebakkode_m->saveProgress('error = ' . $e->getMessage());
       }
-      // send reply message
-      //$this->bot->replyMessage($event['replyToken'], $multiMessageBuilder);
 
     }else if ($questionNum==6) {
       //Progress Complete
-
-      //set user progress finish = 0
-      $this->tebakkode_m->setUserProgress($this->user['user_id'],0);
 
       $img_url="https://myrestobot.herokuapp.com/img/thanks01.jpg";
       $options[] = new MessageTemplateActionBuilder('MULAI LAGI', 'MULAI');
@@ -482,21 +476,11 @@ private function textMessage($event)
           $this->sendQuestion($replyToken, 2);
 
         }else if ($message=="SELESAI") {
-          //Proses complete order
 
-          //Set cmplete order
-          //get order ID
-          $order = $this->tebakkode_m->getOrder($this->user['user_id']);
+          //Set confirmation order 
+          $this->tebakkode_m->setUserProgress($this->user['user_id'],5);
 
-          if ($order!=0) {
-            //publish complete order 
-            $this->tebakkode_m->setOrderComplete($order);
-          }
-
-          //set user progress finish = 0
-          $this->tebakkode_m->setUserProgress($this->user['user_id'],0);
-
-          // send next question
+          // send confirmation order list
           $this->sendQuestion($replyToken, 5);
 
 
@@ -550,6 +534,31 @@ private function textMessage($event)
 
           // send next question
           $this->sendQuestion($replyToken, 2);
+
+        }
+
+      }else if ($this->user['number']==5) {
+        parse_str($message, $parseMessage);
+        if ($parseMessage["ans"] == "Y") {  
+          //Proses complete order
+
+          //get order ID
+          $order = $this->tebakkode_m->getOrder($this->user['user_id']);
+
+          if ($order!=0) {
+            //publish complete order 
+            $this->tebakkode_m->setOrderComplete($order);
+          }
+
+          //set user progress finish = 0
+          $this->tebakkode_m->setUserProgress($this->user['user_id'],0);
+
+          // send next question
+          $this->sendQuestion($replyToken, 6);
+
+
+        }else if ($parseMessage["ans"] == "N") {
+          //Rubah pesanan disini
 
         }
 
