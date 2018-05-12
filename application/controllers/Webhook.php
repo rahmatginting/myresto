@@ -340,8 +340,10 @@ private function textMessage($event)
     }else if ($questionNum==5) {
       //get menu code
       $resto = $this->tebakkode_m->getResto($this->user['user_id']);
+      $this->tebakkode_m->saveProgress('restoID='.$resto);
 
       $orderID = $this->tebakkode_m->getOrder($this->user['user_id']);
+      $this->tebakkode_m->saveProgress('orderID='.$orderID);
 
       //get menu order
       $orders_list="Berikut ini adalah daftar seluruh pesanan Anda: ". "!\n";
@@ -352,29 +354,33 @@ private function textMessage($event)
           }
       }
       $textMessageBuilder = new TextMessageBuilder($orders_list);
+      $this->tebakkode_m->saveProgress('end order list');
       
+      $this->tebakkode_m->saveProgress($orders_list);
+
       //create confirmation
       $actions = array (
         New PostbackTemplateActionBuilder("Ya", "ans=Y"),
         New PostbackTemplateActionBuilder("Tidak", "ans=N")
       );
       $button = new ConfirmTemplateBuilder("Pilih \"YA\" untuk memesan dan pilih \"TIDAK\" untuk mengganti pesanan ", $actions);
-      $messageBuilder = new TemplateMessageBuilder("confirm order list", $button);
-      
+      $confirmMsgBuilder = new TemplateMessageBuilder("confirm order list", $button);
+
       // merge all message
-      $multiMessageBuilder = new MultiMessageBuilder();
-      $multiMessageBuilder->add($textMessageBuilder);
-      $multiMessageBuilder->add($messageBuilder);
-      
+      $messageBuilder = new MultiMessageBuilder();
+      $messageBuilder->add($textMessageBuilder);
+      $messageBuilder->add($confirmMsgBuilder);
+      $this->tebakkode_m->saveProgress('end multiMessageBuilder');
+
       // send reply message
-      $this->bot->replyMessage($event['replyToken'], $multiMessageBuilder);
-      
+      //$this->bot->replyMessage($event['replyToken'], $multiMessageBuilder);
+
     }else if ($questionNum==6) {
       //Progress Complete
 
       //set user progress finish = 0
       $this->tebakkode_m->setUserProgress($this->user['user_id'],0);
-      
+
       $img_url="https://myrestobot.herokuapp.com/img/thanks01.jpg";
       $options[] = new MessageTemplateActionBuilder('MULAI LAGI', 'MULAI');
       $options[] = new MessageTemplateActionBuilder('PANGGIL PRAMUSAJI', 'WAITER');
