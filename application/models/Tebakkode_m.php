@@ -330,6 +330,8 @@ class Tebakkode_m extends CI_Model {
     $sql .= "WHERE a.id = '". $order_id . "' ";
     $sql .= "AND b.restaurant_id = '" . $restoID ."' ";
     
+    saveProgress($sql);
+    
     $query = $this->db->query($sql);
     if($query->num_rows() == 0) return false;
     return $query->result_array();
