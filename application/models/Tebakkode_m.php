@@ -323,6 +323,19 @@ class Tebakkode_m extends CI_Model {
     return $this->db->insert_id();
   }
 
+  function getMenuOrder($order_id, $restoID)
+  {
+    $sql =  "SELECT b.name, a.quantity, b.description ";
+    $sql .= "FROM menu_order_det a INNER JOIN restaurant_menu b ON a.menu = b.code ";
+    $sql .= "WHERE a.id = '". $order_id . "' ";
+    $sql .= "AND b.restaurant_id = '" . $restoID ."' ";
+    
+    $query = $this->db->query($sql);
+    if($query->num_rows() == 0) return false;
+    return $query->result_array();
+    
+  }
+  
   function setOrderComplete($oderID)
   {
     $this->db->set('status', '1')
