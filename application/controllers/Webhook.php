@@ -42,16 +42,16 @@ class Webhook extends CI_Controller {
   {
  
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+
       //get menu order
       $orders_list="Berikut ini adalah daftar seluruh pesanan Anda: ". "!\n";
-      $menu_name = $this->tebakkode_m->getMenuOrder(1, 49);
+      $menu_name = $this->tebakkode_m->getMenuOrder(49, 1);
       foreach($orders as $order) {
           if(!empty($order['name'])) {
               $orders_list .= "(" . $order['quantity'] . ")   " . $order['name'] . "    ==> " . $order['description'] . "!\n";
           }
       }
       echo $orders_list;
-      
 /*      
         //Save Progress debug
         $this->resto = $this->tebakkode_m->getResto('1001');
@@ -328,7 +328,7 @@ private function textMessage($event)
         }
       }
       $carousel = new CarouselTemplateBuilder($columns);
-      $messageBuilder = new TemplateMessageBuilder("Carousel Demo", $carousel);
+      $messageBuilder = new TemplateMessageBuilder("Daftar Menu", $carousel);
 
     }else if ($questionNum==4) {
       //get menu code
@@ -357,7 +357,7 @@ private function textMessage($event)
 
       //get menu order
       $orders_list="Berikut ini adalah daftar seluruh pesanan Anda: ". "!\n";
-      $menu_name = $this->tebakkode_m->getMenuOrder($resto, $orderID);
+      $menu_name = $this->tebakkode_m->getMenuOrder($orderID, $resto);
       foreach($orders as $order) {
           if(!empty($order['name'])) {
               $orders_list .= "(" . $order['quantity'] . ")   " . $order['name'] . "    ==> " . $order['description'] . "!\n";
