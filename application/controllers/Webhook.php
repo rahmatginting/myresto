@@ -367,7 +367,7 @@ private function textMessage($event)
         $textMessageBuilder = new TextMessageBuilder($orders_list);
         $this->tebakkode_m->saveProgress('end order list');
 
-        $this->tebakkode_m->saveProgress($orders_list);
+        //$this->tebakkode_m->saveProgress($orders_list);
 
         //create confirmation
         $actions = array (
@@ -386,7 +386,6 @@ private function textMessage($event)
       
       catch(Exception $e) {
         $this->tebakkode_m->saveProgress('error = ' . $e->getMessage());
-        echo 'Message: ' .$e->getMessage();
       }
       // send reply message
       //$this->bot->replyMessage($event['replyToken'], $multiMessageBuilder);
