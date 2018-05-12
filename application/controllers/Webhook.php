@@ -356,32 +356,38 @@ private function textMessage($event)
       $this->tebakkode_m->saveProgress('orderID='.$orderID);
 
       //get menu order
-      $orders_list="Berikut ini adalah daftar seluruh pesanan Anda: ". "!\n";
-      $menu_order = $this->tebakkode_m->getMenuOrder($orderID, $resto);
-      foreach($menu_order as $order) {
-          if(!empty($order['name'])) {
-              $orders_list .= "(" . $order['quantity'] . ")   " . $order['name'] . "    ==> " . $order['description'] . "!\n";
-          }
+      try {
+        $orders_list="Berikut ini adalah daftar seluruh pesanan Anda: ". "!\n";
+        $menu_order = $this->tebakkode_m->getMenuOrder($orderID, $resto);
+        foreach($menu_order as $order) {
+            if(!empty($order['name'])) {
+                $orders_list .= "(" . $order['quantity'] . ")   " . $order['name'] . "    ==> " . $order['description'] . "!\n";
+            }
+        }
+        $textMessageBuilder = new TextMessageBuilder($orders_list);
+        $this->tebakkode_m->saveProgress('end order list');
+
+        $this->tebakkode_m->saveProgress($orders_list);
+
+        //create confirmation
+        $actions = array (
+          New PostbackTemplateActionBuilder("Ya", "ans=Y"),
+          New PostbackTemplateActionBuilder("Tidak", "ans=N")
+        );
+        $button = new ConfirmTemplateBuilder("Pilih \"YA\" untuk memesan dan pilih \"TIDAK\" untuk mengganti pesanan ", $actions);
+        $confirmMsgBuilder = new TemplateMessageBuilder("confirm order list", $button);
+
+        // merge all message
+        $messageBuilder = new MultiMessageBuilder();
+        $messageBuilder->add($textMessageBuilder);
+        $messageBuilder->add($confirmMsgBuilder);
+        $this->tebakkode_m->saveProgress('end multiMessageBuilder');
       }
-      $textMessageBuilder = new TextMessageBuilder($orders_list);
-      $this->tebakkode_m->saveProgress('end order list');
       
-      $this->tebakkode_m->saveProgress($orders_list);
-
-      //create confirmation
-      $actions = array (
-        New PostbackTemplateActionBuilder("Ya", "ans=Y"),
-        New PostbackTemplateActionBuilder("Tidak", "ans=N")
-      );
-      $button = new ConfirmTemplateBuilder("Pilih \"YA\" untuk memesan dan pilih \"TIDAK\" untuk mengganti pesanan ", $actions);
-      $confirmMsgBuilder = new TemplateMessageBuilder("confirm order list", $button);
-
-      // merge all message
-      $messageBuilder = new MultiMessageBuilder();
-      $messageBuilder->add($textMessageBuilder);
-      $messageBuilder->add($confirmMsgBuilder);
-      $this->tebakkode_m->saveProgress('end multiMessageBuilder');
-
+      catch(Exception $e) {
+        $this->tebakkode_m->saveProgress('error = ' . $e->getMessage());
+        echo 'Message: ' .$e->getMessage();
+      }
       // send reply message
       //$this->bot->replyMessage($event['replyToken'], $multiMessageBuilder);
 
