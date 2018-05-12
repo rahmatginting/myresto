@@ -165,7 +165,7 @@ echo "</br>";
       //=====================================================================
       //=====================================================================
 
-      $img_url="https://myrestobot.herokuapp.com/img/thanks01.jpg";
+      $img_url="https://myrestobot.herokuapp.com/img/qitabot.jpg";
       $options[] = new MessageTemplateActionBuilder('MULAI', 'MULAI');
       $options[] = new MessageTemplateActionBuilder('PANGGIL PRAMUSAJI', 'WAITER');
       $options[] = new MessageTemplateActionBuilder('MINTA TAGIHAN', 'BILLING');
