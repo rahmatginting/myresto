@@ -325,7 +325,7 @@ class Tebakkode_m extends CI_Model {
 
   function getMenuOrder($order_id, $restoID)
   {
-    $sql =  "SELECT b.name, a.quantity, b.description ";
+    $sql =  "SELECT b.name, a.quantity, a.description ";
     $sql .= "FROM menu_order_det a INNER JOIN restaurant_menu b ON a.menu = b.code ";
     $sql .= "WHERE a.id = '". $order_id . "' ";
     $sql .= "AND b.restaurant_id = '" . $restoID ."' ";
