@@ -166,7 +166,7 @@ echo "</br>";
       //=====================================================================
 
       $img_url="https://myrestobot.herokuapp.com/img/qitabot.jpg";
-      $options[] = new MessageTemplateActionBuilder('MULAI', 'MULAI');
+      $options[] = new MessageTemplateActionBuilder('PESAN MAKANAN', 'MULAI');
       $options[] = new MessageTemplateActionBuilder('PANGGIL PRAMUSAJI', 'WAITER');
       $options[] = new MessageTemplateActionBuilder('MINTA TAGIHAN', 'BILLING');
       
@@ -284,28 +284,8 @@ private function textMessage($event)
 
       // prepare button template
       //$buttonTemplate = new ButtonTemplateBuilder($question['number']."/10", $question['text'], $question['image'], $options);
-      $this->tebakkode_m->saveProgress('masuk01');
-      $this->tebakkode_m->saveProgress('resto='.$resto);
       $restoDesc=$this->tebakkode_m->getRestoDesc($resto);
-      $this->tebakkode_m->saveProgress('jml='.count($restoDesc));
-      
-      if (is_array($restoDesc) || is_object($restoDesc)) {
-        $this->tebakkode_m->saveProgress('masukArray');
-        if(!empty($restoDesc['name'])) {
-          $this->tebakkode_m->saveProgress('masuk02');
-          $this->tebakkode_m->saveProgress($restoDesc['name']);
-          $this->tebakkode_m->saveProgress('masuk03');
-        }
-        if(!empty($restoDesc['description'])) {
-         $this->tebakkode_m->saveProgress('masuk04');
-         $this->tebakkode_m->saveProgress($restoDesc['description']);
-        }
-        if(!empty($restoDesc['address'])) {
-          $this->tebakkode_m->saveProgress('masuk05');
-          $this->tebakkode_m->saveProgress($restoDesc['address']);
-        }
-      }
-      
+           
       $imageURL="https://myrestobot.herokuapp.com/img/categories.jpg";
       $buttonTemplate = new ButtonTemplateBuilder($restoDesc['name'], $restoDesc['address'], $imageURL, $options);
       //$buttonTemplate = new ButtonTemplateBuilder("Kategori menu", "Pilih kategori menu yang ingin Anda pesan", $imageURL, $options);
@@ -358,14 +338,47 @@ private function textMessage($event)
       $messageBuilder = new TemplateMessageBuilder("confim message", $button);
 
     }else if ($questionNum==5) {
+      //get menu code
+      $resto = $this->tebakkode_m->getResto($this->user['user_id']);
+
+      $orderID = $this->tebakkode_m->getOrder($this->user['user_id']);
+
+      //get menu order
+      $orders_list="Berikut ini adalah daftar seluruh pesanan Anda: ". "!\n";
+      $menu_name = $this->tebakkode_m->getMenuOrder($resto, $orderID);
+      foreach($orders as $order) {
+          if(!empty($order['name'])) {
+              $orders_list .= "(" . $order['quantity'] . ")   " . $order['name'] . "    ==> " . $order['description'] . "!\n";
+          }
+      }
+      $textMessageBuilder = new TextMessageBuilder($orders_list);
+      
+      //create confirmation
+      $actions = array (
+        New PostbackTemplateActionBuilder("Ya", "ans=Y"),
+        New PostbackTemplateActionBuilder("Tidak", "ans=N")
+      );
+      $button = new ConfirmTemplateBuilder("Pilih \"YA\" untuk memesan dan pilih \"TIDAK\" untuk mengganti pesanan ", $actions);
+      $messageBuilder = new TemplateMessageBuilder("confirm order list", $button);
+      
+      // merge all message
+      $multiMessageBuilder = new MultiMessageBuilder();
+      $multiMessageBuilder->add($textMessageBuilder);
+      $multiMessageBuilder->add($messageBuilder);
+      
+      // send reply message
+      $this->bot->replyMessage($event['replyToken'], $multiMessageBuilder);
+      
+    }else if ($questionNum==6) {
       //Progress Complete
 
       //set user progress finish = 0
       $this->tebakkode_m->setUserProgress($this->user['user_id'],0);
-
+      
       $img_url="https://myrestobot.herokuapp.com/img/thanks01.jpg";
       $options[] = new MessageTemplateActionBuilder('MULAI LAGI', 'MULAI');
-      //$options[] = new MessageTemplateActionBuilder('PANGGIL PRAMUSAJI', 'WAITER');
+      $options[] = new MessageTemplateActionBuilder('PANGGIL PRAMUSAJI', 'WAITER');
+      $options[] = new MessageTemplateActionBuilder('MINTA TAGIHAN', 'BILLING');
       
       // prepare button template
       $buttonTemplate = new ButtonTemplateBuilder("Pemesanan berakhir", "Silahkan menunggu pesanan Anda", $img_url, $options);
