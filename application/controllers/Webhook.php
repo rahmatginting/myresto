@@ -43,6 +43,7 @@ class Webhook extends CI_Controller {
  
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
+/*      
       //get menu order
       $orders_list="Berikut ini adalah daftar seluruh pesanan Anda: ". "!\n";
       $menu_order = $this->tebakkode_m->getMenuOrder('49', '1');
@@ -52,8 +53,9 @@ class Webhook extends CI_Controller {
           }
       }
       echo $orders_list;
-/*      
-        //Save Progress debug
+
+      
+      //Save Progress debug
         $this->resto = $this->tebakkode_m->getResto('1001');
         $this->categoryID = '101';
         echo $this->resto;
