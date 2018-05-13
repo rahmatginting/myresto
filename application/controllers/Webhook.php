@@ -530,6 +530,8 @@ private function textMessage($event)
         }
 
       }else if ($this->user['number']==4) {
+        $this->tebakkode_m->saveProgress('$message = ' . $message;
+        
         if (is_int($message)) { 
 
           $menu_code = $this->tebakkode_m->getMenuProg($this->user['user_id']);
