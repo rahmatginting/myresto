@@ -341,7 +341,7 @@ private function textMessage($event)
       //get menu name
       $menu_name = $this->tebakkode_m->getMenuName($resto, $menu_code);
 
-      $message = 'Masukkan /"JUMLAH PORSI /"' . $menu_name ' yang diinginkan.';
+      $message = 'Masukkan /"JUMLAH PORSI /"' . $menu_name . ' yang diinginkan.';
       $messageBuilder = new TextMessageBuilder($message);
 
     }else if ($questionNum==5) {
