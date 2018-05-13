@@ -359,30 +359,21 @@ private function textMessage($event)
       //get menu name
       $menu_name = $this->tebakkode_m->getMenuName($resto, $menu_code);
 
-      $message = "Masukkan \"KETERANGAN\" untuk pesanan" . $menu_name . '. Jika tidak ada keterangan ketik angka 0 [NOL]';
+      $message = "Masukkan \"KETERANGAN\" untuk pesanan " . $menu_name . '. Jika tidak ada keterangan ketik angka 0 [NOL]';
       $messageBuilder = new TextMessageBuilder($message);
 
       //============================================
       //Mulai dari sini ganti proses pemesanan
       //============================================
-    }else if ($questionNum==11) {
-      //get menu code
-      $menu_code = $this->tebakkode_m->getMenuProg($this->user['user_id']);
-
-      //get menu code
-      $resto = $this->tebakkode_m->getResto($this->user['user_id']);
-
-      //get menu name
-      $menu_name = $this->tebakkode_m->getMenuName($resto, $menu_code);
-
+    }else if ($questionNum==6) {
       $actions = array (
         New PostbackTemplateActionBuilder("Ya", "ans=Y"),
-        New PostbackTemplateActionBuilder("Tidak", "ans=N")
+        New PostbackTemplateActionBuilder("Selesai", "ans=N")
       );
-      $button = new ConfirmTemplateBuilder("Apakah Anda ingin menambah pesanan lagi?" . $menu_name ." ?", $actions);
+      $button = new ConfirmTemplateBuilder("Apakah Anda ingin menambah pesanan lagi?", $actions);
       $messageBuilder = new TemplateMessageBuilder("confim message", $button);
 
-    }else if ($questionNum==12) {
+    }else if ($questionNum==7) {
       //get menu code
       $resto = $this->tebakkode_m->getResto($this->user['user_id']);
 
@@ -404,7 +395,7 @@ private function textMessage($event)
           New PostbackTemplateActionBuilder("Ya", "ans=Y"),
           New PostbackTemplateActionBuilder("Tidak", "ans=N")
         );
-        $button = new ConfirmTemplateBuilder("Pilih \"YA\" untuk memesan dan pilih \"TIDAK\" untuk merubah pesanan ", $actions);
+        $button = new ConfirmTemplateBuilder("Pilih \"YA\" untuk konfirmasi daftar pesanan dan pilih \"TIDAK\" untuk merubah pesanan ", $actions);
         $confirmMsgBuilder = new TemplateMessageBuilder("confirm order list", $button);
 
         // merge all message
@@ -417,7 +408,7 @@ private function textMessage($event)
         $this->tebakkode_m->saveProgress('error = ' . $e->getMessage());
       }
 
-    }else if ($questionNum==13) {
+    }else if ($questionNum==8) {
       //Progress Complete
 
       $img_url="https://myrestobot.herokuapp.com/img/thanks01.jpg";
@@ -576,11 +567,17 @@ private function textMessage($event)
         }
 
       }else if ($this->user['number']==5) {
+        //Keterangan order
+
         //get menu code
         $menu_code = $this->tebakkode_m->getMenuProg($this->user['user_id']);
+        $this->tebakkode_m->saveProgress('menu_code = ' . $menu_code);
 
         //get last order id
+        $resto = $this->tebakkode_m->getResto($this->user['user_id']);
+        $table = $this->tebakkode_m->getTable($this->user['user_id']);
         $orderID = $this->tebakkode_m->searchOrderID($this->user['user_id'], $resto, $table);
+        $this->tebakkode_m->saveProgress('orderID = ' . $orderID);
 
         if ($message=='0') { 
         
@@ -603,32 +600,11 @@ private function textMessage($event)
       //=====================================
       //Mulai dari sini perubahan
       //=====================================
-      }else if ($this->user['number']==11) {
-
-        $menu_code = $this->tebakkode_m->getMenuProg($this->user['user_id']);
+      }else if ($this->user['number']==6) {
+        //Tambah pesanan atau tidak
 
         parse_str($message, $parseMessage);
         if ($parseMessage["ans"] == "Y") {
-
-          $orderID = $this->tebakkode_m->getOrder($this->user['user_id']);
-          $user_name = $this->tebakkode_m->getUserName($this->user['user_id']);
-          $resto = $this->tebakkode_m->getResto($this->user['user_id']);
-          $table = $this->tebakkode_m->getTable($this->user['user_id']);
-          if ($orderID == 0)
-          {
-            //save menu order header
-            $this->tebakkode_m->saveOrderHed($this->user['user_id'], $user_name, $resto, $table);
-            
-            //get last order id
-            $orderID = $this->tebakkode_m->searchOrderID($this->user['user_id'], $resto, $table);
-
-            //update order ID
-            $this->tebakkode_m->setOrder($this->user['user_id'], $orderID);
-
-          }
-          
-          //save menu order detail
-          $this->tebakkode_m->saveOrderDet($orderID, $menu_code, 1);
 
           // update number progress
           $this->tebakkode_m->setUserProgress($this->user['user_id'], 2);
@@ -638,14 +614,14 @@ private function textMessage($event)
           
         }else if ($parseMessage["ans"] == "N") {
           // update number progress
-          $this->tebakkode_m->setUserProgress($this->user['user_id'], 2);
+          $this->tebakkode_m->setUserProgress($this->user['user_id'], 7);
 
           // send next question
-          $this->sendQuestion($replyToken, 2);
+          $this->sendQuestion($replyToken, 7);
 
         }
 
-      }else if ($this->user['number']==12) {
+      }else if ($this->user['number']==7) {
         parse_str($message, $parseMessage);
         if ($parseMessage["ans"] == "Y") {  
           //Proses complete order
@@ -662,7 +638,7 @@ private function textMessage($event)
           $this->tebakkode_m->setUserProgress($this->user['user_id'],0);
 
           // send next question
-          $this->sendQuestion($replyToken, 6);
+          $this->sendQuestion($replyToken, 8);
 
 
         }else if ($parseMessage["ans"] == "N") {
