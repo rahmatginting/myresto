@@ -54,8 +54,9 @@ class Webhook extends CI_Controller {
       }
       echo $orders_list;
 
-      
-      //Save Progress debug
+
+
+        //Save Progress debug
         $this->resto = $this->tebakkode_m->getResto('1001');
         $this->categoryID = '101';
         echo $this->resto;
@@ -343,7 +344,7 @@ private function textMessage($event)
       //get menu name
       $menu_name = $this->tebakkode_m->getMenuName($resto, $menu_code);
 
-      $message = 'Masukkan \"JUMLAH PORSI\"' . $menu_name . ' yang diinginkan.';
+      $message = "Masukkan \"JUMLAH PORSI\"" . $menu_name . " yang diinginkan.";
       $messageBuilder = new TextMessageBuilder($message);
 
     }else if ($questionNum==5) {
@@ -358,7 +359,7 @@ private function textMessage($event)
       //get menu name
       $menu_name = $this->tebakkode_m->getMenuName($resto, $menu_code);
 
-      $message = 'Masukkan \"KETERANGAN\" untuk pesanan' . $menu_name . '. Jika tidak ada keterangan ketik angka 0 [NOL]';
+      $message = "Masukkan \"KETERANGAN\" untuk pesanan" . $menu_name . '. Jika tidak ada keterangan ketik angka 0 [NOL]';
       $messageBuilder = new TextMessageBuilder($message);
 
       //============================================
@@ -531,7 +532,6 @@ private function textMessage($event)
 
       }else if ($this->user['number']==4) {
         $this->tebakkode_m->saveProgress('$message = ' . $message;
-        
         if (is_int($message)) { 
 
           $menu_code = $this->tebakkode_m->getMenuProg($this->user['user_id']);
