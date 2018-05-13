@@ -341,7 +341,7 @@ private function textMessage($event)
       //get menu name
       $menu_name = $this->tebakkode_m->getMenuName($resto, $menu_code);
 
-      $message = 'Masukkan /"JUMLAH PORSI /"' . $menu_name . ' yang diinginkan.';
+      $message = 'Masukkan \"JUMLAH PORSI\"' . $menu_name . ' yang diinginkan.';
       $messageBuilder = new TextMessageBuilder($message);
 
     }else if ($questionNum==5) {
@@ -356,7 +356,7 @@ private function textMessage($event)
       //get menu name
       $menu_name = $this->tebakkode_m->getMenuName($resto, $menu_code);
 
-      $message = 'Masukkan /"KETERANGAN /" untuk pesanan' . $menu_name . '. Jika tidak ada keterangan ketik angka 0 [NOL]';
+      $message = 'Masukkan \"KETERANGAN\" untuk pesanan' . $menu_name . '. Jika tidak ada keterangan ketik angka 0 [NOL]';
       $messageBuilder = new TextMessageBuilder($message);
 
       //============================================
@@ -401,7 +401,7 @@ private function textMessage($event)
           New PostbackTemplateActionBuilder("Ya", "ans=Y"),
           New PostbackTemplateActionBuilder("Tidak", "ans=N")
         );
-        $button = new ConfirmTemplateBuilder("Pilih <b>YA</b> untuk memesan dan pilih \"TIDAK\" untuk merubah pesanan ", $actions);
+        $button = new ConfirmTemplateBuilder("Pilih \"YA\" untuk memesan dan pilih \"TIDAK\" untuk merubah pesanan ", $actions);
         $confirmMsgBuilder = new TemplateMessageBuilder("confirm order list", $button);
 
         // merge all message
