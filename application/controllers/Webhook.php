@@ -100,7 +100,7 @@ echo "</br>";
       
 */      
            
-      echo "Webhook Linebot Batavia Labs";
+      echo "Webhook Qitabot Batavia Labs";
       header('HTTP/1.1 400 Only POST method allowed');
       exit;
     }
