@@ -329,8 +329,40 @@ private function textMessage($event)
       }
       $carousel = new CarouselTemplateBuilder($columns);
       $messageBuilder = new TemplateMessageBuilder("Daftar Menu", $carousel);
-
     }else if ($questionNum==4) {
+      //Tanya Jumlah porsi
+
+      //get menu code
+      $menu_code = $this->tebakkode_m->getMenuProg($this->user['user_id']);
+
+      //get menu code
+      $resto = $this->tebakkode_m->getResto($this->user['user_id']);
+
+      //get menu name
+      $menu_name = $this->tebakkode_m->getMenuName($resto, $menu_code);
+
+      $message = 'Masukkan /"JUMLAH PORSI /"' . $menu_name ' yang diinginkan.';
+      $messageBuilder = new TextMessageBuilder($message);
+
+    }else if ($questionNum==5) {
+      //Tanya Jumlah porsi
+
+      //get menu code
+      $menu_code = $this->tebakkode_m->getMenuProg($this->user['user_id']);
+
+      //get menu code
+      $resto = $this->tebakkode_m->getResto($this->user['user_id']);
+
+      //get menu name
+      $menu_name = $this->tebakkode_m->getMenuName($resto, $menu_code);
+
+      $message = 'Masukkan /"KETERANGAN /" untuk pesanan' . $menu_name . '. Jika tidak ada keterangan ketik angka 0 [NOL]';
+      $messageBuilder = new TextMessageBuilder($message);
+
+      //============================================
+      //Mulai dari sini ganti proses pemesanan
+      //============================================
+    }else if ($questionNum==11) {
       //get menu code
       $menu_code = $this->tebakkode_m->getMenuProg($this->user['user_id']);
 
@@ -344,10 +376,10 @@ private function textMessage($event)
         New PostbackTemplateActionBuilder("Ya", "ans=Y"),
         New PostbackTemplateActionBuilder("Tidak", "ans=N")
       );
-      $button = new ConfirmTemplateBuilder("Apakah Anda yakin pesan " . $menu_name ." ?", $actions);
+      $button = new ConfirmTemplateBuilder("Apakah Anda ingin menambah pesanan lagi?" . $menu_name ." ?", $actions);
       $messageBuilder = new TemplateMessageBuilder("confim message", $button);
 
-    }else if ($questionNum==5) {
+    }else if ($questionNum==12) {
       //get menu code
       $resto = $this->tebakkode_m->getResto($this->user['user_id']);
 
@@ -382,7 +414,7 @@ private function textMessage($event)
         $this->tebakkode_m->saveProgress('error = ' . $e->getMessage());
       }
 
-    }else if ($questionNum==6) {
+    }else if ($questionNum==13) {
       //Progress Complete
 
       $img_url="https://myrestobot.herokuapp.com/img/thanks01.jpg";
@@ -496,6 +528,73 @@ private function textMessage($event)
         }
 
       }else if ($this->user['number']==4) {
+        if (is_int($message)) { 
+
+          $menu_code = $this->tebakkode_m->getMenuProg($this->user['user_id']);
+
+          $orderID = $this->tebakkode_m->getOrder($this->user['user_id']);
+          $user_name = $this->tebakkode_m->getUserName($this->user['user_id']);
+          $resto = $this->tebakkode_m->getResto($this->user['user_id']);
+          $table = $this->tebakkode_m->getTable($this->user['user_id']);
+          if ($orderID == 0)
+          {
+            //save menu order header
+            $this->tebakkode_m->saveOrderHed($this->user['user_id'], $user_name, $resto, $table);
+            
+            //get last order id
+            $orderID = $this->tebakkode_m->searchOrderID($this->user['user_id'], $resto, $table);
+
+            //update order ID
+            $this->tebakkode_m->setOrder($this->user['user_id'], $orderID);
+
+          }
+          
+          //save menu order detail
+          $this->tebakkode_m->saveOrderDet($orderID, $menu_code, $message);
+
+          // update number progress
+          $this->tebakkode_m->setUserProgress($this->user['user_id'], 5);
+
+          // send next question ==> Keterangan pesanan
+          $this->sendQuestion($replyToken, 5);
+
+        } else { 
+          // update number progress
+          $this->tebakkode_m->setUserProgress($this->user['user_id'], 4);
+
+          // send next question ==> Jumlah Porsi
+          $this->sendQuestion($replyToken, 4);
+        }
+
+      }else if ($this->user['number']==5) {
+        //get menu code
+        $menu_code = $this->tebakkode_m->getMenuProg($this->user['user_id']);
+
+        //get last order id
+        $orderID = $this->tebakkode_m->searchOrderID($this->user['user_id'], $resto, $table);
+
+        if ($message=='0') { 
+        
+          //update keterangan order detail
+          $this->tebakkode_m->setKeterangan($orderID, $menu_code, "N/A");
+
+        } else {
+
+          //update keterangan order detail
+          $this->tebakkode_m->setKeterangan($orderID, $menu_code, $message);
+        }
+
+        // update number progress
+        $this->tebakkode_m->setUserProgress($this->user['user_id'], 6);
+
+        // send next question ==> Keterangan pesanan
+        $this->sendQuestion($replyToken, 6);
+
+
+      //=====================================
+      //Mulai dari sini perubahan
+      //=====================================
+      }else if ($this->user['number']==11) {
 
         $menu_code = $this->tebakkode_m->getMenuProg($this->user['user_id']);
 
@@ -537,7 +636,7 @@ private function textMessage($event)
 
         }
 
-      }else if ($this->user['number']==5) {
+      }else if ($this->user['number']==12) {
         parse_str($message, $parseMessage);
         if ($parseMessage["ans"] == "Y") {  
           //Proses complete order
