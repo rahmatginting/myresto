@@ -323,6 +323,17 @@ class Tebakkode_m extends CI_Model {
     return $this->db->insert_id();
   }
 
+  function setKeterangan($order_id, $menu_id, $keterangan)
+  {
+    $this->db->set('description', $keterangan)
+      ->where('id', $order_id)
+      ->where('menu', $menu_id)
+      ->update('menu_order_det');
+ 
+    return $this->db->affected_rows();
+
+  }
+  
   function getMenuOrder($order_id, $restoID)
   {
     $sql =  "SELECT b.name, a.quantity, a.description ";
