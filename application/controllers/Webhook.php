@@ -344,7 +344,7 @@ private function textMessage($event)
       //get menu name
       $menu_name = $this->tebakkode_m->getMenuName($resto, $menu_code);
 
-      $message = "Masukkan \"JUMLAH PORSI\"" . $menu_name . " yang diinginkan.";
+      $message = "Masukkan \"JUMLAH PORSI\" " . $menu_name . " yang diinginkan.";
       $messageBuilder = new TextMessageBuilder($message);
 
     }else if ($questionNum==5) {
@@ -532,8 +532,19 @@ private function textMessage($event)
 
       }else if ($this->user['number']==4) {
         $this->tebakkode_m->saveProgress('$message = ' . $message);
-        if (is_int($message)) { 
+        //if (is_int($message)) { 
+        if ( strval($message) != strval(intval($message)) ) {
+          //$message variable is not an integer
+          $this->tebakkode_m->saveProgress('$message is not integer');
 
+          // update number progress
+          $this->tebakkode_m->setUserProgress($this->user['user_id'], 4);
+
+          // send next question ==> Jumlah Porsi
+          $this->sendQuestion($replyToken, 4);        
+
+        } else { 
+          $this->tebakkode_m->saveProgress('$message is integer');
           $menu_code = $this->tebakkode_m->getMenuProg($this->user['user_id']);
 
           $orderID = $this->tebakkode_m->getOrder($this->user['user_id']);
@@ -562,12 +573,6 @@ private function textMessage($event)
           // send next question ==> Keterangan pesanan
           $this->sendQuestion($replyToken, 5);
 
-        } else { 
-          // update number progress
-          $this->tebakkode_m->setUserProgress($this->user['user_id'], 4);
-
-          // send next question ==> Jumlah Porsi
-          $this->sendQuestion($replyToken, 4);
         }
 
       }else if ($this->user['number']==5) {
