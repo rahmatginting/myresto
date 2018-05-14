@@ -456,6 +456,9 @@ private function textMessage($event)
 
         if ($this->resto=="" || $this->resto==false) 
         {
+          // update number progress
+          $this->tebakkode_m->setUserProgress($this->user['user_id'], 1);
+          
           $message = "Kami tidak menemukan \"NOMOR MEJA\" yang Anda masukkan. ". "\n" . "\n";
           $message .= "Silahkan ulangi ketik nomor meja dimana Anda berada saat ini.";
           $messageBuilder = new TextMessageBuilder($message);
