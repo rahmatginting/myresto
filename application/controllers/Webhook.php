@@ -454,7 +454,7 @@ private function textMessage($event)
 
         if ($this->resto=="" || $this->resto==false) 
         {
-          $message = "Kami tidak menemukan \"NOMOR MEJA\" yang Anda masukkan. ". "\n";
+          $message = "Kami tidak menemukan \"NOMOR MEJA\" yang Anda masukkan. ". "\n" . "\n";
           $message .= "Silahkan ulangi ketik nomor meja dimana Anda berada saat ini.";
           $messageBuilder = new TextMessageBuilder($message);
       
