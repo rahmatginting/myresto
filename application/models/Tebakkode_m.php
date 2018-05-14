@@ -379,7 +379,7 @@ class Tebakkode_m extends CI_Model {
     return $this->db->affected_rows();
   }
   
-  functon saveCallWaitress($userID)
+  function saveCallWaitress($userID)
   {
     $sql =  "SELECT table, resto ";
     $sql .= "FROM users ";
