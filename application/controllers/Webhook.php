@@ -157,27 +157,6 @@ echo "</br>";
     if ($res->isSucceeded())
     {
       $profile = $res->getJSONDecodedBody();
-/* 
-      // create welcome message
-      $message  = "Salam kenal, " . $profile['displayName'] . "!\n";
-      $message .= "Layanan chatbot ini ditujukan untuk pemesanan dan reservasi" . "!\n";
-      $message .= "Silakan ketik \"MULAI\" untuk melakukan pemesanan.";
-      $textMessageBuilder = new TextMessageBuilder($message);
- 
-      // create sticker message
-      $stickerMessageBuilder = new StickerMessageBuilder(1, 3);
- 
-      // merge all message
-      $multiMessageBuilder = new MultiMessageBuilder();
-      $multiMessageBuilder->add($textMessageBuilder);
-      $multiMessageBuilder->add($stickerMessageBuilder);
-
-      // send reply message
-      $this->bot->replyMessage($event['replyToken'], $multiMessageBuilder);
- 
-*/
-      //=====================================================================
-      //=====================================================================
 
       $img_url="https://myrestobot.herokuapp.com/img/qitabot.jpg";
       $options[] = new MessageTemplateActionBuilder('PESAN MAKANAN', 'MULAI');
@@ -229,6 +208,16 @@ private function textMessage($event)
         // send question no.1
         $this->sendQuestion($event['replyToken'], 1);
 
+      } else if(strtolower($userMessage) == 'waiter') {
+
+        //Call button start
+        $this->btnStart();
+
+      } else if(strtolower($userMessage) == 'billing') {
+
+        //Call button start
+        $this->btnStart();
+        
       } else {
         $message = 'Silakan ketik pesan "MULAI" untuk melakukan pemesanan.';
         $textMessageBuilder = new TextMessageBuilder($message);
@@ -242,6 +231,27 @@ private function textMessage($event)
     }
   }
 
+
+//====================================================================================
+//====================================================================================
+//====================================================================================
+private function btnStart()
+{
+  $img_url="https://myrestobot.herokuapp.com/img/qitabot.jpg";
+  $options[] = new MessageTemplateActionBuilder('PESAN MAKANAN', 'MULAI');
+  $options[] = new MessageTemplateActionBuilder('PANGGIL PRAMUSAJI', 'WAITER');
+  $options[] = new MessageTemplateActionBuilder('MINTA TAGIHAN', 'BILLING');
+  
+  // prepare button template
+  $buttonTemplate = new ButtonTemplateBuilder("Silahkan menunggu, petugas kami akan segera melayani Anda", "Silahkan klik tombol pilihan dibawah", $img_url, $options);
+ 
+  // build message
+  $btnmessageBuilder = new TemplateMessageBuilder("Terimakasih", $buttonTemplate);
+
+  // send reply message
+  $this->bot->replyMessage($replyToken, $btnmessageBuilder);
+
+}
 
   //====================================================================================
   //====================================================================================
@@ -273,16 +283,6 @@ private function textMessage($event)
     $question = $this->tebakkode_m->getQuestion($questionNum);
  
     if ($questionNum==1) {
-      /*
-      $options[] = new MessageTemplateActionBuilder('NOMOR MEJA', 'NOMOR MEJA');
-
-      // prepare button template
-      $buttonTemplate = new ButtonTemplateBuilder("Ketik nomor meja dimana Anda berada saat ini", $question['text'], $question['image'], $options);
-     
-      // build message
-      $messageBuilder = new TemplateMessageBuilder("Nomor Meja", $buttonTemplate);
-      */
-
       $message = 'Silakan ketik nomor meja dimana Anda berada saat ini.';
       $messageBuilder = new TextMessageBuilder($message);
 
@@ -620,9 +620,6 @@ private function textMessage($event)
         $this->sendQuestion($replyToken, 6);
 
 
-      //=====================================
-      //Mulai dari sini perubahan
-      //=====================================
       }else if ($this->user['number']==6) {
         //Tambah pesanan atau tidak
 
@@ -666,7 +663,6 @@ private function textMessage($event)
           // send next question
           $this->sendQuestion($replyToken, 8);
 
-
         }else if ($parseMessage["ans"] == "N") {
           //Rubah pesanan disini
 
@@ -679,12 +675,20 @@ private function textMessage($event)
           //set user clear progress 
           $this->tebakkode_m->setClearProgress($this->user['user_id']);
 
+          //Call button start
+          $this->btnStart();
+
+/*
           $message = "Terimakasih atas pesanan Anda " . "\n";
           $message = "Silahkan menunggu, petugas kami akan segera melayani Anda" . "\n";
-          $messageBuilder = new TextMessageBuilder($message);
+          $textMessageBuilder = new TextMessageBuilder($message);
       
           // send message
           $response = $this->bot->replyMessage($replyToken, $messageBuilder);
+
+*/          //==================================================================
+
+
         }
 
       }
