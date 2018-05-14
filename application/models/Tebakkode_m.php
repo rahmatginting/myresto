@@ -391,7 +391,7 @@ class Tebakkode_m extends CI_Model {
     $query = $this->db->get();
     //$query = $this->db->query($sql);
     foreach($query->result_array() AS $row) {
-      $table = $row['id'];
+      $table = $row['table'];
       $resto = $row['resto'];
       $name = $row['display_name'];
     }
