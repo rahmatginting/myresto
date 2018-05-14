@@ -379,7 +379,6 @@ class Tebakkode_m extends CI_Model {
     return $this->db->affected_rows();
   }
   
-
   function saveCallWaitress($userID)
   {
     $this->db->select('table')
@@ -390,15 +389,12 @@ class Tebakkode_m extends CI_Model {
              ->order_by('id', 'asc')
              ->limit(1);
     $query = $this->db->get();
-
-     if ($query->num_rows() > 0) {
-
-      $table = $query['table'];
-      $resto = $query['resto'];
-      $name = $query['display_name'];
-     }
-     return false;
-
+    //$query = $this->db->query($sql);
+    foreach($query->result_array() AS $row) {
+      $table = $row['id'];
+      $resto = $row['resto'];
+      $name = $row['display_name'];
+    }
 
     $this->db->set('user_id', $userID)
       ->set('resto_id', $resto)
