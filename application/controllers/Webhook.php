@@ -487,6 +487,9 @@ private function textMessage($event)
           //set user progress finish = 0
           $this->tebakkode_m->setUserProgress($this->user['user_id'],0);
 
+          //set user clear progress 
+          $this->tebakkode_m->setClearProgress($this->user['user_id']);
+
         }
 
 
@@ -545,10 +548,12 @@ private function textMessage($event)
           if ($orderID == 0)
           {
             //save menu order header
-            $this->tebakkode_m->saveOrderHed($this->user['user_id'], $user_name, $resto, $table);
-            
+            $lastID = $this->tebakkode_m->saveOrderHed($this->user['user_id'], $user_name, $resto, $table);
+            $this->tebakkode_m->saveProgress('lastID = ' . $lastID);
+
             //get last order id
             $orderID = $this->tebakkode_m->searchOrderID($this->user['user_id'], $resto, $table);
+            $this->tebakkode_m->saveProgress('orderID = ' . $orderID);
 
             //update order ID
             $this->tebakkode_m->setOrder($this->user['user_id'], $orderID);
@@ -636,6 +641,9 @@ private function textMessage($event)
 
           //set user progress finish = 0
           $this->tebakkode_m->setUserProgress($this->user['user_id'],0);
+
+          //set user clear progress 
+          $this->tebakkode_m->setClearProgress($this->user['user_id']);
 
           // send next question
           $this->sendQuestion($replyToken, 8);
