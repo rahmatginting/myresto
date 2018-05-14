@@ -386,7 +386,7 @@ class Tebakkode_m extends CI_Model {
              ->select('resto')
              ->select('display_name')
              ->from('users')
-             ->where('user_id',$user_id)
+             ->where('user_id',$userID)
              ->order_by('id', 'asc')
              ->limit(1);
     $query = $this->db->get();
