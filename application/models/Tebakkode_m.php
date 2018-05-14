@@ -379,21 +379,26 @@ class Tebakkode_m extends CI_Model {
     return $this->db->affected_rows();
   }
   
+
   function saveCallWaitress($userID)
   {
-    $sql =  "SELECT table, resto ";
-    $sql .= "FROM users ";
-    $sql .= "WHERE user_id = '". $userID . "' ";
-    $sql .= "ORDER BY id DESC ";
-    $sql .= "LIMIT 1 ";
-        
-    $query = $this->db->query($sql);
-    if($query->num_rows() > 0) 
-    {
+    $this->db->select('table')
+             ->select('resto')
+             ->select('display_name')
+             ->from('users')
+             ->where('user_id',$user_id)
+             ->order_by('id', 'asc')
+             ->limit(1);
+    $query = $this->db->get();
+
+     if ($query->num_rows() > 0) {
+
       $table = $query['table'];
       $resto = $query['resto'];
       $name = $query['display_name'];
-    }
+     }
+     return false;
+
 
     $this->db->set('user_id', $userID)
       ->set('resto_id', $resto)
@@ -406,8 +411,7 @@ class Tebakkode_m extends CI_Model {
       ->insert('panggilan');
  
     return $this->db->insert_id();
+  }
 
-
-  }  
 }
 
