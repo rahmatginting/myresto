@@ -239,7 +239,7 @@ private function textMessage($event)
 //====================================================================================
 //====================================================================================
 //====================================================================================
-private function btnStart($event)
+private function btnStart($replyToken)
 {
   $this->tebakkode_m->saveProgress('message = btnStart01');
   $img_url="https://myrestobot.herokuapp.com/img/qitabot.jpg";
@@ -255,8 +255,9 @@ private function btnStart($event)
 
   // send reply message
   //$this->bot->replyMessage($replyToken, $btnmessageBuilder);
-  $this->bot->replyMessage($event['replyToken'], $btnmessageBuilder);
-  
+  //$this->bot->replyMessage($event['replyToken'], $btnmessageBuilder);
+    // send message
+  $response = $this->bot->replyMessage($replyToken, $btnmessageBuilder);  
   $this->tebakkode_m->saveProgress('message = btnStart02');
 
 }
