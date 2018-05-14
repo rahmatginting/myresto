@@ -43,6 +43,8 @@ class Webhook extends CI_Controller {
   {
  
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+      $dateTimeVariable = date("F j, Y \a\t g:ia");
+      echo $dateTimeVariable;
       $this->tebakkode_m->saveCallWaitress('U4035bbada65f83a2ab7253095cd0e6e7');
 
 
