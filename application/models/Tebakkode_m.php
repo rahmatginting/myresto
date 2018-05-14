@@ -266,7 +266,10 @@ class Tebakkode_m extends CI_Model {
   {
     $this->db->select('order')
              ->from('users')
-             ->where('user_id',$user_id);
+             ->where('user_id',$user_id)
+             ->order_by('id', 'asc');
+             ->limit(1);
+
     $query = $this->db->get();
 
      if ($query->num_rows() > 0) {
@@ -302,7 +305,13 @@ class Tebakkode_m extends CI_Model {
   function searchOrderID($user_id, $resto, $table)
   {
 
-    $sql = "SELECT id FROM menu_order WHERE user_id = '". $user_id . "' AND resto_id = '" . $resto ."' AND table_id = '" . $table ."' LIMIT 1";
+    $sql = "SELECT id "; 
+    $sql .= "FROM menu_order ";
+    $sql .= "WHERE user_id = '". $user_id . "' ";
+    $sql .= "AND resto_id = '" . $resto ."' ";
+    $sql .= "AND table_id = '" . $table ."' ";
+    $sql .= "ORDER BY id ASC ";
+    $sql .= "LIMIT 1";
     $query = $this->db->query($sql);
 
      if ($query->num_rows() > 0) {
@@ -333,7 +342,7 @@ class Tebakkode_m extends CI_Model {
     return $this->db->affected_rows();
 
   }
-  
+
   function getMenuOrder($order_id, $restoID)
   {
     $sql =  "SELECT b.name, a.quantity, a.description ";
@@ -356,5 +365,19 @@ class Tebakkode_m extends CI_Model {
     return $this->db->affected_rows();
   }
 
+  function setClearProgress($userID) 
+  {
+    $this->db->set('number', '0')
+      ->set('resto', '0')
+      ->set('table', '0')
+      ->set('category', '0')
+      ->set('menu', '0')
+      ->set('order', '0')
+      ->where('user_id', $userID)
+      ->update('users');
+ 
+    return $this->db->affected_rows();
+
+  }
 }
 
