@@ -201,7 +201,7 @@ private function textMessage($event)
       if(strtolower($userMessage) == 'mulai')
       {
         $this->tebakkode_m->saveProgress('message = mulai');
-        
+
         // reset score
         $this->tebakkode_m->setScore($this->user['user_id'], 0);
         // update number progress
@@ -214,13 +214,13 @@ private function textMessage($event)
         $this->tebakkode_m->saveProgress('message = waiter');
 
         //Call button start
-        $this->btnStart();
+        $this->btnStart($event['replyToken']);
 
       } else if(strtolower($userMessage) == 'billing') {
         $this->tebakkode_m->saveProgress('message = billing');
 
         //Call button start
-        $this->btnStart();
+        $this->btnStart($event['replyToken']);
 
       } else {
         $message = 'Silakan ketik pesan "MULAI" untuk melakukan pemesanan.';
@@ -239,8 +239,9 @@ private function textMessage($event)
 //====================================================================================
 //====================================================================================
 //====================================================================================
-private function btnStart()
+private function btnStart($event)
 {
+  $this->tebakkode_m->saveProgress('message = btnStart01');
   $img_url="https://myrestobot.herokuapp.com/img/qitabot.jpg";
   $options[] = new MessageTemplateActionBuilder('PESAN MAKANAN', 'MULAI');
   $options[] = new MessageTemplateActionBuilder('PANGGIL PRAMUSAJI', 'WAITER');
@@ -253,7 +254,10 @@ private function btnStart()
   $btnmessageBuilder = new TemplateMessageBuilder("Terimakasih", $buttonTemplate);
 
   // send reply message
-  $this->bot->replyMessage($replyToken, $btnmessageBuilder);
+  //$this->bot->replyMessage($replyToken, $btnmessageBuilder);
+  $this->bot->replyMessage($event['replyToken'], $btnmessageBuilder);
+  
+  $this->tebakkode_m->saveProgress('message = btnStart02');
 
 }
 
@@ -680,7 +684,7 @@ private function btnStart()
           $this->tebakkode_m->setClearProgress($this->user['user_id']);
 
           //Call button start
-          $this->btnStart();
+          $this->btnStart($replyToken);
 
 /*
           $message = "Terimakasih atas pesanan Anda " . "\n";
