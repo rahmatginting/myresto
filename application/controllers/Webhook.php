@@ -200,6 +200,8 @@ private function textMessage($event)
     {
       if(strtolower($userMessage) == 'mulai')
       {
+        $this->tebakkode_m->saveProgress('message = mulai');
+        
         // reset score
         $this->tebakkode_m->setScore($this->user['user_id'], 0);
         // update number progress
@@ -209,15 +211,17 @@ private function textMessage($event)
         $this->sendQuestion($event['replyToken'], 1);
 
       } else if(strtolower($userMessage) == 'waiter') {
+        $this->tebakkode_m->saveProgress('message = waiter');
 
         //Call button start
         $this->btnStart();
 
       } else if(strtolower($userMessage) == 'billing') {
+        $this->tebakkode_m->saveProgress('message = billing');
 
         //Call button start
         $this->btnStart();
-        
+
       } else {
         $message = 'Silakan ketik pesan "MULAI" untuk melakukan pemesanan.';
         $textMessageBuilder = new TextMessageBuilder($message);
