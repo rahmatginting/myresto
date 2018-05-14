@@ -267,7 +267,7 @@ class Tebakkode_m extends CI_Model {
     $this->db->select('order')
              ->from('users')
              ->where('user_id',$user_id)
-             ->order_by('id', 'asc');
+             ->order_by('id', 'asc')
              ->limit(1);
 
     $query = $this->db->get();
