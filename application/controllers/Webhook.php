@@ -670,6 +670,21 @@ private function textMessage($event)
         }else if ($parseMessage["ans"] == "N") {
           //Rubah pesanan disini
 
+          //set user clear progress 
+          $this->tebakkode_m->saveCallWaitress($this->user['user_id']);
+
+          //set user progress finish = 0
+          $this->tebakkode_m->setUserProgress($this->user['user_id'],0);
+
+          //set user clear progress 
+          $this->tebakkode_m->setClearProgress($this->user['user_id']);
+
+          $message = "Terimakasih atas pesanan Anda " . "\n";
+          $message = "Silahkan menunggu, petugas kami akan segera melayani Anda" . "\n";
+          $messageBuilder = new TextMessageBuilder($message);
+      
+          // send message
+          $response = $this->bot->replyMessage($replyToken, $messageBuilder);
         }
 
       }
