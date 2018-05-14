@@ -377,7 +377,37 @@ class Tebakkode_m extends CI_Model {
       ->update('users');
  
     return $this->db->affected_rows();
-
   }
+  
+  functon saveCallWaitress($userID)
+  {
+    $sql =  "SELECT table, resto ";
+    $sql .= "FROM users ";
+    $sql .= "WHERE user_id = '". $userID . "' ";
+    $sql .= "ORDER BY id DESC ";
+    $sql .= "LIMIT 1 ";
+        
+    $query = $this->db->query($sql);
+    if($query->num_rows() > 0) 
+    {
+      $table = $query['table'];
+      $resto = $query['resto'];
+      $name = $query['display_name'];
+    }
+
+    $this->db->set('user_id', $userID)
+      ->set('resto_id', $resto)
+      ->set('table_id', $table)
+      ->set('timestamp', 'current_timestamp')
+      ->set('user_name', $name)
+      ->set('type', '01')
+      ->set('status','0')
+      ->set('description','rubah pesanan')
+      ->insert('panggilan');
+ 
+    return $this->db->insert_id();
+
+
+  }  
 }
 
