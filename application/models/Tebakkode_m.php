@@ -396,11 +396,10 @@ class Tebakkode_m extends CI_Model {
       $name = $row['display_name'];
     }
     
-    $dateTimeVariable = date("F j, Y \a\t g:ia");
     $this->db->set('user_id', $userID)
       ->set('resto_id', $resto)
       ->set('table_id', $table)
-      ->set('timestamp', $dateTimeVariable)
+      ->set('timestamp', now())
       ->set('user_name', $name)
       ->set('type', '01')
       ->set('status','0')
