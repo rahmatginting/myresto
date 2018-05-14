@@ -310,7 +310,7 @@ class Tebakkode_m extends CI_Model {
     $sql .= "WHERE user_id = '". $user_id . "' ";
     $sql .= "AND resto_id = '" . $resto ."' ";
     $sql .= "AND table_id = '" . $table ."' ";
-    $sql .= "ORDER BY id ASC ";
+    $sql .= "ORDER BY id DESC ";
     $sql .= "LIMIT 1";
     $query = $this->db->query($sql);
 
