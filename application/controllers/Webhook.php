@@ -283,7 +283,7 @@ private function textMessage($event)
       $messageBuilder = new TemplateMessageBuilder("Nomor Meja", $buttonTemplate);
       */
 
-      $message = 'Silakan ketik nomor meja dimana Anda berada saat ini.';
+      $message = 'Silahkan ketik nomor meja dimana Anda berada saat ini.';
       $messageBuilder = new TextMessageBuilder($message);
 
     }else if ($questionNum==2) {
@@ -426,7 +426,7 @@ private function textMessage($event)
     }
 
     // send message
-    $response = $this->bot->replyMessage($replyToken, $messageBuilder);;
+    $response = $this->bot->replyMessage($replyToken, $messageBuilder);
 
   }
 
@@ -445,23 +445,38 @@ private function textMessage($event)
     
     if($this->user['number'] < 10)
     {
-      // update number progress
-      $this->tebakkode_m->setUserProgress($this->user['user_id'], $this->user['number'] + 1);
 
       //Proses Resto disini
       if ($this->user['number']==1) {
-        // update table code
-        $this->tebakkode_m->setTable($this->user['user_id'], $message);
 
         $this->resto = $this->tebakkode_m->checkResto($message);
         $this->tebakkode_m->saveProgress('$resto = ' . $this->resto);
 
+        if ($this->resto=="" || $this->resto==false) 
+        {
+          $message = "Kami tidak menemukan \"NOMOR MEJA\" yang Anda masukkan. ". "\n";
+          $message .= "Silahkan ulangi ketik nomor meja dimana Anda berada saat ini.";
+          $messageBuilder = new TextMessageBuilder($message);
+      
+          // send message
+          $response = $this->bot->replyMessage($replyToken, $messageBuilder);
 
-        // update restaurant code
-        $this->tebakkode_m->setResto($this->user['user_id'], $this->resto);
-       
-        // send next question
-        $this->sendQuestion($replyToken, $this->user['number'] + 1);
+
+        }else {
+
+          // update number progress
+          $this->tebakkode_m->setUserProgress($this->user['user_id'], $this->user['number'] + 1);
+
+          // update table code
+          $this->tebakkode_m->setTable($this->user['user_id'], $message);
+
+          // update restaurant code
+          $this->tebakkode_m->setResto($this->user['user_id'], $this->resto);
+         
+          // send next question
+          $this->sendQuestion($replyToken, $this->user['number'] + 1);
+        }
+
         
       }else if ($this->user['number']==2) {
         if ($message!="SELESAI") {
