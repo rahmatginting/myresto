@@ -35,6 +35,7 @@ class Webhook extends CI_Controller {
     // create bot object
     $httpClient = new CurlHTTPClient($_ENV['CHANNEL_ACCESS_TOKEN']);
     $this->bot  = new LINEBot($httpClient, ['channelSecret' => $_ENV['CHANNEL_SECRET']]);
+    $this->resto="";
     
   }
 
@@ -367,7 +368,7 @@ private function textMessage($event)
       //============================================
     }else if ($questionNum==6) {
       $actions = array (
-        New PostbackTemplateActionBuilder("Ya", "ans=Y"),
+        New PostbackTemplateActionBuilder("Pesan Lagi", "ans=Y"),
         New PostbackTemplateActionBuilder("Selesai", "ans=N")
       );
       $button = new ConfirmTemplateBuilder("Apakah Anda ingin menambah pesanan lagi?", $actions);
@@ -452,8 +453,11 @@ private function textMessage($event)
         // update table code
         $this->tebakkode_m->setTable($this->user['user_id'], $message);
 
-        // update restaurant code
         $this->resto = $this->tebakkode_m->checkResto($message);
+        $this->tebakkode_m->saveProgress('$resto = ' . $this->resto);
+
+
+        // update restaurant code
         $this->tebakkode_m->setResto($this->user['user_id'], $this->resto);
        
         // send next question
@@ -525,11 +529,10 @@ private function textMessage($event)
         }
 
       }else if ($this->user['number']==4) {
-        $this->tebakkode_m->saveProgress('$message = ' . $message);
+        
         //if (is_int($message)) { 
         if ( strval($message) != strval(intval($message)) ) {
           //$message variable is not an integer
-          $this->tebakkode_m->saveProgress('$message is not integer');
 
           // update number progress
           $this->tebakkode_m->setUserProgress($this->user['user_id'], 4);
@@ -538,7 +541,6 @@ private function textMessage($event)
           $this->sendQuestion($replyToken, 4);        
 
         } else { 
-          $this->tebakkode_m->saveProgress('$message is integer');
           $menu_code = $this->tebakkode_m->getMenuProg($this->user['user_id']);
 
           $orderID = $this->tebakkode_m->getOrder($this->user['user_id']);
@@ -549,11 +551,9 @@ private function textMessage($event)
           {
             //save menu order header
             $lastID = $this->tebakkode_m->saveOrderHed($this->user['user_id'], $user_name, $resto, $table);
-            $this->tebakkode_m->saveProgress('lastID = ' . $lastID);
 
             //get last order id
             $orderID = $this->tebakkode_m->searchOrderID($this->user['user_id'], $resto, $table);
-            $this->tebakkode_m->saveProgress('orderID = ' . $orderID);
 
             //update order ID
             $this->tebakkode_m->setOrder($this->user['user_id'], $orderID);
@@ -576,13 +576,11 @@ private function textMessage($event)
 
         //get menu code
         $menu_code = $this->tebakkode_m->getMenuProg($this->user['user_id']);
-        $this->tebakkode_m->saveProgress('menu_code = ' . $menu_code);
 
         //get last order id
         $resto = $this->tebakkode_m->getResto($this->user['user_id']);
         $table = $this->tebakkode_m->getTable($this->user['user_id']);
         $orderID = $this->tebakkode_m->searchOrderID($this->user['user_id'], $resto, $table);
-        $this->tebakkode_m->saveProgress('orderID = ' . $orderID);
 
         if ($message=='0') { 
         
