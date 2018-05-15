@@ -216,7 +216,8 @@ private function textMessage($event)
         $result=$this->tebakkode_m->checkTable($this->user['user_id']);
         $this->tebakkode_m->saveProgress("$result = " . $result);
 
-        if ($this->tebakkode_m->checkTable($this->user['user_id'])!=false) {
+        if ($this->tebakkode_m->checkTable($this->user['user_id'])!=false ||
+            !is_null($this->tebakkode_m->checkTable($this->user['user_id'])) {
           //Insert Waitress call 
           $this->tebakkode_m->saveCallWaitress($this->user['user_id']);
 
@@ -242,7 +243,8 @@ private function textMessage($event)
         $result=$this->tebakkode_m->checkTable($this->user['user_id']);
         $this->tebakkode_m->saveProgress("$result = " . $result);
 
-        if ($this->tebakkode_m->checkTable($this->user['user_id'])!=false) {
+        if ($this->tebakkode_m->checkTable($this->user['user_id'])!=false ||
+            !is_null($this->tebakkode_m->checkTable($this->user['user_id'])) {
           //Insert Bill call 
           $this->tebakkode_m->saveCallBilling($this->user['user_id']);
 
