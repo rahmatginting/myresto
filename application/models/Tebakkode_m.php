@@ -404,7 +404,7 @@ class Tebakkode_m extends CI_Model {
       ->set('user_name', $name)
       ->set('type', '01')
       ->set('status','0')
-      ->set('description','rubah pesanan')
+      ->set('description','Panggilan pramusaji meja #' .$table)
       ->insert('panggilan');
  
     return $this->db->insert_id();
