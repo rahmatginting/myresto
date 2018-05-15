@@ -410,5 +410,38 @@ class Tebakkode_m extends CI_Model {
     return $this->db->insert_id();
   }
 
+  function saveCallBilling($userID)
+  {
+    $this->db->select('table')
+             ->select('resto')
+             ->select('order')
+             ->select('display_name')
+             ->from('users')
+             ->where('user_id',$userID)
+             ->order_by('id', 'asc')
+             ->limit(1);
+    $query = $this->db->get();
+    
+    foreach($query->result_array() AS $row) {
+      $table = $row['table'];
+      $resto = $row['resto'];
+      $order = $row['oder'];
+      $name = $row['display_name'];
+    }
+    
+    $date = date("Y-m-d H:i:s"); 
+    $this->db->set('user_id', $userID)
+      ->set('resto_id', $resto)
+      ->set('table_id', $table)
+      ->set('timestamp', $date)
+      ->set('user_name', $name)
+      ->set('type', '02')
+      ->set('status','0')
+      ->set('description','Minta tagihan meja ' .$table)
+      ->insert('panggilan');
+ 
+    return $this->db->insert_id();
+  }
+  
 }
 
