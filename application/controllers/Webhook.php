@@ -213,7 +213,7 @@ private function textMessage($event)
       } else if(strtolower($userMessage) == 'waiter') {
         if ($this->tebakkode_m->checkTable($this->user['user_id'])!=false) {
           //Insert Waitress call 
-          $this->tebakkode_m->saveCallWaitress($this->user['user_id']);\
+          $this->tebakkode_m->saveCallWaitress($this->user['user_id']);
 
           $img_url="https://myrestobot.herokuapp.com/img/qitabot.jpg";
           $options[] = new MessageTemplateActionBuilder('PESAN MAKANAN', 'MULAI');
