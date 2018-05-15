@@ -221,11 +221,11 @@ private function textMessage($event)
               
           $this->tebakkode_m->saveProgress("tidak ada nomor meja");
 
-          $message = 'Silakan ketik nomor meja dimana Anda berada saat ini.';
-          $messageBuilder = new TextMessageBuilder($message);
+          // update number progress
+          $this->tebakkode_m->setUserProgress($this->user['user_id'], 11);
 
-          // send message
-          $this->bot->replyMessage($event['replyToken'], $messageBuilder);
+          // send question no.1
+          $this->sendQuestion($event['replyToken'], 11);
 
         } else {
               
@@ -258,11 +258,12 @@ private function textMessage($event)
             $this->tebakkode_m->checkTable($this->user['user_id'])=="") {
 
           $this->tebakkode_m->saveProgress("tidak ada nomor meja");
-          $message = 'Silakan ketik nomor meja dimana Anda berada saat ini.';
-          $messageBuilder = new TextMessageBuilder($message);
+          
+          // update number progress
+          $this->tebakkode_m->setUserProgress($this->user['user_id'], 12);
 
-          // send message
-          $this->bot->replyMessage($event['replyToken'], $messageBuilder);
+          // send question no.1
+          $this->sendQuestion($event['replyToken'], 12);
 
         } else {
 
@@ -467,6 +468,11 @@ private function textMessage($event)
      
       // build message
       $messageBuilder = new TemplateMessageBuilder("Terimakasih", $buttonTemplate);
+
+    }else if ($questionNum==11 || $questionNum==12) {
+    
+      $message = 'Silakan ketik nomor meja dimana Anda berada saat ini.';
+      $messageBuilder = new TextMessageBuilder($message);
 
     }
 
@@ -751,6 +757,55 @@ private function textMessage($event)
 
       }
             
+    } else if ($this->user['number']==11 || $this->user['number']==12) {
+      //Check nomor meja exist
+      $this->resto = $this->tebakkode_m->checkResto($message);
+      $this->tebakkode_m->saveProgress('$resto = ' . $this->resto);
+
+      if ($this->resto=="" || $this->resto==false) 
+      {
+        // update number progress
+        $this->tebakkode_m->setUserProgress($this->user['user_id'], 1);
+        
+        $message = "Kami tidak menemukan \"NOMOR MEJA\" yang Anda masukkan. ". "\n" . "\n";
+        $message .= "Silahkan ulangi ketik nomor meja dimana Anda berada saat ini.";
+        $messageBuilder = new TextMessageBuilder($message);
+    
+        // send message
+        $response = $this->bot->replyMessage($replyToken, $messageBuilder);
+
+      }else {
+
+        // update table code
+        $this->tebakkode_m->setTable($this->user['user_id'], $message);
+
+        // update restaurant code
+        $this->tebakkode_m->setResto($this->user['user_id'], $this->resto);
+       
+        if ($this->user['number']==11) {
+          //Insert Waitress call 
+          $this->tebakkode_m->saveCallWaitress($this->user['user_id']);
+        }else if ($this->user['number']==12) {
+          //Insert Billing call 
+          $this->tebakkode_m->saveCallBilling($this->user['user_id']);
+        }
+
+        $img_url="https://myrestobot.herokuapp.com/img/qitabot.jpg";
+        $options[] = new MessageTemplateActionBuilder('PESAN MAKANAN', 'MULAI');
+        $options[] = new MessageTemplateActionBuilder('PANGGIL PRAMUSAJI', 'WAITER');
+        $options[] = new MessageTemplateActionBuilder('MINTA TAGIHAN', 'BILLING');
+      
+        // prepare button template
+        $buttonTemplate = new ButtonTemplateBuilder("Terima kasih", "Petugas kami akan segera melayani Anda", $img_url, $options);
+     
+        // build message
+        $messageBuilder = new TemplateMessageBuilder("Selamat Datang", $buttonTemplate);
+
+        // send message
+        $this->bot->replyMessage($replyToken, $messageBuilder);
+
+      }
+
     } else {
       // create user score message
       $message = 'Skormu '. $this->user['score'];
