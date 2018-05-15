@@ -1,5 +1,5 @@
 <?php session_start(); ?>    
-<?php include 'inc/config.php'; $template['header_link'] = $_SESSION['sys_restoName']; ?>
+<?php include 'inc/config.php'; $template['header_link'] = $_SESSION['sys_restoName'];?>
 <?php include 'inc/template_start.php'; ?>
 <?php include 'inc/page_head.php'; ?>
 
