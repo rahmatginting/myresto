@@ -222,8 +222,8 @@ private function textMessage($event)
       // prepare button template
         $msg01 = "Silahkan menunggu petugas kami akan segera melayani Anda";
         $msg02 = "Silahkan klik tombol pilihan dibawah";
-        $buttonTemplate = new ButtonTemplateBuilder($msg01, $msg02, $img_url, $options);
-        //$buttonTemplate = new ButtonTemplateBuilder("Selamat datang " . $profile['displayName'], "Silahkan klik tombol pilihan dibawah", $img_url, $options);
+        //$buttonTemplate = new ButtonTemplateBuilder($msg01, $msg02, $img_url, $options);
+        $buttonTemplate = new ButtonTemplateBuilder("Terima kasih", "Silahkan klik tombol pilihan dibawah", $img_url, $options);
      
         // build message
         $messageBuilder = new TemplateMessageBuilder("Selamat Datang", $buttonTemplate);
@@ -245,8 +245,8 @@ private function textMessage($event)
       // prepare button template
         $msg01 = "Silahkan menunggu petugas kami akan segera melayani Anda";
         $msg02 = "Silahkan klik tombol pilihan dibawah";
-        $buttonTemplate = new ButtonTemplateBuilder($msg01, $msg02, $img_url, $options);
-        //$buttonTemplate = new ButtonTemplateBuilder("Selamat datang " . $profile['displayName'], "Silahkan klik tombol pilihan dibawah", $img_url, $options);
+        //$buttonTemplate = new ButtonTemplateBuilder($msg01, $msg02, $img_url, $options);
+        $buttonTemplate = new ButtonTemplateBuilder("Terima kasih", "Silahkan klik tombol pilihan dibawah", $img_url, $options);
      
         // build message
         $messageBuilder = new TemplateMessageBuilder("Selamat Datang", $buttonTemplate);
