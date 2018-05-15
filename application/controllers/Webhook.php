@@ -212,12 +212,9 @@ private function textMessage($event)
 
       } else if(strtolower($userMessage) == 'waiter') {
         $this->tebakkode_m->saveProgress('message = waiter');
-
-        //Call button start
-        //$this->btnStart($event['replyToken']);
-
         $this->tebakkode_m->saveProgress('message = btnStart01');
-        $img_url="https://myrestobot.herokuapp.com/img/qitabot.jpg";
+
+/*        $img_url="https://myrestobot.herokuapp.com/img/qitabot.jpg";
         $options[] = new MessageTemplateActionBuilder('PESAN MAKANAN', 'MULAI');
         $options[] = new MessageTemplateActionBuilder('PANGGIL PRAMUSAJI', 'WAITER');
         $options[] = new MessageTemplateActionBuilder('MINTA TAGIHAN', 'BILLING');
@@ -230,14 +227,19 @@ private function textMessage($event)
 
         // send reply message
         $this->bot->replyMessage($event['replyToken'], $btnmessageBuilder);
+*/
+        $message = 'Silakan ketik pesan "MULAI" untuk melakukan pemesanan.';
+        $textMessageBuilder = new TextMessageBuilder($message);
 
+        $this->bot->replyMessage($event['replyToken'], $textMessageBuilder);
+        
         $this->tebakkode_m->saveProgress('message = end waiter');
 
       } else if(strtolower($userMessage) == 'billing') {
         $this->tebakkode_m->saveProgress('message = billing');
         $this->tebakkode_m->saveProgress('message = btnStart01');
 
-        $img_url="https://myrestobot.herokuapp.com/img/qitabot.jpg";
+/*        $img_url="https://myrestobot.herokuapp.com/img/qitabot.jpg";
         $options[] = new MessageTemplateActionBuilder('PESAN MAKANAN', 'MULAI');
         $options[] = new MessageTemplateActionBuilder('PANGGIL PRAMUSAJI', 'WAITER');
         $options[] = new MessageTemplateActionBuilder('MINTA TAGIHAN', 'BILLING');
@@ -249,9 +251,14 @@ private function textMessage($event)
        
         // build message
         $messageBuilder = new TemplateMessageBuilder("Selamat Datang", $buttonTemplate);
-        
+
         // send message
         $this->bot->replyMessage($event['replyToken'], $messageBuilder);
+*/
+        $message = 'Silakan ketik pesan "MULAI" untuk melakukan pemesanan.';
+        $textMessageBuilder = new TextMessageBuilder($message);
+
+        $this->bot->replyMessage($event['replyToken'], $textMessageBuilder);
 
         $this->tebakkode_m->saveProgress('message = end billing');
         
