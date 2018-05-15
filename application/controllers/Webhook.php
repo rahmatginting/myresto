@@ -44,7 +44,7 @@ class Webhook extends CI_Controller {
  
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         $result=$this->tebakkode_m->checkTable("U4035bbada65f83a2ab7253095cd0e6e7");
-      if (is_null($result)) {
+      if (is_null($result) || $result=="" || $result=="0") {
         echo "hasil = NULL";
       } else {
         echo "hasil = " . $result;
