@@ -43,12 +43,7 @@ class Webhook extends CI_Controller {
   {
  
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        $result=$this->tebakkode_m->checkTable("U4035bbada65f83a2ab7253095cd0e6e7");
-      if (is_null($result) || $result=="" || $result=="0") {
-        echo "hasil = NULL";
-      } else {
-        echo "hasil = " . $result;
-      }
+       
 /*      
       //get menu order
       $orders_list="Berikut ini adalah daftar seluruh pesanan Anda: ". "!\n";
@@ -226,6 +221,12 @@ private function textMessage($event)
               
           $this->tebakkode_m->saveProgress("tidak ada nomor meja");
 
+          $message = 'Silakan ketik nomor meja dimana Anda berada saat ini.';
+          $messageBuilder = new TextMessageBuilder($message);
+
+          // send message
+          $this->bot->replyMessage($event['replyToken'], $messageBuilder);
+
         } else {
               
           //Insert Waitress call 
@@ -236,7 +237,7 @@ private function textMessage($event)
           $options[] = new MessageTemplateActionBuilder('PANGGIL PRAMUSAJI', 'WAITER');
           $options[] = new MessageTemplateActionBuilder('MINTA TAGIHAN', 'BILLING');
         
-        // prepare button template
+          // prepare button template
           $buttonTemplate = new ButtonTemplateBuilder("Terima kasih", "Petugas kami akan segera melayani Anda", $img_url, $options);
        
           // build message
@@ -257,6 +258,12 @@ private function textMessage($event)
             $this->tebakkode_m->checkTable($this->user['user_id'])=="") {
 
           $this->tebakkode_m->saveProgress("tidak ada nomor meja");
+          $message = 'Silakan ketik nomor meja dimana Anda berada saat ini.';
+          $messageBuilder = new TextMessageBuilder($message);
+
+          // send message
+          $this->bot->replyMessage($event['replyToken'], $messageBuilder);
+
         } else {
 
           //Insert Bill call 
@@ -486,8 +493,22 @@ private function textMessage($event)
       // update number progress
       $this->tebakkode_m->setUserProgress($this->user['user_id'], $this->user['number'] + 1);
 
-      //Proses Resto disini
-      if ($this->user['number']==1) {
+      if ($this->user['number']==0) {
+        $img_url="https://myrestobot.herokuapp.com/img/qitabot.jpg";
+        $options[] = new MessageTemplateActionBuilder('PESAN MAKANAN', 'MULAI');
+        $options[] = new MessageTemplateActionBuilder('PANGGIL PRAMUSAJI', 'WAITER');
+        $options[] = new MessageTemplateActionBuilder('MINTA TAGIHAN', 'BILLING');
+      
+        // prepare button template
+        $buttonTemplate = new ButtonTemplateBuilder("Selamat datang", "Silahkan pilih tombol dibawah", $img_url, $options);
+     
+        // build message
+        $messageBuilder = new TemplateMessageBuilder("Selamat Datang", $buttonTemplate);
+
+        // send message
+        $response = $this->bot->replyMessage($replyToken, $messageBuilder);
+
+      } else if ($this->user['number']==1) {
 
         $this->resto = $this->tebakkode_m->checkResto($message);
         $this->tebakkode_m->saveProgress('$resto = ' . $this->resto);
