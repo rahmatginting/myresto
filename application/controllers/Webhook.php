@@ -43,7 +43,7 @@ class Webhook extends CI_Controller {
   {
  
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        $result=$this->tebakkode_m->checkTable($this->user['user_id']);
+        $result=$this->tebakkode_m->checkTable("U4035bbada65f83a2ab7253095cd0e6e7");
         echo $result;
 
 /*      
