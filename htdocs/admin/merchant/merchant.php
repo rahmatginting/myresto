@@ -53,7 +53,8 @@
                 <tbody>
                     <?php
                         include('connect.php');
-                        $result = $db->prepare("SELECT * FROM restaurants ORDER BY id DESC");
+                        //$result = $db->prepare("SELECT * FROM restaurants ORDER BY id DESC");
+                        $result = $db->prepare("SELECT * FROM restaurants WHERE id = ". $_SESSION['sys_restoID'] . " ORDER BY id DESC");
                         $result->execute();
                         for($i=0; $row = $result->fetch(); $i++){
                     ?>
