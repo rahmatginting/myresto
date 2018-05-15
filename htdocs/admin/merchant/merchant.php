@@ -36,7 +36,7 @@
     <div class="table-responsive">
         <div id="maintable"><div style="margin-top: 10px; margin-bottom: 10px;">
             <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
-                <a href = "#add" data-toggle = "modal" class="btn btn-primary">Tambah Merchant</a>
+                <a href = "#add" data-toggle = "modal" class="btn btn-primary">Tambah Merchant <?php echo $_SESSION['sys_restoID']; ?></a>
                 <?php include 'addmerchant.php'; ?>
                 <thead>
                     <tr>
