@@ -211,8 +211,6 @@ private function textMessage($event)
         $this->sendQuestion($event['replyToken'], 1);
 
       } else if(strtolower($userMessage) == 'waiter') {
-        $this->tebakkode_m->saveProgress('message = waiter');
-        $this->tebakkode_m->saveProgress('message = btnStart01');
 
         $img_url="https://myrestobot.herokuapp.com/img/qitabot.jpg";
         $options[] = new MessageTemplateActionBuilder('PESAN MAKANAN', 'MULAI');
@@ -220,9 +218,6 @@ private function textMessage($event)
         $options[] = new MessageTemplateActionBuilder('MINTA TAGIHAN', 'BILLING');
       
       // prepare button template
-        $msg01 = "Silahkan menunggu petugas kami akan segera melayani Anda";
-        $msg02 = "Silahkan klik tombol pilihan dibawah";
-        //$buttonTemplate = new ButtonTemplateBuilder($msg01, $msg02, $img_url, $options);
         $buttonTemplate = new ButtonTemplateBuilder("Terima kasih", "Petugas kami akan segera melayani Anda", $img_url, $options);
      
         // build message
@@ -231,11 +226,8 @@ private function textMessage($event)
         // send message
         $this->bot->replyMessage($event['replyToken'], $messageBuilder);
 
-        $this->tebakkode_m->saveProgress('message = end waiter');
 
       } else if(strtolower($userMessage) == 'billing') {
-        $this->tebakkode_m->saveProgress('message = billing');
-        $this->tebakkode_m->saveProgress('message = btnStart01');
 
         $img_url="https://myrestobot.herokuapp.com/img/qitabot.jpg";
         $options[] = new MessageTemplateActionBuilder('PESAN MAKANAN', 'MULAI');
@@ -243,9 +235,6 @@ private function textMessage($event)
         $options[] = new MessageTemplateActionBuilder('MINTA TAGIHAN', 'BILLING');
       
       // prepare button template
-        $msg01 = "Silahkan menunggu petugas kami akan segera melayani Anda";
-        $msg02 = "Silahkan klik tombol pilihan dibawah";
-        //$buttonTemplate = new ButtonTemplateBuilder($msg01, $msg02, $img_url, $options);
         $buttonTemplate = new ButtonTemplateBuilder("Terima kasih", "Petugas kami akan segera melayani Anda", $img_url, $options);
      
         // build message
@@ -253,10 +242,7 @@ private function textMessage($event)
 
         // send message
         $this->bot->replyMessage($event['replyToken'], $messageBuilder);
-
-
-        $this->tebakkode_m->saveProgress('message = end billing');
-        
+       
       } else {
         $message = 'Silakan ketik pesan "MULAI" untuk melakukan pemesanan.';
         $textMessageBuilder = new TextMessageBuilder($message);
@@ -270,32 +256,6 @@ private function textMessage($event)
     }
   }
 
-
-//====================================================================================
-//====================================================================================
-//====================================================================================
-private function btnStart($replyToken)
-{
-  $this->tebakkode_m->saveProgress('message = btnStart01');
-  $img_url="https://myrestobot.herokuapp.com/img/qitabot.jpg";
-  $options[] = new MessageTemplateActionBuilder('PESAN MAKANAN', 'MULAI');
-  $options[] = new MessageTemplateActionBuilder('PANGGIL PRAMUSAJI', 'WAITER');
-  $options[] = new MessageTemplateActionBuilder('MINTA TAGIHAN', 'BILLING');
-  
-  // prepare button template
-  $buttonTemplate = new ButtonTemplateBuilder("Silahkan menunggu, petugas kami akan segera melayani Anda", "Silahkan klik tombol pilihan dibawah", $img_url, $options);
- 
-  // build message
-  $btnmessageBuilder = new TemplateMessageBuilder("Terimakasih", $buttonTemplate);
-
-  // send reply message
-  //$this->bot->replyMessage($replyToken, $btnmessageBuilder);
-  //$this->bot->replyMessage($event['replyToken'], $btnmessageBuilder);
-    // send message
-  $response = $this->bot->replyMessage($replyToken, $btnmessageBuilder);  
-  $this->tebakkode_m->saveProgress('message = btnStart02');
-
-}
 
   //====================================================================================
   //====================================================================================
@@ -437,10 +397,10 @@ private function btnStart($replyToken)
 
         //create confirmation
         $actions = array (
-          New PostbackTemplateActionBuilder("Ya", "ans=Y"),
-          New PostbackTemplateActionBuilder("Tidak", "ans=N")
+          New PostbackTemplateActionBuilder("Konfirm", "ans=Y"),
+          New PostbackTemplateActionBuilder("Rubah Pesanan", "ans=N")
         );
-        $button = new ConfirmTemplateBuilder("Pilih \"YA\" untuk konfirmasi daftar pesanan dan pilih \"TIDAK\" untuk merubah pesanan ", $actions);
+        $button = new ConfirmTemplateBuilder("Pilih \"KONFIRM\" untuk konfirmasi daftar pesanan dan pilih \"TIDAK\" untuk merubah pesanan ", $actions);
         $confirmMsgBuilder = new TemplateMessageBuilder("confirm order list", $button);
 
         // merge all message
@@ -719,18 +679,22 @@ private function btnStart($replyToken)
           //set user clear progress 
           $this->tebakkode_m->setClearProgress($this->user['user_id']);
 
-          //Call button start
-          $this->btnStart($replyToken);
+          $img_url="https://myrestobot.herokuapp.com/img/qitabot.jpg";
+          $options[] = new MessageTemplateActionBuilder('PESAN MAKANAN', 'MULAI');
+          $options[] = new MessageTemplateActionBuilder('PANGGIL PRAMUSAJI', 'WAITER');
+          $options[] = new MessageTemplateActionBuilder('MINTA TAGIHAN', 'BILLING');
+        
+        // prepare button template
+          $msg01 = "Silahkan menunggu petugas kami akan segera melayani Anda";
+          $msg02 = "Silahkan klik tombol pilihan dibawah";
+          //$buttonTemplate = new ButtonTemplateBuilder($msg01, $msg02, $img_url, $options);
+          $buttonTemplate = new ButtonTemplateBuilder("Terima kasih", "Petugas kami akan segera melayani Anda", $img_url, $options);
+       
+          // build message
+          $messageBuilder = new TemplateMessageBuilder("Selamat Datang", $buttonTemplate);
 
-/*
-          $message = "Terimakasih atas pesanan Anda " . "\n";
-          $message = "Silahkan menunggu, petugas kami akan segera melayani Anda" . "\n";
-          $textMessageBuilder = new TextMessageBuilder($message);
-      
           // send message
-          $response = $this->bot->replyMessage($replyToken, $messageBuilder);
-
-*/          //==================================================================
+          $this->bot->replyMessage($event['replyToken'], $messageBuilder);
 
 
         }
