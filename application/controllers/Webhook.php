@@ -222,7 +222,7 @@ private function textMessage($event)
         if ($this->tebakkode_m->checkTable($this->user['user_id'])==false ||
             is_null($this->tebakkode_m->checkTable($this->user['user_id'])) || 
             $this->tebakkode_m->checkTable($this->user['user_id'])=="0" ||
-            $this->tebakkode_m->checkTable($this->user['user_id'])=="" || ) {
+            $this->tebakkode_m->checkTable($this->user['user_id'])=="") {
               
           $this->tebakkode_m->saveProgress("tidak ada nomor meja");
 
@@ -254,7 +254,7 @@ private function textMessage($event)
         if ($this->tebakkode_m->checkTable($this->user['user_id'])==false ||
             is_null($this->tebakkode_m->checkTable($this->user['user_id'])) || 
             $this->tebakkode_m->checkTable($this->user['user_id'])=="0" ||
-            $this->tebakkode_m->checkTable($this->user['user_id'])=="" || ) {
+            $this->tebakkode_m->checkTable($this->user['user_id'])=="") {
 
           $this->tebakkode_m->saveProgress("tidak ada nomor meja");
         } else {
