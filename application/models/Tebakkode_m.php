@@ -409,7 +409,23 @@ class Tebakkode_m extends CI_Model {
  
     return $this->db->insert_id();
   }
+  
+  function checkTable($userID)
+  {
 
+    $this->db->select('table')
+             ->from('user')
+             ->where('user_id',$userID)
+             ->order_by('id', 'asc')
+             ->limit(1);
+    $query = $this->db->get();
+
+     if ($query->num_rows() > 0) {
+         return $query->row()->table;
+     }
+     return false;
+  }
+  
   function saveCallBilling($userID)
   {
     $this->db->select('table')
