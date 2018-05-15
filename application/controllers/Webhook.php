@@ -44,8 +44,11 @@ class Webhook extends CI_Controller {
  
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         $result=$this->tebakkode_m->checkTable("U4035bbada65f83a2ab7253095cd0e6e7");
+      if (is_null($result)) {
+        echo "hasil = NULL";
+      } else {
         echo "hasil = " . $result;
-
+      }
 /*      
       //get menu order
       $orders_list="Berikut ini adalah daftar seluruh pesanan Anda: ". "!\n";
@@ -216,8 +219,14 @@ private function textMessage($event)
         $result=$this->tebakkode_m->checkTable($this->user['user_id']);
         $this->tebakkode_m->saveProgress("$result = " . $result);
 
-        if ($this->tebakkode_m->checkTable($this->user['user_id'])!=false ||
-            !is_null($this->tebakkode_m->checkTable($this->user['user_id'])) {
+        if ($this->tebakkode_m->checkTable($this->user['user_id'])==false ||
+            is_null($this->tebakkode_m->checkTable($this->user['user_id'])) || 
+            $this->tebakkode_m->checkTable($this->user['user_id'])=="0" ) {
+              
+          $this->tebakkode_m->saveProgress("tidak ada nomor meja");
+
+        } else {
+              
           //Insert Waitress call 
           $this->tebakkode_m->saveCallWaitress($this->user['user_id']);
 
@@ -234,17 +243,20 @@ private function textMessage($event)
 
           // send message
           $this->bot->replyMessage($event['replyToken'], $messageBuilder);
-
-        } else {
-          $this->tebakkode_m->saveProgress("tidak ada nomor meja");
+              
         }
 
       } else if(strtolower($userMessage) == 'billing') {
         $result=$this->tebakkode_m->checkTable($this->user['user_id']);
         $this->tebakkode_m->saveProgress("$result = " . $result);
 
-        if ($this->tebakkode_m->checkTable($this->user['user_id'])!=false ||
-            !is_null($this->tebakkode_m->checkTable($this->user['user_id'])) {
+        if ($this->tebakkode_m->checkTable($this->user['user_id'])==false ||
+            is_null($this->tebakkode_m->checkTable($this->user['user_id'])) || 
+            $this->tebakkode_m->checkTable($this->user['user_id'])=="0" ) {
+
+          $this->tebakkode_m->saveProgress("tidak ada nomor meja");
+        } else {
+
           //Insert Bill call 
           $this->tebakkode_m->saveCallBilling($this->user['user_id']);
 
@@ -261,8 +273,6 @@ private function textMessage($event)
 
           // send message
           $this->bot->replyMessage($event['replyToken'], $messageBuilder);
-        } else {
-          $this->tebakkode_m->saveProgress("tidak ada nomor meja");
         }
        
       } else {
