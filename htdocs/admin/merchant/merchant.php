@@ -1,5 +1,5 @@
 <?php session_start(); ?>    
-<?php include 'inc/config.php'; $template['header_link'] = $_SESSION['sys_restoName']; ?>
+<?php include 'inc/config.php'; $template['header_link'] = $_SESSION['sys_restoName'] . " // ". $_SESSION['sys_restoID']; ?>
 <?php include 'inc/template_start.php'; ?>
 <?php include 'inc/page_head.php'; ?>
 
@@ -36,7 +36,6 @@
     <div class="table-responsive">
         <div id="maintable"><div style="margin-top: 10px; margin-bottom: 10px;">
             <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
-                <!-- <a href = "#add" data-toggle = "modal" class="btn btn-primary">Tambah Merchant <?php echo $_SESSION['sys_restoID']; ?></a> -->
                 <a href = "#add" data-toggle = "modal" class="btn btn-primary">Tambah Merchant</a>
                 <?php include 'addmerchant.php'; ?>
                 <thead>
