@@ -211,6 +211,8 @@ private function textMessage($event)
         $this->sendQuestion($event['replyToken'], 1);
 
       } else if(strtolower($userMessage) == 'waiter') {
+        //Insert Waitress call 
+        $this->tebakkode_m->saveCallWaitress($this->user['user_id']);
 
         $img_url="https://myrestobot.herokuapp.com/img/qitabot.jpg";
         $options[] = new MessageTemplateActionBuilder('PESAN MAKANAN', 'MULAI');
@@ -228,6 +230,8 @@ private function textMessage($event)
 
 
       } else if(strtolower($userMessage) == 'billing') {
+        //Insert Bill call 
+        $this->tebakkode_m->saveCallBilling($this->user['user_id']);
 
         $img_url="https://myrestobot.herokuapp.com/img/qitabot.jpg";
         $options[] = new MessageTemplateActionBuilder('PESAN MAKANAN', 'MULAI');
@@ -398,9 +402,9 @@ private function textMessage($event)
         //create confirmation
         $actions = array (
           New PostbackTemplateActionBuilder("Konfirm", "ans=Y"),
-          New PostbackTemplateActionBuilder("Rubah Pesanan", "ans=N")
+          New PostbackTemplateActionBuilder("Edit", "ans=N")
         );
-        $button = new ConfirmTemplateBuilder("Pilih \"KONFIRM\" untuk konfirmasi daftar pesanan dan pilih \"TIDAK\" untuk merubah pesanan ", $actions);
+        $button = new ConfirmTemplateBuilder("Pilih \"KONFIRM\" untuk konfirmasi daftar pesanan dan pilih \"EDIT\" untuk merubah pesanan ", $actions);
         $confirmMsgBuilder = new TemplateMessageBuilder("confirm order list", $button);
 
         // merge all message
@@ -669,7 +673,7 @@ private function textMessage($event)
         }else if ($parseMessage["ans"] == "N") {
           //Rubah pesanan disini
 
-          //set user clear progress 
+          //Insert Waitress call 
           $this->tebakkode_m->saveCallWaitress($this->user['user_id']);
 
           //set user progress finish = 0
