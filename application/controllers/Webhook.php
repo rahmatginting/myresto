@@ -43,6 +43,8 @@ class Webhook extends CI_Controller {
   {
  
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        $result=$this->tebakkode_m->checkTable($this->user['user_id']);
+        echo $result;
 
 /*      
       //get menu order
