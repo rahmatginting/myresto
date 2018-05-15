@@ -211,6 +211,9 @@ private function textMessage($event)
         $this->sendQuestion($event['replyToken'], 1);
 
       } else if(strtolower($userMessage) == 'waiter') {
+        $result=$this->tebakkode_m->checkTable($this->user['user_id'];
+        $this->tebakkode_m->saveProgress("$result = " . $result);
+
         if ($this->tebakkode_m->checkTable($this->user['user_id'])!=false) {
           //Insert Waitress call 
           $this->tebakkode_m->saveCallWaitress($this->user['user_id']);
@@ -234,6 +237,9 @@ private function textMessage($event)
         }
 
       } else if(strtolower($userMessage) == 'billing') {
+        $result=$this->tebakkode_m->checkTable($this->user['user_id'];
+        $this->tebakkode_m->saveProgress("$result = " . $result);
+
         if ($this->tebakkode_m->checkTable($this->user['user_id'])!=false) {
           //Insert Bill call 
           $this->tebakkode_m->saveCallBilling($this->user['user_id']);
