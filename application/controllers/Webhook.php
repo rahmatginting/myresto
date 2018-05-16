@@ -45,6 +45,9 @@ class Webhook extends CI_Controller {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
       $img_url="";
+      $root = $_SERVER['DOCUMENT_ROOT'] ;
+      echo "root = " . $root. "</br>" . "</br>";
+      
       $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
       $imgPath = "/admin/image/menu/";
       $url = $protocol . $_SERVER['HTTP_HOST'] . $imgPath;
