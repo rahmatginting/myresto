@@ -404,6 +404,7 @@ private function textMessage($event)
               new PostbackTemplateActionBuilder("SELESAI","SELESAI")
             );
             
+            $this->tebakkode_m->saveProgress('filename = ' . $menu['filename']);
             //If menu has no picture
             $url=$url.$menu['filename'];
             if ($menu['picture']=="" || $menu['filename']=="" ) {
