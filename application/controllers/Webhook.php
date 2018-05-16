@@ -354,31 +354,43 @@ private function textMessage($event)
       $messageBuilder = new TemplateMessageBuilder("Kategori Menu", $buttonTemplate);
       
     }else if ($questionNum==3) {
-    
+
       $columns = array();
-      $img_url = "https://res.cloudinary.com/db9zavtws/image/upload/v1486222467/4_n5ai4k.png";
+      //Image path
+      //$img_url = "https://res.cloudinary.com/db9zavtws/image/upload/v1486222467/4_n5ai4k.png";
+      $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+      $parent_dir = dirname(dirname($_SERVER['SCRIPT_NAME'])) . '/';
+      $imgPath = "image/menu/";
+      $url = $protocol . $_SERVER['HTTP_HOST'] . $parent_dir . $imgPath;
+
       $menus=$this->tebakkode_m->getMenu($this->resto,$this->categoryID);
       if (is_array($menus) || is_object($menus))
       {
         foreach($menus as $menu) {
           if(!empty($menu['name'])){
-            //$options[] = new MessageTemplateActionBuilder($menu['name'], $menu['name']);
-            //$actions = array("Pesan","Kembali");
-            //$actions = array(new PostbackTemplateActionBuilder("Pesan","code=".$menu['code']."&menu=".$menu['name']),
-              //new UriTemplateActionBuilder("View","http://www.google.com"));
+
             $actions = array(
               new PostbackTemplateActionBuilder("PESAN","code=".$menu['code']."&menu=".$menu['name']),
               new PostbackTemplateActionBuilder("KEMBALI","KEMBALI"),
               new PostbackTemplateActionBuilder("SELESAI","SELESAI")
             );
-            
+            if ($menu['picture']=="" ) {
+              $img_url=$url."no-picture.jpg";
+            } else if (!file_exists($menu['picture'])) {   
+              $img_url=$url."no-picture.jpg";
+            } else {
+              $img_url=$menu['picture'];
+            }
+              
             $column = new CarouselColumnTemplateBuilder($menu['name'], $menu['description'], $img_url , $actions);
             $columns[] = $column;
+            }
           }
         }
       }
       $carousel = new CarouselTemplateBuilder($columns);
       $messageBuilder = new TemplateMessageBuilder("Daftar Menu", $carousel);
+    
     }else if ($questionNum==4) {
       //Tanya Jumlah porsi
 
