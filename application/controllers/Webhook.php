@@ -413,6 +413,8 @@ private function textMessage($event)
             } else {
               $img_url=$menu['picture'];
             }
+            $this->tebakkode_m->saveProgress('picture = ' . $menu['picture']);
+            $this->tebakkode_m->saveProgress('img_url = ' . $img_url);
             
             $column = new CarouselColumnTemplateBuilder($menu['name'], $menu['description'], $img_url , $actions);
             $columns[] = $column;
