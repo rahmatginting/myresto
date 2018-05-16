@@ -374,6 +374,8 @@ private function textMessage($event)
               new PostbackTemplateActionBuilder("KEMBALI","KEMBALI"),
               new PostbackTemplateActionBuilder("SELESAI","SELESAI")
             );
+            
+            //If menu has no picture
             if ($menu['picture']=="" ) {
               $img_url=$url."no-picture.jpg";
             } else if (!file_exists($menu['picture'])) {   
@@ -384,7 +386,7 @@ private function textMessage($event)
               
             $column = new CarouselColumnTemplateBuilder($menu['name'], $menu['description'], $img_url , $actions);
             $columns[] = $column;
-            }
+            
           }
         }
       }
