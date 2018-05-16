@@ -408,13 +408,13 @@ private function textMessage($event)
             //If menu has no picture
             $url=$url.$menu['filename'];
             if ($menu['picture']=="" || $menu['filename']=="" ) {
-              $this->tebakkode_m->saveProgress('masuk 01']);
+              $this->tebakkode_m->saveProgress('masuk 01');
               $img_url="http://myrestobot.herokuapp.com/admin/image/menu/no-picture.jpg";
             } else if (!file_exists($url)) {
-              $this->tebakkode_m->saveProgress('masuk 02']);
+              $this->tebakkode_m->saveProgress('masuk 02');
               $img_url="http://myrestobot.herokuapp.com/admin/image/menu/no-picture.jpg";
             } else {
-              $this->tebakkode_m->saveProgress('masuk 03']);
+              $this->tebakkode_m->saveProgress('masuk 03');
               $img_url=$menu['picture'];
             }
 
