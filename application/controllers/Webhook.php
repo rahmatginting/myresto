@@ -381,7 +381,7 @@ private function textMessage($event)
       $messageBuilder = new TemplateMessageBuilder("Kategori Menu", $buttonTemplate);
       
     }else if ($questionNum==3) {
-
+    try {
       $columns = array();
       //Image path
       $img_url="";
@@ -430,6 +430,10 @@ private function textMessage($event)
       }
       $carousel = new CarouselTemplateBuilder($columns);
       $messageBuilder = new TemplateMessageBuilder("Daftar Menu", $carousel);
+      
+    catch(Exception $e) {
+      $this->tebakkode_m->saveProgress('error = ' . $e->getMessage());
+    }
       
     }else if ($questionNum==4) {
       //Tanya Jumlah porsi
