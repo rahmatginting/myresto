@@ -410,6 +410,7 @@ private function textMessage($event)
             $this->tebakkode_m->saveProgress('picture00 = ' . $menu['picture']);
             //If menu has no picture
             $url=$url.$menu['filename'];
+            $this->tebakkode_m->saveProgress('url = ' . $url);
             if ($menu['picture']=="" || $menu['filename']=="" ) {
               $this->tebakkode_m->saveProgress('masuk 01');
               $img_url="http://myrestobot.herokuapp.com/admin/image/menu/no-picture.jpg";
