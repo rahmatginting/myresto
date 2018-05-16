@@ -430,7 +430,7 @@ private function textMessage($event)
       }
       $carousel = new CarouselTemplateBuilder($columns);
       $messageBuilder = new TemplateMessageBuilder("Daftar Menu", $carousel);
-      
+    }
     catch(Exception $e) {
       $this->tebakkode_m->saveProgress('error = ' . $e->getMessage());
     }
