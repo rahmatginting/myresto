@@ -38,8 +38,9 @@ include('connect.php');
 // query
 $sql = "UPDATE restaurant_menu 
     	SET picture=?
+    	SET filename=?
 		WHERE id=?";
 $q = $db->prepare($sql);
-$q->execute(array($imgURL,$menuID));
+$q->execute(array($imgURL,$filename,$menuID));
 
 echo $response;
