@@ -97,7 +97,7 @@
                     <div class="modal-body">
                         <!-- Form -->
                         <form method='post' action='' enctype="multipart/form-data">
-                            <input id="menu_id" type="text" name="menu_id" value=""> 
+                            <input id="menu_id" type="hidden" name="menu_id" value=""> 
                             Select file : <input type='file' name='file' id='file' class='form-control' ><br>
                             <input type='button' class='btn btn-info' value="Upload" id='upload'>
                         </form>
