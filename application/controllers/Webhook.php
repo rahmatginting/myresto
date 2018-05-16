@@ -41,16 +41,12 @@ class Webhook extends CI_Controller {
 
   public function index()
   {
- 
+    
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-
       $img_url="";
-      $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
       $root = $_SERVER['DOCUMENT_ROOT'] ;
-      echo "root = " . $root. "</br>" . "</br>";
       $imgPath = "/admin/image/menu/";
       $url = $root . $imgPath;
-      echo "url = " . $url . "</br>" . "</br>";
 
       $menus=$this->tebakkode_m->getMenu("1","101");
       if (is_array($menus) || is_object($menus))
@@ -74,7 +70,7 @@ class Webhook extends CI_Controller {
         }
       }
 
-      
+       
 /*      
       //get menu order
       $orders_list="Berikut ini adalah daftar seluruh pesanan Anda: ". "!\n";
@@ -388,11 +384,10 @@ private function textMessage($event)
 
       $columns = array();
       //Image path
-      //$img_url = "https://res.cloudinary.com/db9zavtws/image/upload/v1486222467/4_n5ai4k.png";
-      $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-      $parent_dir = dirname(dirname($_SERVER['SCRIPT_NAME'])) . '/';
-      $imgPath = "image/menu/";
-      $url = $protocol . $_SERVER['HTTP_HOST'] . $parent_dir . $imgPath;
+      $img_url="";
+      $root = $_SERVER['DOCUMENT_ROOT'] ;
+      $imgPath = "/admin/image/menu/";
+      $url = $root . $imgPath;
 
       $menus=$this->tebakkode_m->getMenu($this->resto,$this->categoryID);
       if (is_array($menus) || is_object($menus))
@@ -407,14 +402,15 @@ private function textMessage($event)
             );
             
             //If menu has no picture
-            if ($menu['picture']=="" ) {
-              $img_url=$url."no-picture.jpg";
-            } else if (!file_exists($menu['picture'])) {   
-              $img_url=$url."no-picture.jpg";
+            $url=$url.$menu['filename'];
+            if ($menu['picture']=="" || $menu['filename']=="" ) {
+              $img_url="http://myrestobot.herokuapp.com/admin/image/menu/no-picture.jpg";
+            } else if (!file_exists($url)) {
+              $img_url="http://myrestobot.herokuapp.com/admin/image/menu/no-picture.jpg";
             } else {
               $img_url=$menu['picture'];
             }
-              
+            
             $column = new CarouselColumnTemplateBuilder($menu['name'], $menu['description'], $img_url , $actions);
             $columns[] = $column;
             
