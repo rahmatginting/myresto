@@ -428,7 +428,7 @@ private function textMessage($event)
             
             $column = new CarouselColumnTemplateBuilder($menu['name'], $menu['description'], $img_url , $actions);
             $columns[] = $column;
-            
+            $this->tebakkode_m->saveProgress('SELESAI');
           }
         }
       }
