@@ -241,7 +241,10 @@ class Tebakkode_m extends CI_Model {
 
   function getMenu($restoID,$categoryID)
   {
-    $sql = "SELECT name, code, description, picture FROM restaurant_menu WHERE category_id = '". $categoryID . "' AND restaurant_id = '" . $restoID ."'";
+    $sql = "SELECT name, code, description, picture, filename ";
+    $sql .= "FROM restaurant_menu ";
+    $sql .= "WHERE category_id = '". $categoryID . "' ";
+    $sql .= "AND restaurant_id = '" . $restoID ."'";
     $query = $this->db->query($sql);
     if($query->num_rows() == 0) return false;
     return $query->result_array();
