@@ -51,13 +51,12 @@ class Webhook extends CI_Controller {
       $url = $protocol . $_SERVER['HTTP_HOST'] . $parent_dir . $imgPath;
       echo $url . "</br>";
 
-      $menus=$this->tebakkode_m->getMenu($this->resto,$this->categoryID);
+      $menus=$this->tebakkode_m->getMenu("1","101");
       if (is_array($menus) || is_object($menus))
       {
         foreach($menus as $menu) {
           if(!empty($menu['name'])){
-              echo $menu['code'] . " || " . $menu['name'] ."</br>" . " || " . $menu['picture'] ."</br>";
-            );
+            echo $menu['code'] . " || " . $menu['name'] ."</br>" . " || " . $menu['picture'] ."</br>";
             
             //If menu has no picture
             if ($menu['picture']=="" ) {
