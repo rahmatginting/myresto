@@ -383,61 +383,31 @@ private function textMessage($event)
       $messageBuilder = new TemplateMessageBuilder("Kategori Menu", $buttonTemplate);
       
     }else if ($questionNum==3) {
-    try {
       $columns = array();
-      //Image path
-      $img_url="";
-      $root = $_SERVER['DOCUMENT_ROOT'];
-      $imgPath = "/admin/image/menu/";
-      $url = $root . $imgPath;
-
+      $img_url = "https://res.cloudinary.com/db9zavtws/image/upload/v1486222467/4_n5ai4k.png";
       $menus=$this->tebakkode_m->getMenu($this->resto,$this->categoryID);
-      $this->tebakkode_m->saveProgress('resto = ' . $this->resto);
-      $this->tebakkode_m->saveProgress('categoryID = ' . $this->categoryID);
       if (is_array($menus) || is_object($menus))
       {
         foreach($menus as $menu) {
           if(!empty($menu['name'])){
-            $this->tebakkode_m->saveProgress('name = ' . $menu['name']);
-
+            //$options[] = new MessageTemplateActionBuilder($menu['name'], $menu['name']);
+            //$actions = array("Pesan","Kembali");
+            //$actions = array(new PostbackTemplateActionBuilder("Pesan","code=".$menu['code']."&menu=".$menu['name']),
+              //new UriTemplateActionBuilder("View","http://www.google.com"));
             $actions = array(
               new PostbackTemplateActionBuilder("PESAN","code=".$menu['code']."&menu=".$menu['name']),
               new PostbackTemplateActionBuilder("KEMBALI","KEMBALI"),
               new PostbackTemplateActionBuilder("SELESAI","SELESAI")
             );
             
-            $this->tebakkode_m->saveProgress('filename = ' . $menu['filename']);
-            $this->tebakkode_m->saveProgress('picture00 = ' . $menu['picture']);
-            //If menu has no picture
-            $fileURL=$url.$menu['filename'];
-            $this->tebakkode_m->saveProgress('url = ' . $url);
-            if ($menu['picture']=="" || $menu['filename']=="" ) {
-              $this->tebakkode_m->saveProgress('masuk 01');
-              $img_url="http://myrestobot.herokuapp.com/admin/image/menu/no-picture.jpg";
-            } else if (!file_exists($fileURL)) {
-              $this->tebakkode_m->saveProgress('masuk 02');
-              $img_url="http://myrestobot.herokuapp.com/admin/image/menu/no-picture.jpg";
-            } else {
-              $this->tebakkode_m->saveProgress('masuk 03');
-              $img_url=$menu['picture'];
-              $this->tebakkode_m->saveProgress('picture01 = ' . $menu['picture']);
-            }
-
-            $this->tebakkode_m->saveProgress('picture02 = ' . $menu['picture']);
-            $this->tebakkode_m->saveProgress('img_url = ' . $img_url);
-            
             $column = new CarouselColumnTemplateBuilder($menu['name'], $menu['description'], $img_url , $actions);
             $columns[] = $column;
-            $this->tebakkode_m->saveProgress('SELESAI');
           }
         }
       }
       $carousel = new CarouselTemplateBuilder($columns);
-      $messageBuilder = new TemplateMessageBuilder("Daftar Menu", $carousel);
-    }
-    catch(Exception $e) {
-      $this->tebakkode_m->saveProgress('error = ' . $e->getMessage());
-    }
+      $messageBuilder = new TemplateMessageBuilder("Carousel Demo", $carousel);
+
       
     }else if ($questionNum==4) {
       //Tanya Jumlah porsi
