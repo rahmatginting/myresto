@@ -62,7 +62,7 @@ class Webhook extends CI_Controller {
             //If menu has no picture
             $url=$url.$menu['filename'];
              echo "url = " . $url . "</br>" . "</br>";
-            if ($menu['picture']=="" ) {
+            if ($menu['picture']=="" || $menu['filename']=="" ) {
               $img_url="http://myrestobot.herokuapp.com/admin/image/menu/no-picture.jpg";
             } else if (!file_exists($url)) {
               $img_url="http://myrestobot.herokuapp.com/admin/image/menu/no-picture.jpg";
