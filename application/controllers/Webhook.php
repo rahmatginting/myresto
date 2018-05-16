@@ -43,7 +43,36 @@ class Webhook extends CI_Controller {
   {
  
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-       
+
+      $img_url="";
+      $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+      $parent_dir = dirname(dirname($_SERVER['SCRIPT_NAME'])) . '/';
+      $imgPath = "image/menu/";
+      $url = $protocol . $_SERVER['HTTP_HOST'] . $parent_dir . $imgPath;
+      echo $url . "</br>";
+
+      $menus=$this->tebakkode_m->getMenu($this->resto,$this->categoryID);
+      if (is_array($menus) || is_object($menus))
+      {
+        foreach($menus as $menu) {
+          if(!empty($menu['name'])){
+              echo $menu['code'] . " || " . $menu['name'] ."</br>" . " || " . $menu['picture'] ."</br>";
+            );
+            
+            //If menu has no picture
+            if ($menu['picture']=="" ) {
+              $img_url=$url."no-picture.jpg";
+            } else if (!file_exists($menu['picture'])) {   
+              $img_url=$url."no-picture.jpg";
+            } else {
+              $img_url=$menu['picture'];
+            }
+            echo "img_url" . $img_url . "</br>";
+          }
+        }
+      }
+
+      
 /*      
       //get menu order
       $orders_list="Berikut ini adalah daftar seluruh pesanan Anda: ". "!\n";
