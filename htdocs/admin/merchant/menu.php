@@ -67,14 +67,50 @@
                         <td><?php echo $row['code']; ?></td>
                         <td><?php echo $row['name']; ?></td>
                         <td><?php echo $row['description']; ?></td>
-                        <td><?php echo $row['picture']; ?></td>
-                        <td align="center"><a rel="facebox" class="btn btn-primary" href="editmenu.php?id=<?php echo $row['id']; ?>"> <i class="fa fa-pencil"></i> </a>  <a href="#" id="<?php echo $row['id']; ?>" class="btn btn-danger delbutton" title="Click To Delete"><i class = "fa fa-trash"></i></a></td>
+                        <td><img id="<?php echo 'imgRow' . $row['id']; ?>" src="<?php echo $row['picture']; ?> " width='150' height='100' style='display: inline-block;'> </td>
+                        <td align="center">
+                            <button type="button" id="<?php echo $row['id']; ?>" class="btn btn-info imgbutton" data-toggle="modal" data-userid="<?php echo $row['id']; ?>" data-target="#uploadModal">Gambar</button>
+
+                            <a rel="facebox" class="btn btn-primary" href="editmenu.php?id=<?php echo $row['id']; ?>"> <i class="fa fa-pencil"></i> 
+                            </a>  
+                            <a href="#" id="<?php echo $row['id']; ?>" class="btn btn-danger delbutton" title="Click To Delete">
+                                <i class = "fa fa-trash"></i>
+                            </a>
+                        </td>
                     </tr>
                     <?php
                         }
                         ?>
                 </tbody>            
             </table>
+
+            <!-- Modal -->
+            <div id="uploadModal" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">File upload form</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form -->
+                        <form method='post' action='' enctype="multipart/form-data">
+                            <input id="menu_id" type="text" name="menu_id" value=""> 
+                            Select file : <input type='file' name='file' id='file' class='form-control' ><br>
+                            <input type='button' class='btn btn-info' value="Upload" id='upload'>
+                        </form>
+
+                        <!-- Preview-->
+                        <div id='preview'></div>
+                    </div>
+                    
+                </div>
+
+              </div>
+            </div>
+
             </div>
         </div>
     </div>
@@ -132,6 +168,43 @@
         $('#dataTables-example').DataTable({
             responsive: true
         });
+
+        $('#uploadModal').on('show.bs.modal', function(e) {
+            var userid = $(e.relatedTarget).data('userid');
+            $(e.currentTarget).find('input[name="menu_id"]').val(userid);
+        });
+
+        $('#upload').click(function(){
+            //var menu_id = $('#menu_id').attr("value").val();
+            var menu_id = $('#menu_id').val();
+            var param_id = 'id=' + menu_id;
+
+            var fd = new FormData();
+            var files = $('#file')[0].files[0];
+            fd.append('file',files);
+            fd.append('request',1);
+            fd.append('id',menu_id);
+
+            // AJAX request
+            $.ajax({
+                url: 'upload.php',
+                type: 'post',
+                data: fd,param_id,
+                contentType: false,
+                processData: false,
+                success: function(response){
+                    if(response != 0){
+                        var res = response.split("|");
+                        // Show image preview
+                        $('#preview').append("<img src='"+res[1]+"' width='150' height='100' style='display: inline-block;'>");
+                        $("#" + 'imgRow'+res[2]).attr('src',res[1]);
+                    }else{
+                        alert('file not uploaded');
+                    }
+                }
+            });
+        });
+
     });
 </script>
 
