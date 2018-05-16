@@ -46,10 +46,8 @@ class Webhook extends CI_Controller {
 
       $img_url="";
       $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-      $parent_dir = dirname(dirname($_SERVER['SCRIPT_NAME'])) . '/';
-      echo "parent_dir = " . $parent_dir . "</br>" . "</br>";
       $imgPath = "admin/image/menu/";
-      $url = $protocol . $_SERVER['HTTP_HOST'] . $parent_dir . $imgPath;
+      $url = $protocol . $_SERVER['HTTP_HOST'] . $imgPath;
       echo "url = " . $url . "</br>" . "</br>";
 
       $menus=$this->tebakkode_m->getMenu("1","101");
