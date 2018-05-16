@@ -46,7 +46,7 @@ class Webhook extends CI_Controller {
 
       $img_url="";
       $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-      $imgPath = "admin/image/menu/";
+      $imgPath = "/admin/image/menu/";
       $url = $protocol . $_SERVER['HTTP_HOST'] . $imgPath;
       echo "url = " . $url . "</br>" . "</br>";
 
@@ -55,7 +55,7 @@ class Webhook extends CI_Controller {
       {
         foreach($menus as $menu) {
           if(!empty($menu['name'])){
-            echo $menu['code'] . " || " . $menu['name'] ."</br>" . " || " . $menu['picture'] ."</br>";
+              echo $menu['code'] . " || " . $menu['name'] ."</br>" . " || " . $menu['picture'] ."</br>";
             
             //If menu has no picture
             if ($menu['picture']=="" ) {
@@ -65,7 +65,7 @@ class Webhook extends CI_Controller {
             } else {
               $img_url=$menu['picture'];
             }
-            echo "img_url" . $img_url . "</br>";
+            echo "img_url = " . $img_url . "</br>";
           }
         }
       }
