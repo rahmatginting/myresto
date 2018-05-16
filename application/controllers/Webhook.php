@@ -45,12 +45,11 @@ class Webhook extends CI_Controller {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
       $img_url="";
+      $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
       $root = $_SERVER['DOCUMENT_ROOT'] ;
       echo "root = " . $root. "</br>" . "</br>";
-      
-      $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
       $imgPath = "/admin/image/menu/";
-      $url = $protocol . $_SERVER['HTTP_HOST'] . $imgPath;
+      $url = $root . $imgPath;
       echo "url = " . $url . "</br>" . "</br>";
 
       $menus=$this->tebakkode_m->getMenu("1","101");
@@ -58,13 +57,15 @@ class Webhook extends CI_Controller {
       {
         foreach($menus as $menu) {
           if(!empty($menu['name'])){
-              echo $menu['code'] . " || " . $menu['name'] ."</br>" . " || " . $menu['picture'] ."</br>";
+              echo $menu['code'] . " || " . $menu['name'] ."</br>" . " || " . $menu['picture'] . " || " . $menu['filename'] ."</br></br>";
             
             //If menu has no picture
+            $url=$url.$menu['filename'];
+             echo "url = " . $url . "</br>" . "</br>";
             if ($menu['picture']=="" ) {
-              $img_url=$url."no-picture.jpg";
-            } else if (!file_exists($menu['picture'])) {   
-              $img_url=$url."no-picture.jpg";
+              $img_url="http://myrestobot.herokuapp.com/admin/image/menu/no-picture.jpg";
+            } else if (!file_exists($url)) {
+              $img_url="http://myrestobot.herokuapp.com/admin/image/menu/no-picture.jpg";
             } else {
               $img_url=$menu['picture'];
             }
