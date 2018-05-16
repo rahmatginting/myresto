@@ -385,15 +385,18 @@ private function textMessage($event)
       $columns = array();
       //Image path
       $img_url="";
-      $root = $_SERVER['DOCUMENT_ROOT'] ;
+      $root = $_SERVER['DOCUMENT_ROOT'];
       $imgPath = "/admin/image/menu/";
       $url = $root . $imgPath;
 
       $menus=$this->tebakkode_m->getMenu($this->resto,$this->categoryID);
+      $this->tebakkode_m->saveProgress('resto = ' . $this->resto);
+      $this->tebakkode_m->saveProgress('categoryID = ' . $this->categoryID);
       if (is_array($menus) || is_object($menus))
       {
         foreach($menus as $menu) {
           if(!empty($menu['name'])){
+            $this->tebakkode_m->saveProgress('name = ' . $menu['name']);
 
             $actions = array(
               new PostbackTemplateActionBuilder("PESAN","code=".$menu['code']."&menu=".$menu['name']),
@@ -419,7 +422,7 @@ private function textMessage($event)
       }
       $carousel = new CarouselTemplateBuilder($columns);
       $messageBuilder = new TemplateMessageBuilder("Daftar Menu", $carousel);
-    
+      
     }else if ($questionNum==4) {
       //Tanya Jumlah porsi
 
