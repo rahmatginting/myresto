@@ -1,5 +1,9 @@
 <?php
 $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+if ($protocol=="http://") {
+  $protocol="https://";
+}
+	
 $parent_dir = dirname(dirname($_SERVER['SCRIPT_NAME'])) . '/';
 $imgPath = "image/menu/";
 
