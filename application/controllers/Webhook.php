@@ -383,10 +383,9 @@ private function textMessage($event)
       $messageBuilder = new TemplateMessageBuilder("Kategori Menu", $buttonTemplate);
       
     }else if ($questionNum==3) {
-      
+
       //Image path
       $img_url="";
-      $img_url="http://myrestobot.herokuapp.com/admin/image/menu/no-picture.jpg";
       $root = $_SERVER['DOCUMENT_ROOT'];
       $imgPath = "/admin/image/menu/";
       $url = $root . $imgPath;
@@ -397,6 +396,17 @@ private function textMessage($event)
       {
         foreach($menus as $menu) {
           if(!empty($menu['name'])){
+            //If menu has no picture
+            $fileURL=$url.$menu['filename'];
+            if ($menu['picture']=="" || $menu['filename']=="" ) {
+              $img_url="https://myrestobot.herokuapp.com/admin/image/menu/no-picture.jpg";
+            } else if (!file_exists($fileURL)) {
+              $img_url="https://myrestobot.herokuapp.com/admin/image/menu/no-picture.jpg";
+            } else {
+              $img_url=$menu['picture'];
+            }
+
+
             $actions = array(
               new PostbackTemplateActionBuilder("PESAN","code=".$menu['code']."&menu=".$menu['name']),
               new PostbackTemplateActionBuilder("KEMBALI","KEMBALI"),
