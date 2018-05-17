@@ -399,14 +399,7 @@ private function textMessage($event)
       {
         foreach($menus as $menu) {
           if(!empty($menu['name'])){
-            $this->tebakkode_m->saveProgress('name = ' . $menu['name']);
-
-            $actions = array(
-              new PostbackTemplateActionBuilder("PESAN","code=".$menu['code']."&menu=".$menu['name']),
-              new PostbackTemplateActionBuilder("KEMBALI","KEMBALI"),
-              new PostbackTemplateActionBuilder("SELESAI","SELESAI")
-            );
-            
+            $this->tebakkode_m->saveProgress('name = ' . $menu['name']);            
             $this->tebakkode_m->saveProgress('filename = ' . $menu['filename']);
             $this->tebakkode_m->saveProgress('picture00 = ' . $menu['picture']);
             //If menu has no picture
@@ -426,6 +419,12 @@ private function textMessage($event)
 
             $this->tebakkode_m->saveProgress('picture02 = ' . $menu['picture']);
             $this->tebakkode_m->saveProgress('img_url = ' . $img_url);
+
+            $actions = array(
+              new PostbackTemplateActionBuilder("PESAN","code=".$menu['code']."&menu=".$menu['name']),
+              new PostbackTemplateActionBuilder("KEMBALI","KEMBALI"),
+              new PostbackTemplateActionBuilder("SELESAI","SELESAI")
+            );
             
             $column = new CarouselColumnTemplateBuilder($menu['name'], $menu['description'], $img_url , $actions);
             $columns[] = $column;
