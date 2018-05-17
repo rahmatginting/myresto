@@ -383,9 +383,7 @@ private function textMessage($event)
       $messageBuilder = new TemplateMessageBuilder("Kategori Menu", $buttonTemplate);
       
     }else if ($questionNum==3) {
-
-    try {
-      $columns = array();
+      
       //Image path
       $img_url="";
       $root = $_SERVER['DOCUMENT_ROOT'];
@@ -393,32 +391,21 @@ private function textMessage($event)
       $url = $root . $imgPath;
 
       $menus=$this->tebakkode_m->getMenu($this->resto,$this->categoryID);
-      $this->tebakkode_m->saveProgress('resto = ' . $this->resto);
-      $this->tebakkode_m->saveProgress('categoryID = ' . $this->categoryID);
+      $columns = array();
       if (is_array($menus) || is_object($menus))
       {
         foreach($menus as $menu) {
           if(!empty($menu['name'])){
-            $this->tebakkode_m->saveProgress('name = ' . $menu['name']);            
-            $this->tebakkode_m->saveProgress('filename = ' . $menu['filename']);
-            $this->tebakkode_m->saveProgress('picture00 = ' . $menu['picture']);
             //If menu has no picture
             $fileURL=$url.$menu['filename'];
-            $this->tebakkode_m->saveProgress('url = ' . $url);
             if ($menu['picture']=="" || $menu['filename']=="" ) {
-              $this->tebakkode_m->saveProgress('masuk 01');
               $img_url="http://myrestobot.herokuapp.com/admin/image/menu/no-picture.jpg";
             } else if (!file_exists($fileURL)) {
-              $this->tebakkode_m->saveProgress('masuk 02');
               $img_url="http://myrestobot.herokuapp.com/admin/image/menu/no-picture.jpg";
             } else {
-              $this->tebakkode_m->saveProgress('masuk 03');
               $img_url=$menu['picture'];
-              $this->tebakkode_m->saveProgress('picture01 = ' . $menu['picture']);
             }
 
-            $this->tebakkode_m->saveProgress('picture02 = ' . $menu['picture']);
-            $this->tebakkode_m->saveProgress('img_url = ' . $img_url);
 
             $actions = array(
               new PostbackTemplateActionBuilder("PESAN","code=".$menu['code']."&menu=".$menu['name']),
@@ -428,17 +415,11 @@ private function textMessage($event)
             
             $column = new CarouselColumnTemplateBuilder($menu['name'], $menu['description'], $img_url , $actions);
             $columns[] = $column;
-            $this->tebakkode_m->saveProgress('SELESAI');
           }
         }
       }
       $carousel = new CarouselTemplateBuilder($columns);
-      $messageBuilder = new TemplateMessageBuilder("Daftar Menu", $carousel);
-    }
-    catch(Exception $e) {
-      $this->tebakkode_m->saveProgress('error = ' . $e->getMessage());
-    }
-      
+      $messageBuilder = new TemplateMessageBuilder("Carousel Demo", $carousel);
       
     }else if ($questionNum==4) {
       //Tanya Jumlah porsi
