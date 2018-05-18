@@ -1,4 +1,5 @@
-<?php include 'inc/config.php'; ?>
+<?php session_start(); ?>    
+<?php include 'inc/config.php'; $template['header_link'] = $_SESSION['sys_restoName'];?>
 <?php include 'inc/template_start.php'; ?>
 <?php include 'inc/page_head.php'; ?>
 
@@ -184,7 +185,6 @@
             fd.append('file',files);
             fd.append('request',1);
             fd.append('id',menu_id);
-
             // AJAX request
             $.ajax({
                 url: 'upload.php',
