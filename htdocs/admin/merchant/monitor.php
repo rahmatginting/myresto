@@ -1,8 +1,9 @@
-<?php session_start(); ?>    
-<?php include 'inc/config.php'; $template['header_link'] = $_SESSION['sys_restoName']; ?>
-<?php include 'inc/template_start.php'; ?>
-<?php include 'inc/page_head.php'; ?>
-<?php
+<?php 
+session_start();  
+include 'inc/config.php'; $template['header_link'] = $_SESSION['sys_restoName'];
+include 'inc/template_start.php';
+include 'inc/page_head.php';
+
     $today = date('d-m-Y');
     /*
         ORDER STATUS
@@ -13,6 +14,7 @@
         4 = Invalid
     */
 ?>
+
 <!-- DataTables Responsive CSS -->
 <link href="src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
 <script src="lib/jquery.js" type="text/javascript"></script>
