@@ -36,7 +36,8 @@
 <script src="js/ion.sound.js"></script>
 
 
-<input type="hidden" name="resto_id" id="resto_id" value="<?=$_SESSION['sys_restoID']?>" />
+<!-- <input type="hidden" name="resto_id" id="resto_id" value="<?=$_SESSION['sys_restoID']?>" /> -->
+<input type="hidden" name="resto_id" id="resto_id" value="1" />
 
 <!-- Page content -->
 <div id="page-content">
