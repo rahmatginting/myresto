@@ -34,17 +34,17 @@ if(in_array($file_extension,$image_ext)){
 	// Upload file
 	if(move_uploaded_file($_FILES['file']['tmp_name'],$location)){
 		$response = $imgURL . "|" . $location . "|" . $menuID;
+
+		// query
+		include('connect.php');
+		$sql = "UPDATE restaurant_menu 
+			SET picture=?,
+			filename=?
+				WHERE id=?";
+		$q = $db->prepare($sql);
+		$q->execute(array($imgURL,$filename,$menuID));
+
 	}
 }
-
-include('connect.php');
-
-// query
-$sql = "UPDATE restaurant_menu 
-    	SET picture=?
-    	SET filename=?
-		WHERE id=?";
-$q = $db->prepare($sql);
-$q->execute(array($imgURL,$filename,$menuID));
 
 echo $response;
